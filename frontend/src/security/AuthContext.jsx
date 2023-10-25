@@ -2,7 +2,7 @@ import { createContext, useState, useContext } from "react";
 import {
   executeAccountRegistration,
   executeJwtAuthenticationService,
-} from "../api/AuthenticationApiService";
+} from "../api/auth/AuthenticationApiService";
 import { HttpStatusResponse } from "../utils/enums";
 
 export const AuthContext = createContext();
