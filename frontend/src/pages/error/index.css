@@ -1,0 +1,19 @@
+/* ErrorPage.css */
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  background-color: #f8d7da; /* Light red background color */
+}
+
+.error-container h1 {
+  color: #b8b6b6; /* Dark red text color */
+}
+
+.error-container p {
+  color: #b8b6b6; /* Dark red text color */
+}
