@@ -13,6 +13,9 @@ buildNumber.properties
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
+# Env
+.env
+
 # Logs
 logs
 *.log
@@ -37,3 +40,4 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
+*.sw?
