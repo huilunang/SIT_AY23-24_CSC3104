@@ -7,7 +7,7 @@ spring:
   data:
     mongodb:
       database: travelexp_db
-      host: 0.0.0.0
+      host: localhost
       port: 27017
   mail:
     host: smtp.gmail.com
