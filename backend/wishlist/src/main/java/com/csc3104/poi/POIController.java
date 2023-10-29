@@ -24,6 +24,11 @@ public class POIController {
 
     @GetMapping("/{businessId}")
     public POI getPOIDetails(@PathVariable String businessId) {
-        return poiService.getDetails(businessId);
+        return poiService.getPOIRecord(businessId);
+    }
+
+    @GetMapping("/suggestions")
+    public Map<String, String> getSuggestions(@RequestParam String location, @RequestParam String userInput) {
+        return poiService.getAutoCompleteSuggestion(location, userInput);
     }
 }   

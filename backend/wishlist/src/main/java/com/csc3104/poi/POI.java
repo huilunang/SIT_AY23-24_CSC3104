@@ -5,6 +5,7 @@ public class POI {
     private String category;
     private String address; 
     private String imageUrl;
+    private String remarks;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class POI {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }

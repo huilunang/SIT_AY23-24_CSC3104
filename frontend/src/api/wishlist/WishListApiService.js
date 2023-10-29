@@ -8,12 +8,4 @@ export function getAllGallery() {
   }
 }
 
-export function searchPOIByTermAndLocation(term, location) {
-  try {
-    return apiClient.get("/api/v1/poi/search", {
-      params: { term, location }
-    });
-  } catch (error) {
-    console.log(error);
-  }
-}
+

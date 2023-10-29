@@ -1,47 +1,52 @@
-import { useEffect, useState } from "react";
-import { searchPOIByTermAndLocation } from "../../api/wishlist/WishListApiService";
+import React, { useState } from 'react';
 
-const POI = () => {
-    const [term, setTerm] = useState("");
-    const [location, setLocation] = useState("");
-    const [results, setResults] = useState([]);
-  
-    const search = async () => {
-      try {
-        const res = await searchPOIByTermAndLocation(term, location);
-  
-        if (res.data && res.data.businesses) {
-          setResults(res.data.businesses);
-        } else {
-          console.log("No results found.");
+const Index = () => {
+    const [location, setLocation] = useState('Singapore'); // Default location
+    const [userInput, setUserInput] = useState('');
+    const [suggestions, setSuggestions] = useState({});
+
+    const handleInputChange = async (e) => {
+        const input = e.target.value;
+        setUserInput(input);
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/v1/poi/suggestions?location=${location}&userInput=${input}`);
+            const data = await response.json();
+            setSuggestions(data);
+        } catch (error) {
+            console.error('Error fetching suggestions:', error);
         }
-      } catch (error) {
-        console.error(error);
-      }
     };
-  
+
+    const handleSelect = (businessId) => {
+        console.log('Selected business ID:', businessId);
+        // Perform actions after selecting the business
+    };
+
     return (
-      <div>
-        <input
-          type="text"
-          placeholder="Search for Place"
-          value={term}
-          onChange={(e) => setTerm(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-        />
-        <button onClick={search}>Search</button>
-        <ul>
-          {results.map((poi) => (
-            <li key={poi.id}>{poi.name}</li>
-          ))}
-        </ul>
-      </div>
+        <div>
+            <select onChange={(e) => setLocation(e.target.value)}>
+                <option value="Singapore">Singapore</option>
+                <option value="Johor Bahru">Johor Bahru</option>
+                {/* Add more location options */}
+            </select>
+
+            <input
+                type="text"
+                placeholder="Search for shops..."
+                value={userInput}
+                onChange={handleInputChange}
+            />
+
+            <ul>
+                {Object.entries(suggestions).map(([businessId, nameAndAddress]) => (
+                    <li key={businessId} onClick={() => handleSelect(businessId)}>
+                        {nameAndAddress}
+                    </li>
+                ))}
+            </ul>
+        </div>
     );
-  };
-  
-  export default POI;
+};
+
+export default Index;
