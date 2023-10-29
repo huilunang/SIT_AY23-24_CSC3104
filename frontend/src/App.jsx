@@ -9,7 +9,6 @@ import GalleryPage from "./pages/gallery";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
-import CustomNavbar from "./components/navbar";
 
 function AuthenticatedRoute({ children }) {
   if (localStorage.getItem("isAuthenticated") === "true") {
@@ -26,7 +25,6 @@ export default function App() {
     <div className="FoodMining">
       <AuthProvider>
         <BrowserRouter>
-          {isAuthenticated && <CustomNavbar />}
           <Routes>
             <Route
               path="/"
@@ -50,13 +48,9 @@ export default function App() {
             <Route
               path="/gallery"
               element={
-                isAuthenticated ? (
-                  <AuthenticatedRoute>
-                    <GalleryPage />
-                  </AuthenticatedRoute>
-                ) : (
-                  <Navigate to="/" />
-                )
+                <AuthenticatedRoute>
+                  <GalleryPage />
+                </AuthenticatedRoute>
               }
             ></Route>
 

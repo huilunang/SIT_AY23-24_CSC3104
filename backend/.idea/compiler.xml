@@ -7,13 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="notification" />
-        <module name="wishlist" />
         <module name="backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="notification" target="21" />
       <module name="travelexp" target="21" />
+      <module name="wishlist" target="21" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

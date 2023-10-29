@@ -9,7 +9,6 @@ import {
   MDBNavbarNav,
   MDBNavbarItem,
   MDBNavbarLink,
-  MDBBtn,
   MDBDropdown,
   MDBDropdownToggle,
   MDBDropdownMenu,
@@ -17,8 +16,14 @@ import {
   MDBCollapse,
 } from "mdb-react-ui-kit";
 
-export default function App() {
+import { useAuth } from "../../security/AuthContext";
+
+export default function CustomNavbar() {
   const [showBasic, setShowBasic] = useState(false);
+
+  const authContext = useAuth();
+
+  const logout = authContext.logout;
 
   return (
     <div style={{ padding: "20px" }}>
@@ -45,18 +50,23 @@ export default function App() {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
               <MDBNavbarItem style={{ marginRight: "30px" }}>
-                <MDBNavbarLink href="#">
+                <MDBNavbarLink href="/gallery">
                   <MDBIcon far icon="images" /> Gallery
                 </MDBNavbarLink>
               </MDBNavbarItem>
               <MDBNavbarItem>
-                <MDBNavbarLink href="#">
+                <MDBNavbarLink href="/friends">
                   <MDBIcon fas icon="user-friends" /> Friends
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
 
             <MDBNavbarNav className="justify-content-end">
+              <MDBNavbarItem style={{ marginRight: "30px" }}>
+                <MDBNavbarLink href="/notifications">
+                  <MDBIcon fas icon="bell" /> Notifications
+                </MDBNavbarLink>
+              </MDBNavbarItem>
               <MDBNavbarItem>
                 <MDBDropdown>
                   <MDBDropdownToggle
@@ -65,11 +75,23 @@ export default function App() {
                     role="button"
                     style={{ cursor: "pointer" }} // Remove the arrow icon
                   >
-                    <MDBIcon fas icon="user-alt" /> Profile
+                    <MDBIcon fas icon="user-alt" />
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
-                    <MDBDropdownItem link>User Profile</MDBDropdownItem>
-                    <MDBDropdownItem link>Log Out</MDBDropdownItem>
+                    <MDBDropdownItem>
+                      <MDBNavbarLink href="/profile">
+                        <MDBIcon fas icon="user-circle" />
+                        <span style={{ marginRight: "10px" }} />
+                        Profile
+                      </MDBNavbarLink>
+                    </MDBDropdownItem>
+                    <MDBDropdownItem>
+                      <MDBNavbarLink onClick={logout}>
+                        <MDBIcon fas icon="sign-in-alt" />
+                        <span style={{ marginRight: "10px" }} />
+                        Log Out
+                      </MDBNavbarLink>
+                    </MDBDropdownItem>
                   </MDBDropdownMenu>
                 </MDBDropdown>
               </MDBNavbarItem>
