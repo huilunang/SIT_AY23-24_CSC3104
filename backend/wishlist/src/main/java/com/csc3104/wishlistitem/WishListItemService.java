@@ -23,8 +23,8 @@ public class WishListItemService {
         return wishlistitemRepository.findById(id);
     }
 
-    public WishListItem createWishListItem(String name, String albumId) {
-        WishListItem wishlistItem = wishlistitemRepository.insert(new WishListItem(name, albumId));
+    public WishListItem createWishListItem(String name, String businessId, String albumId, String remarks, boolean visited) {
+        WishListItem wishlistItem = wishlistitemRepository.insert(new WishListItem(name, businessId, albumId, remarks, visited));
     
         return wishlistItem;
     }

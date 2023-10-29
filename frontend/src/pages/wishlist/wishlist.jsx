@@ -41,7 +41,6 @@ function WishList() {
     const handleModalShow = () => setShowModal(true);
     const handleModalClose = () => setShowModal(false);
 
-    console.log(wishlistitemById);
     return (
         <div className="container wishlist-container">
             <h1>WishList</h1>
@@ -59,16 +58,16 @@ function WishList() {
                 </tbody>
             </table>
             <Button variant="primary" onClick={handleModalShow}>
-                Add a new item
+                Add New
             </Button>
             <Modal show={showModal} onHide={handleModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New Item</Modal.Title>
+                    <Modal.Title>New Place of Interest</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group controlId="formBasicEmail">
-                            <Form.Label>Item Name</Form.Label>
+                            <Form.Label>POI Name</Form.Label>
                             <Form.Control type="text" placeholder="Enter item name" />
                         </Form.Group>
                     </Form>

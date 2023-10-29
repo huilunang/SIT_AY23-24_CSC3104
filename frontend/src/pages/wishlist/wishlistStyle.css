@@ -1,18 +1,30 @@
 /* WishList.css */
 .wishlist-container {
     text-align: center;
-    padding: 20px;
+    padding: 25px;
 }
 
 .wishlist-item {
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
 }
 
 .table-light {
     background-color: #f8f9fa; /* light background color */
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); /* Adding a drop shadow to the table */
 }
 
 .table-secondary {
     background-color: #e9ecef; /* slightly darker background color */
+    box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); /* Adding a drop shadow to the table */
+}
+
+.delete-icon {
+    cursor: pointer;
+    float: right;
+}
+
+.fa-trash {
+    color: red; /* or any color you desire */
+    font-size: 18px; /* or adjust the font size as needed */
 }

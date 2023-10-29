@@ -34,9 +34,11 @@ public class WishListItemController {
     @PostMapping("/insert")
     public ResponseEntity<WishListItem> createWishListItem(@RequestBody Map<String, String> payload) {
         String name = payload.get("name");
+        String businessId = payload.get("businessId");
         String albumId = payload.get("albumId");
-
-        WishListItem newWishListItem = wishlistitemService.createWishListItem(name, albumId);
+        String remarks = payload.get("remarks");
+        boolean visited = Boolean.parseBoolean(payload.get("visited"));
+        WishListItem newWishListItem = wishlistitemService.createWishListItem(name, businessId, albumId, remarks, visited);
 
         return new ResponseEntity<>(newWishListItem, HttpStatus.CREATED);
     }
