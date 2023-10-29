@@ -31,7 +31,7 @@ function HeaderComponent() {
                       Friends
                     </Link>
                   </li>
-                                  </ul>
+                </ul>
               </div>
               <ul className="navbar-nav">
                 { NotificationComponent() }
