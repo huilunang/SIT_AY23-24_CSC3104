@@ -7,6 +7,8 @@ import HomePage from "./pages/home";
 import ErrorPage from "./pages/error";
 import LogoutPage from "./pages/logout";
 import RegisterPage from "./pages/register";
+import WishListPage from "./pages/wishlist/wishlist";
+import WishListItemPage from "./pages/poi_details/poi";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
@@ -27,6 +29,10 @@ export default function App() {
         <BrowserRouter>
           <HeaderComponent />
           <Routes>
+            {/* Routes to bypass authentication here */}
+            <Route path="wishlist/:id" element={<WishListPage />}></Route>
+            <Route path="wishlist/:id/:id" element={<WishListItemPage />}></Route>
+            {/* Until here */}
             <Route path="/" element={<LoginPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/register" element={<RegisterPage />}></Route>
