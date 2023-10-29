@@ -1,4 +1,4 @@
-package main.java.com.csc3104.poi;
+package com.csc3104.poi;
 
 import java.util.List;
 import java.util.Map;
@@ -22,13 +22,8 @@ public class POIController {
     @Autowired
     private POIService poiService;
 
-    // @GetMapping("/search")
-    // public ResponseEntity<String> searchPOI(@RequestParam String term, @RequestParam String location) {
-    //     return poiService.searchYelp(term, location);
-    // }
-
-    @GetMapping("/search")
-    public String test(){
-        return "hello";
+    @GetMapping("/{businessId}")
+    public POI getPOIDetails(@PathVariable String businessId) {
+        return poiService.getDetails(businessId);
     }
 }   
