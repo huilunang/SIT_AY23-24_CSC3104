@@ -40,7 +40,7 @@ const Registration = () => {
       );
 
       if (httpStatus == HttpStatusResponse.OK) {
-        navigate("/home");
+        navigate("/login");
       } else if (httpStatus == HttpStatusResponse.USER_ALREADY_EXISTS) {
         alert("User with this email already exists");
         action.resetForm();

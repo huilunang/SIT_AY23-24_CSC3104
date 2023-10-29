@@ -3,17 +3,16 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
 import LoginPage from "./pages/login";
-import HomePage from "./pages/home";
 import ErrorPage from "./pages/error";
-import LogoutPage from "./pages/logout";
 import RegisterPage from "./pages/register";
+import GalleryPage from "./pages/gallery";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
-import HeaderComponent from "./components/header";
+import CustomNavbar from "./components/navbar";
 
 function AuthenticatedRoute({ children }) {
-  if (localStorage.getItem("isAuthenticated") == "true") {
+  if (localStorage.getItem("isAuthenticated") === "true") {
     return children;
   } else {
     return <Navigate to="/" />;
@@ -21,26 +20,46 @@ function AuthenticatedRoute({ children }) {
 }
 
 export default function App() {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+
   return (
     <div className="FoodMining">
       <AuthProvider>
         <BrowserRouter>
-          <HeaderComponent />
+          <CustomNavbar />
           <Routes>
-            <Route path="/" element={<LoginPage />}></Route>
-            <Route path="/login" element={<LoginPage />}></Route>
-            <Route path="/register" element={<RegisterPage />}></Route>
-
             <Route
-              path="/home"
+              path="/"
               element={
-                <AuthenticatedRoute>
-                  <HomePage />
-                </AuthenticatedRoute>
+                isAuthenticated ? <Navigate to="/gallery" /> : <LoginPage />
+              }
+            ></Route>
+            <Route
+              path="/login"
+              element={
+                isAuthenticated ? <Navigate to="/gallery" /> : <LoginPage />
+              }
+            ></Route>
+            <Route
+              path="/register"
+              element={
+                isAuthenticated ? <Navigate to="/gallery" /> : <RegisterPage />
               }
             ></Route>
 
-            <Route path="/logout" element={<LogoutPage />}></Route>
+            <Route
+              path="/gallery"
+              element={
+                isAuthenticated ? (
+                  <AuthenticatedRoute>
+                    <GalleryPage />
+                  </AuthenticatedRoute>
+                ) : (
+                  <Navigate to="/" />
+                )
+              }
+            ></Route>
+
             <Route path="*" element={<ErrorPage />}></Route>
           </Routes>
         </BrowserRouter>

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { apiClient } from "./ApiClient";
 
 export function executeJwtAuthenticationService(email, password) {

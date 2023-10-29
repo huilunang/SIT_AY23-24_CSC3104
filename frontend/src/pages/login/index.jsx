@@ -25,7 +25,7 @@ const Login = () => {
       validationSchema: loginSchema,
       onSubmit: async (values, action) => {
         if (await authContext.login(values.email, values.password)) {
-          navigate("/home");
+          navigate("/gallery");
         } else {
           action.resetForm();
         }
