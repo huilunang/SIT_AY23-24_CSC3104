@@ -5,7 +5,7 @@ import { Link, Outlet } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import Badge from 'react-bootstrap/Badge';
 import Notification from "../../pages/notification";
-import { readAllNotifications } from "../../api/NotificationApiService";
+import { readAllNotifications } from "../../api/notification/NotificationApiService";
 
 export const NotificationComponent = () => {
     const [notificationCount, setNotificationCount] = useState(0); // Initialize the count to 0

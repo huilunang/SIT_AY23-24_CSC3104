@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import { getAllNotifications } from "../../api/NotificationApiService";
+import { getAllNotifications } from "../../api/notification/NotificationApiService";
 
 import Badge from 'react-bootstrap/Badge';
 import Offcanvas from 'react-bootstrap/Offcanvas';
