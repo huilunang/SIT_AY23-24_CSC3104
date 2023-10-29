@@ -26,7 +26,7 @@ export default function App() {
     <div className="FoodMining">
       <AuthProvider>
         <BrowserRouter>
-          <CustomNavbar />
+          {isAuthenticated && <CustomNavbar />}
           <Routes>
             <Route
               path="/"

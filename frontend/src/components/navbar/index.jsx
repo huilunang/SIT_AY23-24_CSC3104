@@ -44,7 +44,7 @@ export default function App() {
 
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
-              <MDBNavbarItem>
+              <MDBNavbarItem style={{ marginRight: "30px" }}>
                 <MDBNavbarLink href="#">
                   <MDBIcon far icon="images" /> Gallery
                 </MDBNavbarLink>
