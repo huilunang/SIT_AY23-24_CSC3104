@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../security/AuthContext";
-
+import { NotificationComponent } from "../notification";
 function HeaderComponent() {
   const authContext = useAuth();
   const isAuthenticated = authContext.isAuthenticated;
@@ -31,9 +31,10 @@ function HeaderComponent() {
                       Friends
                     </Link>
                   </li>
-                </ul>
+                                  </ul>
               </div>
               <ul className="navbar-nav">
+                { NotificationComponent() }
                 <li className="nav-item fs-5">
                   <Link className="nav-link" to="/login" onClick={logout}>
                     Logout
