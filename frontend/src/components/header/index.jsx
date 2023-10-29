@@ -4,7 +4,8 @@ import { useAuth } from "../../security/AuthContext";
 
 function HeaderComponent() {
   const authContext = useAuth();
-  const isAuthenticated = authContext.isAuthenticated;
+  // const isAuthenticated = authContext.isAuthenticated;
+  const isAuthenticated = true;
 
   function logout() {
     authContext.logout();
@@ -17,18 +18,18 @@ function HeaderComponent() {
           <div className="row">
             <nav className="navbar navbar-expand-lg">
               <a className="navbar-brand ms-2 fs-2 fw-bold text-black" href="#">
-                FoodMining
+                TravelExplorer
               </a>
               <div className="collapse navbar-collapse">
                 <ul className="navbar-nav">
                   <li className="nav-item fs-5">
-                    <Link className="nav-link" to="/welcome/in28minutes">
-                      Foods
+                    <Link className="nav-link" to="/gallery">
+                      Gallery
                     </Link>
                   </li>
                   <li className="nav-item fs-5">
                     <Link className="nav-link" to="/todos">
-                      Friends
+                      Events
                     </Link>
                   </li>
                 </ul>

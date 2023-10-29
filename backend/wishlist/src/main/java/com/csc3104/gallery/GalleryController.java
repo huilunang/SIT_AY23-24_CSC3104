@@ -31,8 +31,8 @@ public class GalleryController {
         return new ResponseEntity<Optional<Gallery>>(galleryService.oneGallery(id), HttpStatus.OK);
     }
 
-    @PostMapping("/insert")
-    public ResponseEntity<Gallery> createGallery(@RequestBody Map<String, String> payload) {
-        return new ResponseEntity<Gallery>(galleryService.createGallery(payload.get("title")), HttpStatus.CREATED);
+    @PostMapping("/create")
+    public ResponseEntity<Gallery> createGallery(@RequestBody Gallery gallery) {
+        return new ResponseEntity<Gallery>(galleryService.addGallery(gallery.getTitle(), gallery.getImage()), HttpStatus.CREATED);
     }
 }

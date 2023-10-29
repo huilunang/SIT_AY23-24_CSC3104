@@ -12,8 +12,10 @@ public class Gallery {
     @Id
     private ObjectId id;
     private String title;
+    private ObjectId imageId;
 
-    public Gallery(String title) {
+    public Gallery(String title, ObjectId imageId) {
         this.title = title;
+        this.image = imageId;
     }
 }

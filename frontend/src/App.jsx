@@ -3,10 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
 import LoginPage from "./pages/login";
-import HomePage from "./pages/home";
+// import HomePage from "./pages/home";
 import ErrorPage from "./pages/error";
 import LogoutPage from "./pages/logout";
 import RegisterPage from "./pages/register";
+import Gallery from "./pages/gallery";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
@@ -22,23 +23,24 @@ function AuthenticatedRoute({ children }) {
 
 export default function App() {
   return (
-    <div className="FoodMining">
+    <div className="TravelExp">
       <AuthProvider>
         <BrowserRouter>
           <HeaderComponent />
           <Routes>
+            <Route path="/gallery" element={<Gallery />}></Route>
             <Route path="/" element={<LoginPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/register" element={<RegisterPage />}></Route>
 
-            <Route
+            {/* <Route
               path="/home"
               element={
                 <AuthenticatedRoute>
                   <HomePage />
                 </AuthenticatedRoute>
               }
-            ></Route>
+            ></Route> */}
 
             <Route path="/logout" element={<LogoutPage />}></Route>
             <Route path="*" element={<ErrorPage />}></Route>
