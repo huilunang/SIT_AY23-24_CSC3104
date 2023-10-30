@@ -62,6 +62,7 @@ public class POIService {
     // Categories: Category of the shop (bar, cafe, etc.)
     // Location: Address of the shop
     // Image URL: Image of the shop
+    // Rating: Rating of the shop 
     public Object[] getDetails(String businessId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
@@ -78,6 +79,7 @@ public class POIService {
 
                 String name = jsonObject.getString("name");
                 String imageURL = jsonObject.getString("image_url");
+                String rating = jsonObject.getString("rating");
 
                 JSONObject location = jsonObject.getJSONObject("location");
                 String address = formatAddress(location);
@@ -93,11 +95,12 @@ public class POIService {
                     }
                 }
 
-                Object[] result = new Object[4];
+                Object[] result = new Object[5];
                 result[0] = name;
                 result[1] = imageURL;
                 result[2] = categoriesAll.toString();
                 result[3] = address;
+                result[4] = rating;
 
                 return result;
             } else {
@@ -164,11 +167,13 @@ public class POIService {
         String imageURL = (String) details[1];
         String categories = (String) details[2];
         String address = (String) details[3];
+        String rating = (String) details[4];
 
         poi.setName(name);
         poi.setImageUrl(imageURL);
         poi.setCategory(categories);
         poi.setAddress(address);
+        poi.setRating(rating);
         poi.setRemarks("");
 
         return poi;

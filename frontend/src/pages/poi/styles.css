@@ -1,0 +1,37 @@
+/* Container for the image and details */
+.details-container {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    background-color: #e6e6e6;
+  }
+  
+  /* Container for the image */
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65%;
+    padding: 50px;
+  }
+  
+  .image-container img {
+    width: 300px;
+    border-radius: 5px;
+    display: block;
+  }
+  
+  /* Container for the details */
+  .details-info {
+    width: 50%;
+    padding: 10px;
+  }
+  
+  .details-info h2 {
+    margin-top: 0;
+  }
+  
+  .details-info p {
+    margin-bottom: 10px;
+  }
+  

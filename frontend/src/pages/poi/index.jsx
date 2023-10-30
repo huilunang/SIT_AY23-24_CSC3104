@@ -1,52 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import './styles.css'; 
+import { getPOIDetails } from '../../api/wishlist/WishListApiService';
 
-const Index = () => {
-    const [location, setLocation] = useState('Singapore'); // Default location
-    const [userInput, setUserInput] = useState('');
-    const [suggestions, setSuggestions] = useState({});
+const Details = ({ businessId }) => {
+  const [details, setDetails] = useState({
+    name: '',
+    imageURL: '',
+    category: '',
+    address: '',
+    rating: ''
+  });
 
-    const handleInputChange = async (e) => {
-        const input = e.target.value;
-        setUserInput(input);
-
-        try {
-            const response = await fetch(`http://localhost:8080/api/v1/poi/suggestions?location=${location}&userInput=${input}`);
-            const data = await response.json();
-            setSuggestions(data);
-        } catch (error) {
-            console.error('Error fetching suggestions:', error);
-        }
+  useEffect(() => {
+    
+    const fetchData = async () => {
+      try {
+        const res = await getPOIDetails();
+        setDetails(res.data);
+      } catch (error) {
+        console.error('Error fetching details:', error);
+      }
     };
 
-    const handleSelect = (businessId) => {
-        console.log('Selected business ID:', businessId);
-        // Perform actions after selecting the business
-    };
+    fetchData();
+  }, [businessId]);
 
-    return (
-        <div>
-            <select onChange={(e) => setLocation(e.target.value)}>
-                <option value="Singapore">Singapore</option>
-                <option value="Johor Bahru">Johor Bahru</option>
-                {/* Add more location options */}
-            </select>
-
-            <input
-                type="text"
-                placeholder="Search for shops..."
-                value={userInput}
-                onChange={handleInputChange}
-            />
-
-            <ul>
-                {Object.entries(suggestions).map(([businessId, nameAndAddress]) => (
-                    <li key={businessId} onClick={() => handleSelect(businessId)}>
-                        {nameAndAddress}
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
+  return (
+    <div className="details-container">
+      <div className="image-container">
+        <img src={details.imageUrl} alt="Shop" />
+      </div>
+      <div className="details-info">
+        <h2>{details.name}</h2>
+        <p><strong>Category:</strong> {details.category}</p>
+        <p><strong>Address:</strong> {details.address}</p>
+        <p><strong>Rating:</strong> {details.rating}</p>
+        <p><strong>Remarks:</strong> {details.remarks}</p>
+      </div>
+    </div>
+  );
 };
 
-export default Index;
+export default Details;
