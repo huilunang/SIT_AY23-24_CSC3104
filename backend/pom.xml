@@ -12,9 +12,8 @@
 
   <modules>
     <module>account</module>
-    <module>travel-management</module>
     <module>notification</module>
-    <module>travelexp-client</module>
+    <module>wishlist</module>
   </modules>
 
   <properties>

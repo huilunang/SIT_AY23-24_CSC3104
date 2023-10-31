@@ -14,8 +14,7 @@ public class Gallery {
     private String title;
     private ObjectId imageId;
 
-    public Gallery(String title, ObjectId imageId) {
+    public Gallery(String title) {
         this.title = title;
-        this.image = imageId;
     }
 }
