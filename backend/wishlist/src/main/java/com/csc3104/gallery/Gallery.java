@@ -11,10 +11,12 @@ import lombok.Data;
 public class Gallery {
     @Id
     private ObjectId id;
+    // private String email;
     private String title;
-    private ObjectId imageId;
 
+    // public Gallery(String email, String title) {
     public Gallery(String title) {
+        // this.email = email;
         this.title = title;
     }
 }

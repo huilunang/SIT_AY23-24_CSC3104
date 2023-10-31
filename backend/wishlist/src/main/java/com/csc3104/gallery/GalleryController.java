@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/v1/gallery")
@@ -22,8 +23,8 @@ public class GalleryController {
     private GalleryService galleryService;
 
     @GetMapping
-    public ResponseEntity<List<Gallery>> getAllGallery() {
-        return new ResponseEntity<List<Gallery>>(galleryService.allGallery(), HttpStatus.OK);
+    public ResponseEntity<List<GalleryCreateImage>> getAllGallery() {
+        return new ResponseEntity<List<GalleryCreateImage>>(galleryService.allGallery(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -32,7 +33,8 @@ public class GalleryController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Gallery> createGallery(@RequestBody Gallery gallery) {
-        return new ResponseEntity<Gallery>(galleryService.addGallery(gallery.getTitle(), gallery.getImage()), HttpStatus.CREATED);
+    public ResponseEntity<GalleryCreateAlbum> createGallery(@RequestBody GalleryCreateImage gallery) {
+        MultipartFile mFIle = gallery.getImage();
+        return new ResponseEntity<GalleryCreateAlbum>(galleryService.addGallery(gallery.getTitle(), mFIle), HttpStatus.CREATED);
     }
 }
