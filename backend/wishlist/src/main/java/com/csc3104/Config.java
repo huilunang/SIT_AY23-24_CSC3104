@@ -1,4 +1,4 @@
-package com.csc3104.configuration;
+package com.csc3104;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
