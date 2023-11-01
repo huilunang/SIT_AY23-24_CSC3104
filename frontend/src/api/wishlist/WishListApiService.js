@@ -11,7 +11,7 @@ export function getAllGallery() {
 // testing based on specific business ID
 export function getPOIDetails() {
   try {
-    return apiClient.get("/api/v1/poi/EgAjAehlSbYDsBv6IJ4new");
+    return apiClient.get("/api/v1/poi/rSRC0t8hLeTQsOzmgQfUEA");
   } catch (error) {
     console.log(error);
   }
