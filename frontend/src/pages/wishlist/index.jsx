@@ -14,7 +14,7 @@ function WishList() {
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const [selectedBusinessId, setSelectedBusinessId] = useState('');
-    // const [selectedPOIName, setSelectedPoiName] = useState('');
+    const [selectedPOIName, setSelectedPOIName] = useState('');
     
     const [location, setLocation] = useState('Singapore'); // Default location
     const [userInput, setUserInput] = useState('');
@@ -57,7 +57,7 @@ function WishList() {
             const data = await response.json();
             setSuggestions(data);
             const keys = Object.keys(data);
-            console.log(data);
+            // const value = data[keys[0]][1];
             if (keys.length > 0) {
                 handleSelect(keys[0]);
             }
@@ -67,18 +67,22 @@ function WishList() {
     };
 
     const handleSelect = (businessId) => {
-        console.log('Selected business ID:', businessId);
         // Perform actions after selecting the business
         setSelectedBusinessId(businessId);
+        setSelectedPOIName(suggestions[businessId][1])
+        console.log('Selected business ID:', selectedBusinessId);
+        console.log('Selected POI Name:', selectedPOIName);
     };
 
 
     const handleModalClose = () => setShowModal(false);
 
     const handleAddNewPOI = async () => {
+        console.log("BUSINESS",selectedBusinessId);
+        console.log("POI",selectedPOIName);
         if (selectedBusinessId) {
             const payload = {
-                name: "",
+                name: selectedPOIName,
                 businessId: selectedBusinessId,
                 albumId: id,
                 remarks: "",
@@ -141,9 +145,9 @@ function WishList() {
                     />
                     <br/>
                     <Form.Select onChange={(e) => handleSelect(e.target.value)}>
-                    {Object.entries(suggestions).map(([businessId, nameAndAddress]) => (
+                    {Object.entries(suggestions).map(([businessId, details]) => (
                         <option key={businessId} value={businessId}>
-                        {nameAndAddress}
+                        {details[0]}
                         </option>
                     ))}
                     </Form.Select>
