@@ -19,7 +19,8 @@ public class BackendApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedMethods("*")
-						.allowedOrigins("http://localhost:5173");
+						.allowedOrigins("http://host.docker.internal:5173");
+
 			}
 		};
 	}
