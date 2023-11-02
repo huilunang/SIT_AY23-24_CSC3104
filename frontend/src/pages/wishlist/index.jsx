@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllWishListItemByAlbumId } from "../../api/wishlist/WishListApiService";
+import { getAllWishListItemByAlbumId, createWishListItem } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +13,9 @@ function WishList() {
     let { id } = useParams();
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
-
+    const [selectedBusinessId, setSelectedBusinessId] = useState('');
+    // const [selectedPOIName, setSelectedPoiName] = useState('');
+    
     const [location, setLocation] = useState('Singapore'); // Default location
     const [userInput, setUserInput] = useState('');
     const [suggestions, setSuggestions] = useState({});
@@ -30,40 +32,72 @@ function WishList() {
         }
     }
 
-    const handleItemClick = (objectId) => {
-        // console.log(id.toString());
-        if (objectId) {
-            const objectIdString = objectId.toString(); // Convert the ObjectId to a string
-            navigate(`/gallery/wishlist/1/${objectIdString}`);
+
+
+    const handleItemClick = (businessId) => {
+        if (businessId) {
+            // const objectIdString = businessId.toString(); // Convert the ObjectId to a string
+            navigate(`/POI/${businessId}`);
         }
       };
     
     useEffect(() => {
         getWishListByAlbumId(id.toString());
-    }, [id]); // Trigger the effect when the albumId changes
+    }, [id]);
 
     const handleModalShow = () => setShowModal(true);
 
     const handleInputChange = async (e) => {
         const input = e.target.value;
         setUserInput(input);
-
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/poi/suggestions?location=${location}&userInput=${input}`);
+            const response = await fetch(
+                `http://localhost:8080/api/v1/poi/suggestions?location=${location}&userInput=${input}`
+            );
             const data = await response.json();
             setSuggestions(data);
-        } catch (error) {
-            console.error('Error fetching suggestions:', error);
-        }
+            const keys = Object.keys(data);
+            console.log(data);
+            if (keys.length > 0) {
+                handleSelect(keys[0]);
+            }
+            } catch (error) {
+                console.error('Error fetching suggestions:', error);
+            }
     };
 
     const handleSelect = (businessId) => {
         console.log('Selected business ID:', businessId);
         // Perform actions after selecting the business
+        setSelectedBusinessId(businessId);
     };
 
 
     const handleModalClose = () => setShowModal(false);
+
+    const handleAddNewPOI = async () => {
+        if (selectedBusinessId) {
+            const payload = {
+                name: "",
+                businessId: selectedBusinessId,
+                albumId: id,
+                remarks: "",
+                visited: "false" // or "false" based on your requirement
+            };
+    
+            try {
+                const res = await createWishListItem(payload);
+                if (res.status === 201) {
+                    // Handle the success response
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        if (Object.keys(suggestions).length > 0) {
+            navigate(`/POI/${selectedBusinessId}`);
+        }
+    };
 
     return (
         <div className="container wishlist-container">
@@ -74,7 +108,7 @@ function WishList() {
                     <tr
                         key={index}
                         className={"table-light wishlist-item"}
-                        onClick={() => handleItemClick(wish._id)}
+                        onClick={() => handleItemClick(wish.businessId)}
                     >
                         <td>{wish.name}</td>
                     </tr>
@@ -92,27 +126,20 @@ function WishList() {
             <Form>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Label>POI Name</Form.Label>
-                    <Form.Select onChange={(e) => setLocation(e.target.value)}>
+                    <Form.Select onChange={(e) => {setLocation(e.target.value)}}>
                     <option value="Singapore">Singapore</option>
                     <option value="Johor Bahru">Johor Bahru</option>
+                    <option value="Sweden">Sweden</option>
                     {/* Add more location options */}
                     </Form.Select>
-
-                    <Autocomplete
-                    id="autocomplete"
+                    <br/>
+                    <Form.Control
+                    type="text"
+                    placeholder="Search for shops..."
                     value={userInput}
-                    onChange={(e) => handleInputChange(e.target.value)}
-                    options={Object.values(suggestions)}
-                    renderInput={(params) => (
-                        <TextField
-                        {...params}
-                        label="Search for shops..."
-                        variant="outlined"
-                        />
-                    )}
-                    renderOption={(option) => <p>{option}</p>}
+                    onChange={handleInputChange}
                     />
-
+                    <br/>
                     <Form.Select onChange={(e) => handleSelect(e.target.value)}>
                     {Object.entries(suggestions).map(([businessId, nameAndAddress]) => (
                         <option key={businessId} value={businessId}>
@@ -127,8 +154,8 @@ function WishList() {
                 <Button variant="secondary" onClick={handleModalClose}>
                 Close
                 </Button>
-                <Button variant="primary" onClick={handleModalClose}>
-                Save Changes
+                <Button variant="primary" onClick={handleAddNewPOI}>
+                Add New
                 </Button>
             </Modal.Footer>
             </Modal>

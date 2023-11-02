@@ -24,6 +24,13 @@ export function getAllWishListItemByAlbumId(albumId) {
   }
 }
 
+export function createWishListItem(payload) {
+  try {
+    return apiClient.post(`/api/v1/wishlist/insert`, payload);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 
 
