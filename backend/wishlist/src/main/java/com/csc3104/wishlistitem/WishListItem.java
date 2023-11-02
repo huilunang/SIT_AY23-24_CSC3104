@@ -1,5 +1,5 @@
-package main.java.com.csc3104.wishlistitem;
+// package main.java.com.csc3104.wishlistitem;
 
-public class WishListItem {
+// public class WishListItem {
     
-}
+// }
