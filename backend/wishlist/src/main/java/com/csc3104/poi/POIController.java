@@ -21,7 +21,7 @@ public class POIController {
     }
 
     @GetMapping("/suggestions")
-    public Map<String, String> getSuggestions(@RequestParam String location, @RequestParam String userInput) {
+    public Map<String, String[]> getSuggestions(@RequestParam String location, @RequestParam String userInput) {
         return poiService.getAutoCompleteSuggestion(location, userInput);
     }
 }   

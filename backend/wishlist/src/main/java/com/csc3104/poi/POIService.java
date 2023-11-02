@@ -1,7 +1,9 @@
 package com.csc3104.poi;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -107,7 +109,7 @@ public class POIService {
     }
 
     // Get Autocomplete suggestions 
-    public Map<String, String> getAutoCompleteSuggestion(String location, String userInput) {
+    public Map<String, String[]> getAutoCompleteSuggestion(String location, String userInput) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
 
@@ -123,7 +125,7 @@ public class POIService {
 
                 JSONArray suggestions = jsonResponse.getJSONArray("businesses");
                 
-                Map<String, String> suggestedShopInfo = new LinkedHashMap<>();
+                Map<String, String[]> suggestedShopInfo = new LinkedHashMap<>();
                 
                 int count = 0;
                 for (int i = 0; i < suggestions.length(); i++) {
@@ -137,9 +139,10 @@ public class POIService {
                     String address = locationInfo.getString("address1");
     
                     String nameAndAddress = name + " | " + address;
+                    String[] details = {nameAndAddress, name, address};
                     
                     if (name.toLowerCase().contains(userInput.toLowerCase())) {
-                        suggestedShopInfo.put(businessId, nameAndAddress);
+                        suggestedShopInfo.put(businessId, details);
                         count++;
                     }
                 }
