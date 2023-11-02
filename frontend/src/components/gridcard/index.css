@@ -23,3 +23,9 @@
     max-width: 300px;
     object-fit: cover;
 }
+
+.card-icon {
+    font-size: larger;
+    padding-right: 0.2rem;
+    color:#514e4e;
+}

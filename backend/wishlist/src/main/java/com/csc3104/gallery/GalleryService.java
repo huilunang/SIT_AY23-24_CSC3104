@@ -18,7 +18,6 @@ import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
 // business logic
 @Service
 public class GalleryService {
@@ -34,31 +33,50 @@ public class GalleryService {
         List<GalleryCreateImage> images = new ArrayList<>();
 
         for (GalleryCreateAlbum album : albums) {
-            ObjectId imageId = album.getImageId();
-            byte[] imageData = loadImageFromGridFS(imageId);
+            byte[] imageData = loadImageFromGridFS(album.getImageId());
 
             // Attach the image data to the album
-            GalleryCreateImage image = new GalleryCreateImage();
-            image.setTitle(album.getTitle());
-            image.setImage(imageData);
+            GalleryCreateImage image = new GalleryCreateImage(album.getId(), album.getTitle(), imageData);
             images.add(image);
         }
-        
+
         return images;
     }
 
-    public Optional<Gallery> oneGallery(ObjectId id) {
-        return galleryRepository.findById(id);
+    public GalleryCreateImage oneGallery(ObjectId id) {
+        Optional<GalleryCreateAlbum> albumOpt = galleryRepository.findById(id);
+
+        if (albumOpt.isPresent()) {
+            GalleryCreateAlbum album = albumOpt.get();
+            byte[] imageData = loadImageFromGridFS(album.getImageId());
+            GalleryCreateImage image = new GalleryCreateImage(album.getId(), album.getTitle(), imageData);
+
+            return image;
+        }
+
+        return null;
     }
 
-    public GalleryCreateAlbum addGallery(String title, MultipartFile image) {
+    public GalleryCreateAlbum addGallery(String title, MultipartFile image) throws IOException {
         DBObject metadata = new BasicDBObject();
         metadata.put("fileSize", image.getSize());
-        ObjectId imageId = gridFsTemplate.store(image.getInputStream(), image.getName(), image.getContentType(), metadata);
+        ObjectId imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(),
+                image.getContentType(),
+                metadata);
 
         GalleryCreateAlbum album = galleryRepository.insert(new GalleryCreateAlbum(title, imageId));
 
         return album;
+    }
+
+    public String deleteGallery(ObjectId id) {
+
+        if (galleryRepository.existsById(id)) {
+            galleryRepository.deleteById(id);
+            return "Successful deletion";
+        }
+
+        return "Unsuccessful deletion";
     }
 
     private byte[] loadImageFromGridFS(ObjectId imageId) {
@@ -66,24 +84,12 @@ public class GalleryService {
 
         if (imageFile != null) {
             try {
-                byte[] file = IOUtils.toByteArray(operations.getResource(imageFile).getInputStream());
-    
-                // Read the image data into a byte array
-                // ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                // int bytesRead;
-                // byte[] buffer = new byte[1024];
-                // while ((bytesRead = imageStream.read(buffer)) != -1) {
-                //     outputStream.write(buffer, 0, bytesRead);
-                // }
-    
-                // return outputStream.toByteArray();
-                return file;
+                return IOUtils.toByteArray(operations.getResource(imageFile).getInputStream());
             } catch (IOException e) {
-                // Handle the exception
                 return null;
             }
         }
-    
+
         return null;
     }
 }
