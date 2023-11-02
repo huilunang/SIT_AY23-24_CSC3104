@@ -1,18 +1,12 @@
 package com.csc3104.poi;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
-import org.springframework.context.annotation.Bean;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -47,9 +41,9 @@ public class POIService {
         String zipCode = location.getString("zip_code");
 
         StringBuilder formattedAddress = new StringBuilder(address1);
-        if (!address2.isEmpty()) {
+        if (!address2.equals("null") && !address2.equals("")) {
             formattedAddress.append(", ").append(address2);
-            if (!address3.isEmpty()) {
+            if (!address3.equals("null") && !address3.equals("")) {
                 formattedAddress.append(", ").append(address3);
             }
         }
@@ -62,6 +56,7 @@ public class POIService {
     // Categories: Category of the shop (bar, cafe, etc.)
     // Location: Address of the shop
     // Image URL: Image of the shop
+    // Rating: Rating of the shop 
     public Object[] getDetails(String businessId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
@@ -78,6 +73,7 @@ public class POIService {
 
                 String name = jsonObject.getString("name");
                 String imageURL = jsonObject.getString("image_url");
+                String rating = jsonObject.getString("rating");
 
                 JSONObject location = jsonObject.getJSONObject("location");
                 String address = formatAddress(location);
@@ -93,11 +89,12 @@ public class POIService {
                     }
                 }
 
-                Object[] result = new Object[4];
+                Object[] result = new Object[5];
                 result[0] = name;
                 result[1] = imageURL;
                 result[2] = categoriesAll.toString();
                 result[3] = address;
+                result[4] = rating;
 
                 return result;
             } else {
@@ -110,7 +107,7 @@ public class POIService {
     }
 
     // Get Autocomplete suggestions 
-    public Map<String, String> getAutoCompleteSuggestion(String location, String userInput) {
+    public Map<String, String[]> getAutoCompleteSuggestion(String location, String userInput) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
 
@@ -126,7 +123,7 @@ public class POIService {
 
                 JSONArray suggestions = jsonResponse.getJSONArray("businesses");
                 
-                Map<String, String> suggestedShopInfo = new LinkedHashMap<>();
+                Map<String, String[]> suggestedShopInfo = new LinkedHashMap<>();
                 
                 int count = 0;
                 for (int i = 0; i < suggestions.length(); i++) {
@@ -140,9 +137,10 @@ public class POIService {
                     String address = locationInfo.getString("address1");
     
                     String nameAndAddress = name + " | " + address;
+                    String[] details = {nameAndAddress, name, address};
                     
                     if (name.toLowerCase().contains(userInput.toLowerCase())) {
-                        suggestedShopInfo.put(businessId, nameAndAddress);
+                        suggestedShopInfo.put(businessId, details);
                         count++;
                     }
                 }
@@ -164,11 +162,13 @@ public class POIService {
         String imageURL = (String) details[1];
         String categories = (String) details[2];
         String address = (String) details[3];
+        String rating = (String) details[4];
 
         poi.setName(name);
         poi.setImageUrl(imageURL);
         poi.setCategory(categories);
         poi.setAddress(address);
+        poi.setRating(rating);
         poi.setRemarks("");
 
         return poi;

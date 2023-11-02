@@ -32,5 +32,13 @@ export function createWishListItem(payload) {
   }
 }
 
+// testing based on specific business ID
+export function getPOIDetails() {
+  try {
+    return apiClient.get("/api/v1/poi/rSRC0t8hLeTQsOzmgQfUEA");
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 
