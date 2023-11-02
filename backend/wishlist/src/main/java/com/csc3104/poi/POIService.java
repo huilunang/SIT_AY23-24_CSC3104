@@ -47,9 +47,9 @@ public class POIService {
         String zipCode = location.getString("zip_code");
 
         StringBuilder formattedAddress = new StringBuilder(address1);
-        if (!address2.equals("null")) {
+        if (!address2.equals("null") && !address2.equals("")) {
             formattedAddress.append(", ").append(address2);
-            if (!address3.equals("null")) {
+            if (!address3.equals("null") && !address3.equals("")) {
                 formattedAddress.append(", ").append(address3);
             }
         }
