@@ -6,10 +6,9 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 public interface NotificationRepository extends MongoRepository<Notification, String> {
-    Notification findByName(String name);
+    Notification findByOwner(String owner);
     
-    List<Notification> findBySender(String sender);
-    List<Notification> findByRecipient(String recipient);
+    List<Notification> findByMember(String member);
 
     List<Notification> findByTimestampBefore(LocalDateTime currentTime);
     List<Notification> findByTimestampAfter(LocalDateTime currentTime);
