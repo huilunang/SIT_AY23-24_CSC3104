@@ -3,7 +3,7 @@ import "./index.css";
 import { pushEvent } from "../../../api/notification/EventApiService";
 import { getAllNotifications } from "../../../api/notification/NotificationApiService";
 import { scheduleInviteNotification } from "../../../api/notification/NotificationApiService";
-import { actionInviteNotification } from "../../../api/notification/NotificationApiService";
+import { eventInviteNotification } from "../../../api/notification/NotificationApiService";
 import { friendRequest } from "../../../api/notification/NotificationApiService";
 
 import Badge from 'react-bootstrap/Badge';
@@ -83,7 +83,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         .catch((error) => errorResponse(error))
         .finally(() => console.log("cleanup"));
   
-      await actionInviteNotification(key, owner, member, title, date, time, description, invites, notify, type + '-' + 'accepted', status) // Pass the parameters to the API function
+      await eventInviteNotification(key, owner, member, title, date, time, description, invites, notify, type + '-' + 'accepted', status) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
         .finally(() => console.log("cleanup"));
@@ -98,7 +98,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   
   const rejectEventRequestApi = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {  
-      await actionInviteNotification(key, owner, member, title, date, time, description, invites, notify, type + '-' + 'rejected', status) // Pass the parameters to the API function
+      await eventInviteNotification(key, owner, member, title, date, time, description, invites, notify, type + '-' + 'rejected', status) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
         .finally(() => console.log("cleanup"));
@@ -111,9 +111,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     };
   }
   
-  const acceptFriendRequestApi  = async () => {
+  const acceptFriendRequestApi  = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {
-        await friendRequest("<ur friend>", "false", "friend-accepted", "accepted") // Pass the parameters to the API function
+        await friendRequest(owner, member, notify, type + '-' + 'accepted', status) // Pass the parameters to the API function
             .then((response) => successfulResponse(response))
             .catch((error) => errorResponse(error))
             .finally(() => console.log("cleanup"));
@@ -126,9 +126,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     }
   }  
 
-  const rejectFriendRequestApi  = async () => {
+  const rejectFriendRequestApi  = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
       try {
-          await friendRequest("<ur friend>", "false", "friend-rejected", "rejected") // Pass the parameters to the API function
+          await friendRequest(owner, member, notify, type + '-' + 'rejected', status) // Pass the parameters to the API function
               .then((response) => successfulResponse(response))
               .catch((error) => errorResponse(error))
               .finally(() => console.log("cleanup"));
@@ -163,12 +163,12 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                   </div>
                 </Col>   
                 <Col sm="2">
-                  <div onClick={() => rejectEventRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "event", "accepted")}>
+                  <div onClick={() => rejectEventRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "event", "rejected")}>
                     <IoCloseCircleOutline style={{ fontSize: '34px', color: "#e7202e" }}/>
                   </div>   
                 </Col>    
                 <Col sm="2" className="p-0">         
-                  <div onClick={() => acceptEventRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "event", "rejected")}>
+                  <div onClick={() => acceptEventRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "event", "accepted")}>
                     <IoCheckmarkCircleOutline style={{ fontSize: '34px', color: "#3db04a" }}/>
                   </div>
                 </Col> 
@@ -177,7 +177,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                 <>
                 <Col sm="8">
                   <div className="notification-text">
-                    <b>You've been accepted the invite by {notification.owner} to {notification.title}!</b>
+                    <b>You've accepted the invite by {notification.owner} to {notification.title}!</b>
                     <br/> 
                     Date: {notification.date}<br/> 
                     Time: {notification.time}<br/> 
@@ -189,7 +189,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                 <>
                 <Col sm="8">
                   <div className="notification-text">
-                    <b>You've been rejected the invite by {notification.owner} to {notification.title}!</b>
+                    <b>You've rejected the invite by {notification.owner} to {notification.title}!</b>
                     <br/> 
                     Date: {notification.date}<br/> 
                     Time: {notification.time}<br/> 
@@ -205,12 +205,12 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                   </div>
                 </Col>   
                 <Col sm="2">
-                  <div onClick={() => rejectFriendRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "event", notification.status)}>
+                  <div onClick={() => rejectFriendRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "friend", "rejected")}>
                     <IoCloseCircleOutline style={{ fontSize: '34px', color: "#e7202e" }}/>
                   </div>   
                 </Col>    
                 <Col sm="2" className="p-0">         
-                  <div onClick={() => acceptFriendRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "event", notification.status)}>
+                  <div onClick={() => acceptFriendRequestApi(notification.key, notification.owner, notification.member, notification.title, notification.date, notification.time, notification.description, notification.invites, notification.notify, "friend", "accepted")}>
                     <IoCheckmarkCircleOutline style={{ fontSize: '34px', color: "#3db04a" }}/>
                   </div>
                 </Col> 

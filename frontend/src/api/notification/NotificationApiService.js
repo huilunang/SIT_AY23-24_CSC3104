@@ -101,20 +101,32 @@ export function scheduleInviteNotification(key, owner, title, date, time, descri
   );
 }
 
-export function friendRequest(member, notify, type, status) {
+export function friendRequest(owner, member, notify, type, status) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
-
-  return notificationClient.post(
-    `/notification/friend-request`,
-    { owner:email, member:email, type:type, notify:notify, status:status}, // Pass the message in the request payload
-    {
-      headers: {
-        Authorization: jwtToken,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  if (type == "friend-request"){
+    return notificationClient.post(
+      `/notification/friend-request`,
+      { owner:email, member:member, type:type, notify:notify, status:status}, // Pass the message in the request payload
+      {
+        headers: {
+          Authorization: jwtToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );  
+  } else {
+    return notificationClient.post(
+      `/notification/friend-request`,
+      { owner:owner, member:member, type:type, notify:notify, status:status}, // Pass the message in the request payload
+      {
+        headers: {
+          Authorization: jwtToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );  
+  }
 }
 
 export function deleteInviteNotification(key, owner, title, date, time, description, invites, notify, type, status) {
@@ -145,7 +157,7 @@ export function deleteInviteNotification(key, owner, title, date, time, descript
   );
 }
 
-export function actionInviteNotification(key, owner, member, title, date, time, description, invites, notify, type, status) {
+export function eventInviteNotification(key, owner, member, title, date, time, description, invites, notify, type, status) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
