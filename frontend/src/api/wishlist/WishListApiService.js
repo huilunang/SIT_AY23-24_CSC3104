@@ -41,4 +41,10 @@ export function getPOIDetails() {
   }
 }
 
-
+export function deleteWishListItemByBusinessId(businessId) {
+  try {
+    return apiClient.delete(`/api/v1/wishlist/delete/${businessId}`);
+  } catch (error) {
+    console.error(error);
+  }
+}

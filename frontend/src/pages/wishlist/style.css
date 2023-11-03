@@ -12,6 +12,7 @@
 .table-light {
     background-color: #f8f9fa; /* light background color */
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2); /* Adding a drop shadow to the table */
+    font-size:20px;
 }
 
 .table-secondary {
@@ -24,7 +25,21 @@
     float: right;
 }
 
-.fa-trash {
-    color: red; /* or any color you desire */
-    font-size: 18px; /* or adjust the font size as needed */
+.trash-can-cell{
+    width:5%;
+}
+
+.trash-can-cell:hover {
+    background-color: rgb(255, 87, 87); /* Replace with the desired color */
+    color: #fff; /* Replace with the desired color */
+    cursor: pointer;
+}
+
+.wishlistitem-cell {
+    padding-left: 100px;
+}
+
+.wishlistitem-cell:hover {
+    background-color: #e6e6ec; /* Define your preferred hover background color */
+    cursor: pointer; /* Show pointer cursor on hover */
 }

@@ -1,6 +1,7 @@
 package com.csc3104.wishlistitem;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.bson.types.ObjectId;
@@ -32,23 +33,12 @@ public class WishListItemService {
         return wishlistitemRepository.findAllByAlbumId(albumId);
     }
     
-    
-
-    // public List<WishListItem> allWishListItemById(String albumId) {
-    //     // Assuming your repository is wishlistitemRepository
-    //     List<WishListItem> allItems = wishlistitemRepository.findAll();
-    //     List<WishListItem> filteredItems = new ArrayList<>();
-    //     for (WishListItem item : allItems) {
-    //         if (item.getAlbumId().equals(albumId)) {
-    //             filteredItems.add(item);
-    //         }
-    //     }
-    //     return filteredItems;
-    // }
-    
-    // public ResponseEntity<List<WishListItem>> getAllWishListItemById(String albumId) {
-    //     List<WishListItem> filteredList = wishListItemService.allWishListItemByAlbumId(albumId);
-    //     return new ResponseEntity<List<WishListItem>>(filteredList, HttpStatus.OK);
-    // }
-    
+    public void deleteWishListItemByBusinessId(String businessId) {
+        WishListItem wishlistItem = wishlistitemRepository.findByBusinessId(businessId);
+        if (wishlistItem != null) {
+            wishlistitemRepository.delete(wishlistItem);
+        } else {
+            throw new NoSuchElementException("Wish list item not found for the given businessId");
+        }
+    }
 }

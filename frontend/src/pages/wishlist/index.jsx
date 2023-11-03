@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllWishListItemByAlbumId, createWishListItem } from "../../api/wishlist/WishListApiService";
+import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByBusinessId } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,11 +7,21 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
+import { FaTrash } from 'react-icons/fa';
 
 function WishList() {
     const [wishlistitemById, setWishlistitemById] = useState([]);
     let { id } = useParams();
+
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [businessIdToDelete, setBusinessIdToDelete] = useState(null);
+    const openDeleteModal = (businessId) => {
+        setBusinessIdToDelete(businessId);
+        setShowDeleteModal(true);
+    };
+    const handleCloseDeleteModal = () => setShowDeleteModal(false);
+
     const navigate = useNavigate();
     const [selectedBusinessId, setSelectedBusinessId] = useState('');
     const [selectedPOIName, setSelectedPOIName] = useState('');
@@ -31,8 +41,6 @@ function WishList() {
             console.error(error);
         }
     }
-
-
 
     const handleItemClick = (businessId) => {
         if (businessId) {
@@ -56,9 +64,10 @@ function WishList() {
             );
             const data = await response.json();
             setSuggestions(data);
+            
             const keys = Object.keys(data);
-            // const value = data[keys[0]][1];
             if (keys.length > 0) {
+                setSelectedPOIName(data[keys[0]][1]);
                 handleSelect(keys[0]);
             }
             } catch (error) {
@@ -103,25 +112,40 @@ function WishList() {
         }
     };
 
+    const handleDelete = async (businessId) => {
+        console.log("Delete attempted, Business ID is:", businessId);
+        try {
+            await deleteWishListItemByBusinessId(businessId); 
+            window.location.reload()
+        } catch (error) {
+            console.error('Error deleting wish list item:', error);
+        }
+        setShowDeleteModal(false);
+    };
+
     return (
         <div className="container wishlist-container">
             <h1>WishList</h1>
-            <table className="table table-bordered table-hover">
-                <tbody>
+            <table className="table table-bordered">
+            <tbody>
                 {wishlistitemById.map((wish, index) => (
                     <tr
                         key={index}
-                        className={"table-light wishlist-item"}
-                        onClick={() => handleItemClick(wish.businessId)}
+                        className={"table-light"}
                     >
-                        <td>{wish.name}</td>
+                        <td className="table-hover wishlistitem-cell"
+                        onClick={() => handleItemClick(wish.businessId)}>{wish.name}</td>
+                        <td className="trash-can-cell" onClick={() => openDeleteModal(wish.businessId)} >
+                            <FaTrash/>
+                        </td>
                     </tr>
-                    ))}
-                </tbody>
-            </table>
+                ))}
+            </tbody>
+        </table>
             <Button variant="primary" onClick={handleModalShow}>
             Add New
             </Button>
+            {/* Modal for adding new POI */}
             <Modal show={showModal} onHide={handleModalClose}>
             <Modal.Header closeButton>
                 <Modal.Title>New Place of Interest</Modal.Title>
@@ -162,6 +186,21 @@ function WishList() {
                 Add New
                 </Button>
             </Modal.Footer>
+            </Modal>
+            {/* Modal for confirm deletion */}
+            <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete this POI?</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleCloseDeleteModal}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={() => handleDelete(businessIdToDelete)}>
+                        Confirm Delete
+                    </Button>
+                </Modal.Footer>
             </Modal>
         </div>
     );
