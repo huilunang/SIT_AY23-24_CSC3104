@@ -7,6 +7,9 @@ import ErrorPage from "./pages/error";
 import LogoutPage from "./pages/logout";
 import RegisterPage from "./pages/register";
 import Gallery from "./pages/gallery";
+import WishListPage from "./pages/wishlist";
+import POIPage from "./pages/poi";
+import RandomizerPage from "./pages/randomizer";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
@@ -27,6 +30,11 @@ export default function App() {
         <BrowserRouter>
           <HeaderComponent />
           <Routes>
+            {/* Routes to bypass authentication here */}
+            <Route path="wishlist/:id" element={<WishListPage />}></Route>
+            <Route path="poi/:id" element={<POIPage />}></Route>
+            <Route path="randomizer" element={<RandomizerPage />}></Route>
+            {/* Until here */}
             <Route path="/" element={<LoginPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/register" element={<RegisterPage />}></Route>
