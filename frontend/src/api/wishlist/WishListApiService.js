@@ -33,6 +33,23 @@ export function createGallery(title, imageFile) {
   }
 }
 
+export function updateGallery(id, title, imageFile) {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("imageFile", imageFile);
+
+    return apiClient.put(`/api/v1/gallery/${id}`, formData, config);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export function deleteGallery(id) {
   try {
     return apiClient.delete(`/api/v1/gallery/${id}`);

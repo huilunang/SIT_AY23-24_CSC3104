@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { getAllGallery } from "../../api/wishlist/WishListApiService";
 
 import GridCardComponent from "../../components/gridcard";
-import ModalComponent from "../../components/modal";
 
 import "./index.css";
 
@@ -22,6 +21,7 @@ function Gallery() {
       set: setGallery,
     },
     modalshow: {
+      get: modalShow,
       set: setModalShow,
     },
     formdata: {
@@ -69,23 +69,15 @@ function Gallery() {
           </Button>
         </div>
         <div>
-          <GridCardComponent data={gallery} modalcontent={modalcontent} handler={handler} />
+          <GridCardComponent
+            data={gallery}
+            modalcontent={modalcontent}
+            handler={handler}
+            state={stateAccessor}
+          />
         </div>
       </div>
-      <div>
-        <ModalComponent
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          title="Create Album"
-          body={modalcontent.create}
-          submit={handler.createsubmit}
-          button={{
-            color: "primary",
-            text: "Submit",
-          }}
-        />
-      </div>
-      <div></div>
+      <div>{modalcontent.create}</div>
     </>
   );
 }

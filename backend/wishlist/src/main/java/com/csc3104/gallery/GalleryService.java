@@ -43,7 +43,7 @@ public class GalleryService {
         return images;
     }
 
-    public GalleryCreateImage oneGallery(ObjectId id) {
+    public GalleryCreateImage oneGallery(String id) {
         Optional<GalleryCreateAlbum> albumOpt = galleryRepository.findById(id);
 
         if (albumOpt.isPresent()) {
@@ -69,14 +69,52 @@ public class GalleryService {
         return album;
     }
 
-    public String deleteGallery(ObjectId id) {
-
+    public String updateGallery(String id, String title, MultipartFile image) throws IOException {
         if (galleryRepository.existsById(id)) {
-            galleryRepository.deleteById(id);
-            return "Successful deletion";
-        }
+            Optional<GalleryCreateAlbum> albumOpt = galleryRepository.findById(id);
 
-        return "Unsuccessful deletion";
+            if (albumOpt.isPresent()) {
+                GalleryCreateAlbum album = albumOpt.get();
+
+                if (title != null || image != null) {
+                    if (title != null) {
+                        album.setTitle(title);
+                    }
+
+                    if (image != null) {
+                        gridFsTemplate.delete(new Query(Criteria.where("_id").is(album.getImageId())));
+
+                        DBObject metadata = new BasicDBObject();
+                        metadata.put("fileSize", image.getSize());
+                        ObjectId imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(),
+                                image.getContentType(),
+                                metadata);
+
+                        album.setImageId(imageId);
+                    }
+
+                    galleryRepository.save(album);
+                }
+            }
+            return "Successful";
+        } else {
+            return "Unsuccessful: Id `" + id + "` is not found";
+        }
+    }
+
+    public String deleteGallery(String id) {
+        if (galleryRepository.existsById(id)) {
+            Optional<GalleryCreateAlbum> albumOpt = galleryRepository.findById(id);
+
+            if (albumOpt.isPresent()) {
+                GalleryCreateAlbum album = albumOpt.get();
+                gridFsTemplate.delete(new Query(Criteria.where("_id").is(album.getImageId())));
+                galleryRepository.deleteById(id);
+            }
+            return "Successful";
+        } else {
+            return "Unsuccessful: Id `" + id + "` is not found";
+        }
     }
 
     private byte[] loadImageFromGridFS(ObjectId imageId) {
