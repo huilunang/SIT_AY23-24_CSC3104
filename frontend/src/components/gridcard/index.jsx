@@ -44,7 +44,7 @@ function GridCardComponent(props) {
 
                 <Card.Footer className="text-muted">
                   <Card.Link
-                    href="https://stackoverflow.com/questions/18913559/reactjs-anchor-tag-link"
+                    href={`/wishlist/${gal.id}`}
                     className="card-icon"
                   >
                     <FaEye />
