@@ -1,0 +1,31 @@
+.grid-card-row {
+    margin-top: 1.2rem;
+}
+
+.btn-row {
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card-col {
+    display: flex;
+    justify-content: center;
+}
+
+.card-parent {
+    width: 18rem;
+    height: 10rem;
+    text-decoration: none;
+}
+
+.card-img {
+    max-height: 220px;
+    max-width: 300px;
+    object-fit: cover;
+}
+
+.card-icon {
+    font-size: larger;
+    padding-right: 0.2rem;
+    color:#514e4e;
+}
