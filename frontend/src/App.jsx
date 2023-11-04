@@ -31,6 +31,7 @@ export default function App() {
           <HeaderComponent />
           <Routes>
             {/* Routes to bypass authentication here */}
+            <Route path="/gallery" element={<Gallery />}></Route>
             <Route path="wishlist/:id" element={<WishListPage />}></Route>
             <Route path="poi/:id" element={<POIPage />}></Route>
             <Route path="randomizer" element={<RandomizerPage />}></Route>
@@ -38,7 +39,6 @@ export default function App() {
             <Route path="/" element={<LoginPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/register" element={<RegisterPage />}></Route>
-            <Route path="/gallery" element={<Gallery />}></Route>
 
             <Route
               path="/home"
