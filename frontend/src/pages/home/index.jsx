@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./index.css"; // Import your CSS file
-import { getAllRestaurantsByEmail } from "../../api/RestaurantApiService";
+// import { getAllRestaurantsByEmail } from "../../api/RestaurantApiService";
 
 function HomePage() {
   const [restaurants, setRestaurants] = useState([]);
