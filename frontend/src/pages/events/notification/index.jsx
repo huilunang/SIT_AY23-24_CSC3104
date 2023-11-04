@@ -70,6 +70,21 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     console.log(error);
   }
   
+  const refreshNotification = async () => {
+    getAllNotifications()
+    .then((response) => successfulResponse(response.data))
+    .catch((error) => errorResponse(error))
+    .finally(() => console.log("Notifications Loaded"));
+
+    function successfulResponse(content) { 
+      setNotifications(content);
+    }
+
+    function errorResponse(error) {
+      console.log(error);
+    }
+  }
+
   const acceptEventRequestApi = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {
       // Wait for the pushEvent and scheduleInviteNotification to complete
@@ -87,13 +102,12 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
         .finally(() => console.log("cleanup"));
-    
-      // After both operations have completed, reload the page
-      window.location.reload();
     } catch (error) {
       console.error("An error occurred:", error);
       // Handle errors as needed
-    };
+    } finally {
+      refreshNotification ();
+    }
   }
   
   const rejectEventRequestApi = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
@@ -102,43 +116,40 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
         .finally(() => console.log("cleanup"));
-    
-      // After both operations have completed, reload the page
-      window.location.reload();
     } catch (error) {
-      console.error("An error occurred:", error);
-      // Handle errors as needed
-    };
+        console.error("An error occurred:", error);
+        // Handle errors as needed
+    }finally {
+      refreshNotification ();
+    }
   }
   
   const acceptFriendRequestApi  = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {
-        await friendRequest(owner, member, notify, type + '-' + 'accepted', status) // Pass the parameters to the API function
-            .then((response) => successfulResponse(response))
-            .catch((error) => errorResponse(error))
-            .finally(() => console.log("cleanup"));
-
-          // After both operations have completed, reload the page
-          window.location.reload();
-        } catch (error) {
-        console.error("An error occurred:", error);
-        // Handle errors as needed
+      await friendRequest(owner, member, notify, type + '-' + 'accepted', status) // Pass the parameters to the API function
+          .then((response) => successfulResponse(response))
+          .catch((error) => errorResponse(error))
+          .finally(() => console.log("cleanup"));
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle errors as needed
+    } finally {
+      refreshNotification ();
     }
   }  
 
   const rejectFriendRequestApi  = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
-      try {
-          await friendRequest(owner, member, notify, type + '-' + 'rejected', status) // Pass the parameters to the API function
-              .then((response) => successfulResponse(response))
-              .catch((error) => errorResponse(error))
-              .finally(() => console.log("cleanup"));
-
-            // After both operations have completed, reload the page
-            window.location.reload();
-          } catch (error) {
-          console.error("An error occurred:", error);
-          // Handle errors as needed
-      }
+    try {
+      await friendRequest(owner, member, notify, type + '-' + 'rejected', status) // Pass the parameters to the API function
+          .then((response) => successfulResponse(response))
+          .catch((error) => errorResponse(error))
+          .finally(() => console.log("cleanup"));
+    } catch (error) {
+      console.error("An error occurred:", error);
+    // Handle errors as needed
+    } finally {
+      refreshNotification ();
+    }
   }  
 
   return (

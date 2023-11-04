@@ -22,7 +22,7 @@ export function getAllParty(key) {
 
   return eventClient.post(
     "/events/party",
-    { key},
+    { key },
     {
       headers: {
         Authorization: jwtToken,

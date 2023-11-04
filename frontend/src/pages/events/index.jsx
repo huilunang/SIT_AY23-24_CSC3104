@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { EventComponent } from "./event-tab";
 
-import { getAllEvents } from "../../api/notification/EventApiService";
-import { getAllParty } from "../../api/notification/EventApiService";
+import EventComponent from "./event-tab";
 
 import Card from 'react-bootstrap/Card';
 import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
+
+import { friendRequest } from "../../api/notification/NotificationApiService";
 
 const EventPage = () => {
   const [events, setEvents] = useState([]);
@@ -27,52 +27,26 @@ const EventPage = () => {
   //   }
   // }, []);
 
-  // import { friendRequest } from "../../../api/notification/NotificationApiService";
-  // async function friendRequestApi() {
-  //     try {
-  //         await friendRequest("<receipent>", "false", "friend-request", "requested")
-  //             .then((response) => successfulResponse(response))
-  //             .catch((error) => errorResponse(error))
-  //             .finally(() => console.log("cleanup"));
-  //         } catch (error) {
-  //         console.error("An error occurred:", error);
-  //     }
-  // }  
+  async function friendRequestApi() {
+    try {
+        await friendRequest("", "osy4uu@gmail.com", "false", "friend-request", "requested")
+            .then((response) => successfulResponse(response))
+            .catch((error) => errorResponse(error))
+            .finally(() => console.log("cleanup"));
+        } catch (error) {
+          console.error("An error occurred:", error);
+      }
+  }  
 
   useEffect(() =>{
-    getAllEvents()
-      .then((response) => successfulResponse(response.data))
-      .catch((error) => errorResponse(error))
-      .finally(() => console.log("Current Event Loaded"));
-
-    async function successfulResponse(content) { 
-      await setEvents(content);
-  
-      const partyPromises = content.map((event) => getParty(event.key));
-
-      await Promise.all(partyPromises); // Wait for all getParty calls to complete
-    }
-
-    function errorResponse(error) {
-      console.log(error);
-    }
   }, []);
-
-  const getParty = async (key) => {
-    try {  
-      const response = await getAllParty(key);
-      const content = response.data;
-      setParties((prevParties) => [...prevParties, ...content]);
-      console.log(content)
-    } catch (error) {
-      console.error("An error occurred:", error);
-      // Handle errors as needed
-    }
-  };
 
   return (
     <>
-    { EventComponent() }
+    <EventComponent updateEvent={(event) => setEvents(event)} updateParty={(party) => setParties(party)}/>
+    <div className="nav-link me-4" onClick={friendRequestApi}>
+      click me
+    </div>
     {[...events].reverse().map((event, index) => (
       <Card as={Row} key={index} style={{width: '100%'}}>
         <Card.Body className="ps-5 pe-5">
@@ -82,14 +56,14 @@ const EventPage = () => {
               <Card.Text>
             <>
               Creator: {event.owner}<br />
-              Date: {event.date}<br />
+              Date: {event.description}<br />
               Time: {event.time}<br />
               Description: {event.description}<br />
               Party: {event.invites}
               <br />
               Accepted:&nbsp;
               {parties
-                .filter((party) => event.key === party.key)
+                .filter((party) => event.key === party.key && event.member == party.member)
                 .map((party) => (
                   <span key={party.key}>
                     {party.member}&nbsp;

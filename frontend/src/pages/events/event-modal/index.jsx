@@ -59,8 +59,8 @@ export const EventModal = ({ isOpen, onClose }) => {
                 .catch((error) => errorResponse(error))
                 .finally(() => console.log("cleanup"));
                 
-            // After both operations have completed, reload the page
-            window.location.reload();
+            // After both operations have completed, close the modal
+            onClose();
             } catch (error) {
             console.error("An error occurred:", error);
             // Handle errors as needed
@@ -68,7 +68,6 @@ export const EventModal = ({ isOpen, onClose }) => {
     }  
 
     function successfulResponse(response) {
-    //   setDescription(''); // Clear the description after a successful send
       console.log("successful. here's data " + response.data);
     }
   
