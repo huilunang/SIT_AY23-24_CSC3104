@@ -102,13 +102,11 @@ function WishList() {
                 const res = await createWishListItem(payload);
                 if (res.status === 201) {
                     // Handle the success response
+                    window.location.reload();
                 }
             } catch (error) {
                 console.error(error);
             }
-        }
-        if (Object.keys(suggestions).length > 0) {
-            navigate(`/POI/${selectedBusinessId}`);
         }
     };
 
