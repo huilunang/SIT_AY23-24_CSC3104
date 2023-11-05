@@ -163,6 +163,7 @@ function WishList() {
                     placeholder="Search for shops..."
                     value={userInput}
                     onChange={handleInputChange}
+                    autoComplete="off"
                     />
                     <br/>
                     <Form.Select onChange={(e) => handleSelect(e.target.value)}>
