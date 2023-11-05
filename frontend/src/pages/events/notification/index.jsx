@@ -85,6 +85,32 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     }
   }
 
+  // Update friend details after successfully adding a friend    await callGetAllFriendsByIdApi(); 
+  // This will update both friends and friend details
+  async function handleAcceptFriendRequest(senderEmail) {  
+    try {
+      const response = await addFriend(senderEmail);    
+      successfulFriendRequestResponse(response);
+      setFriends((prevFriends) => [...prevFriends, senderEmail]);
+    } catch (error) {    
+      errorResponse(error);
+    } finally {    
+      console.log("Map API cleanup");
+    }
+  }
+
+  // // Reject the friend request (With the sender's email)
+  async function handleRejectFriendRequest(senderEmail) {  
+    try {
+      const response = await removeFriendRequest(senderEmail);    
+      successfulRejectFriendRequestResponse(response);
+    } catch (error) {   
+      errorResponse(error);
+    } finally {    
+      console.log("Map API cleanup");
+    }
+  }
+
   const acceptEventRequestApi = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {
       // Wait for the pushEvent and scheduleInviteNotification to complete
@@ -125,11 +151,14 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   }
   
   const acceptFriendRequestApi  = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
-    try {
+    try {      
+      await handleAcceptFriendRequest(member);
+
       await friendRequest(owner, member, notify, type + '-' + 'accepted', status) // Pass the parameters to the API function
           .then((response) => successfulResponse(response))
           .catch((error) => errorResponse(error))
           .finally(() => console.log("cleanup"));
+
     } catch (error) {
       console.error("An error occurred:", error);
       // Handle errors as needed
@@ -140,6 +169,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
 
   const rejectFriendRequestApi  = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {
+      await handleRejectFriendRequest(member);
+
       await friendRequest(owner, member, notify, type + '-' + 'rejected', status) // Pass the parameters to the API function
           .then((response) => successfulResponse(response))
           .catch((error) => errorResponse(error))

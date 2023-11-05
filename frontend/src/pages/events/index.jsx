@@ -27,9 +27,10 @@ const EventPage = () => {
   //   }
   // }, []);
 
+  // This is a test to send friend requests. (To remove)
   async function friendRequestApi() {
     try {
-        await friendRequest("", "osy4uu@gmail.com", "false", "friend-request", "requested")
+        await friendRequest("", "w08277427@gmail.com", "false", "friend-request", "requested")
             .then((response) => successfulResponse(response))
             .catch((error) => errorResponse(error))
             .finally(() => console.log("cleanup"));
@@ -44,9 +45,9 @@ const EventPage = () => {
   return (
     <>
     <EventComponent updateEvent={(event) => setEvents(event)} updateParty={(party) => setParties(party)}/>
-    <div className="nav-link me-4" onClick={friendRequestApi}>
+    {/* <div className="nav-link me-4" onClick={friendRequestApi}>
       click me
-    </div>
+    </div> */}
     {[...events].reverse().map((event, index) => (
       <Card as={Row} key={index} style={{width: '100%'}}>
         <Card.Body className="ps-5 pe-5">
