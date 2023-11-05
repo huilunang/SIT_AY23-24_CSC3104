@@ -3,8 +3,8 @@ services:
   mongodb:
     image: "mongo"
     restart: always
-    volumes:
-      - mongodb_data:/data/db
+    # volumes:
+    #   - mongodb_data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: sa
       MONGO_INITDB_ROOT_PASSWORD: password
@@ -15,13 +15,14 @@ services:
       - "9191:9191"
     depends_on:
       - mysqldb
-    volumes:
-      - ./backend/account:/app
+    # volumes:
+    #   - ./backend/account:/app
   mysqldb:
+    # platform: linux/x86_64
     image: "mysql"
     restart: always
-    volumes:
-      - mysqldb_data:/var/lib/mysql
+    # volumes:
+    #   - mysqldb_data:/var/lib/mysql
     ports:
       - "3307:3306"
     environment:
@@ -37,6 +38,8 @@ services:
       - ./frontend/src:/app/src
     depends_on:
       - account
-volumes:
-  mongodb_data:
-  mysqldb_data:
+    stdin_open: true
+    tty: true
+# volumes:
+#   mongodb_data:
+#   mysqldb_data:
