@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
 
@@ -7,6 +6,7 @@ import HomePage from "./pages/home";
 import ErrorPage from "./pages/error";
 import LogoutPage from "./pages/logout";
 import RegisterPage from "./pages/register";
+import Gallery from "./pages/gallery";
 import WishListPage from "./pages/wishlist";
 import POIPage from "./pages/poi";
 import RandomizerPage from "./pages/randomizer";
@@ -26,12 +26,13 @@ function AuthenticatedRoute({ children }) {
 
 export default function App() {
   return (
-    <div className="FoodMining">
+    <div className="TravelExp">
       <AuthProvider>
         <BrowserRouter>
           <HeaderComponent />
           <Routes>
             {/* Routes to bypass authentication here */}
+            <Route path="/gallery" element={<Gallery />}></Route>
             <Route path="wishlist/:id" element={<WishListPage />}></Route>
             <Route path="poi/:id" element={<POIPage />}></Route>
             <Route path="randomizer" element={<RandomizerPage />}></Route>
