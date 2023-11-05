@@ -111,8 +111,10 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       successfulRejectFriendRequestResponse(response);
     } catch (error) {   
       errorResponse(error);
-    } finally {    console.log("Map API cleanup");
-    }}
+    } finally {    
+      console.log("Map API cleanup");
+    }
+  }
 
   const acceptEventRequestApi = async (key, owner, member, title, date, time, description, invites, notify, type, status) => {
     try {
@@ -135,7 +137,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       console.error("An error occurred:", error);
       // Handle errors as needed
     } finally {
-      refreshNotification ();
+      await refreshNotification ();
     }
   }
   
@@ -149,7 +151,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         console.error("An error occurred:", error);
         // Handle errors as needed
     }finally {
-      refreshNotification ();
+      await refreshNotification ();
     }
   }
   
@@ -163,7 +165,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       console.error("An error occurred:", error);
       // Handle errors as needed
     } finally {
-      refreshNotification ();
+      await refreshNotification ();
     }
   }  
 
@@ -177,7 +179,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       console.error("An error occurred:", error);
     // Handle errors as needed
     } finally {
-      refreshNotification ();
+      await refreshNotification ();
     }
   }  
 
