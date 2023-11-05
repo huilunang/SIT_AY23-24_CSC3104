@@ -1,0 +1,36 @@
+.header {
+    text-align: center;
+}
+
+.grid-container {
+    margin: 1rem 5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-add {
+    width: 8%;
+    margin: 1rem 1rem;
+}
+
+.img-preview {
+    height: 25%;
+    width: 25%;
+}
+
+@media (max-width: 480px) {
+    .grid-container {
+        align-items: center;
+    }
+
+    .btn-add {
+        width: 100%;
+        margin: 1rem 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .btn-add {
+        margin: 1rem 0;
+    }
+}
