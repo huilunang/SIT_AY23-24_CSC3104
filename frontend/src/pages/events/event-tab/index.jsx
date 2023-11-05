@@ -60,6 +60,7 @@ const EventComponent = ({ updateEvent, updateParty }) => {
     
     const openNotification = () => {
         setNotificationOpen(true);
+        getEvent();
     };
     
     const closeNotification = () => {
