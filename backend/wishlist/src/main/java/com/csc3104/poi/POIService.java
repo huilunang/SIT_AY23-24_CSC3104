@@ -27,8 +27,8 @@ public class POIService {
     private String yelpBaseUrl = "https://api.yelp.com/v3";
 
     // @Value("${api.key}")
-    private String apiKey = "T-x0gy1cReiguaj6wrR7t3Bbh1VLvXOdQtqWD5S_utPY-MSF55xx5HSe916Ffh3l3HufmaMviu-ty2XUKTLeyta6v2MkWOX0I3H7sOWUOOWQM_OVdCrPMIGS3SI6ZXYx";
-
+    // private String apiKey = "T-x0gy1cReiguaj6wrR7t3Bbh1VLvXOdQtqWD5S_utPY-MSF55xx5HSe916Ffh3l3HufmaMviu-ty2XUKTLeyta6v2MkWOX0I3H7sOWUOOWQM_OVdCrPMIGS3SI6ZXYx";
+    private String apiKey = "lFi7n2tg44VwsQ7e4BPhXBWHBzLQOR416CZKIRRbBJogKhgbyxdp4FA9Tpu-ujdPVwwESp_iDZ8ZvUaT-MVRuQF3p6c7k1B6N-gcyoeHqZIHjEkFkVxCvbov_mZHZXYx";
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -201,7 +201,7 @@ public class POIService {
         //     e.printStackTrace();
         // }
         String locQuery = "&location=" + location;
-        String url = yelpBaseUrl + "/businesses/search?radius=3000&limit=40&category=food" + locQuery;
+        String url = yelpBaseUrl + "/businesses/search?radius=3000&limit=40&term=food" + locQuery;
         
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
 

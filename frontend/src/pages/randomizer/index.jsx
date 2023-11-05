@@ -33,17 +33,16 @@ function WishList() {
 
 
     return (
-        <div className="container">
-            {data.map((poi) => (
-                <div key={poi.name}>
-                <p>Name: {poi.name}</p>
-                <p>Category: {poi.category}</p>
-                <p>Address: {poi.address}</p>
-                <p>Image URL: {poi.imageUrl}</p>
-                <p>Rating: {poi.rating}</p>
-                <hr />
-                </div>
-            ))}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {data.map((poi) => (
+            <div key={poi.name} style={{ margin: '10px', padding: '10px', border: '1px solid #ddd' }}>
+            <img src={poi.imageUrl} alt="POI Image" style={{ width: '100px', height: '100px' }} />
+            <p>Name: {poi.name}</p>
+            <p>Category: {poi.category}</p>
+            <p>Address: {poi.address}</p>
+            <p>Rating: {poi.rating}</p>
+            </div>
+        ))}
         </div>
     );
 }

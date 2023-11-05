@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByBusinessId } from "../../api/wishlist/WishListApiService";
+import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByObjectId } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,9 +15,16 @@ function WishList() {
 
     const [showModal, setShowModal] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [businessIdToDelete, setBusinessIdToDelete] = useState(null);
-    const openDeleteModal = (businessId) => {
-        setBusinessIdToDelete(businessId);
+    // const [businessIdToDelete, setBusinessIdToDelete] = useState(null);
+    // const openDeleteModal = (businessId) => {
+    //     setBusinessIdToDelete(businessId);
+    //     setShowDeleteModal(true);
+    // };
+
+    const [objectIdToDelete, setObjectIdToDelete] = useState(null);
+    const openDeleteModal = (objectId) => {
+        console.log("Object Id",objectId)
+        setObjectIdToDelete(objectId);
         setShowDeleteModal(true);
     };
     const handleCloseDeleteModal = () => setShowDeleteModal(false);
@@ -110,10 +117,10 @@ function WishList() {
         }
     };
 
-    const handleDelete = async (businessId) => {
-        console.log("Delete attempted, Business ID is:", businessId);
+    const handleDelete = async (objectId) => {
+        console.log("Delete attempted, Object ID is:", objectId);
         try {
-            await deleteWishListItemByBusinessId(businessId); 
+            await deleteWishListItemByObjectId(objectId); 
             window.location.reload()
         } catch (error) {
             console.error('Error deleting wish list item:', error);
@@ -133,7 +140,7 @@ function WishList() {
                     >
                         <td className="table-hover wishlistitem-cell"
                         onClick={() => handleItemClick(wish.businessId)}>{wish.name}</td>
-                        <td className="trash-can-cell" onClick={() => openDeleteModal(wish.businessId)} >
+                        <td className="trash-can-cell" onClick={() => openDeleteModal(wish.id)} >
                             <FaTrash/>
                         </td>
                     </tr>
@@ -195,7 +202,7 @@ function WishList() {
                     <Button variant="secondary" onClick={handleCloseDeleteModal}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => handleDelete(businessIdToDelete)}>
+                    <Button variant="primary" onClick={() => handleDelete(objectIdToDelete)}>
                         Confirm Delete
                     </Button>
                 </Modal.Footer>

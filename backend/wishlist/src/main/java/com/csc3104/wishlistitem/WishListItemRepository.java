@@ -10,5 +10,6 @@ public interface WishListItemRepository extends MongoRepository<WishListItem, Ob
     @Query("{ 'albumId' : ?0 }")
     List<WishListItem> findAllByAlbumId(String albumId);
 
-    WishListItem findByBusinessId(String businessId);
+    // WishListItem findByBusinessId(String businessId);
+    WishListItem findById(String objectId);
 }
