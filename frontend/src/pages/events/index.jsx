@@ -12,25 +12,12 @@ const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [parties, setParties] = useState([]);
 
-  // useEffect(() => {
-  //   getCurrentEvents()
-  //     .then((response) => successfulResponse(response.data))
-  //     .catch((error) => errorResponse(error))
-  //     .finally(() => console.log("Current Event Loaded"));
-
-  //   function successfulResponse(content) { 
-  //     setEvents(content);
-  //   }
-
-  //   function errorResponse(error) {
-  //     console.log(error);
-  //   }
-  // }, []);
-
-  // This is a test to send friend requests. (To remove)
+  // This is a test to send friend requests notification. (To remove later)
   async function friendRequestApi() {
     try {
-        await friendRequest("", "w08277427@gmail.com", "false", "friend-request", "requested")
+        const email = localStorage.getItem("email");
+
+        await friendRequest("", email, "false", "friend-request", "requested")
             .then((response) => successfulResponse(response))
             .catch((error) => errorResponse(error))
             .finally(() => console.log("cleanup"));
@@ -45,9 +32,9 @@ const EventPage = () => {
   return (
     <>
     <EventComponent updateEvent={(event) => setEvents(event)} updateParty={(party) => setParties(party)}/>
-    {/* <div className="nav-link me-4" onClick={friendRequestApi}>
+    <div className="nav-link me-4" onClick={friendRequestApi}>
       click me
-    </div> */}
+    </div>
     {[...events].reverse().map((event, index) => (
       <Card as={Row} key={index} style={{width: '100%'}}>
         <Card.Body className="ps-5 pe-5">

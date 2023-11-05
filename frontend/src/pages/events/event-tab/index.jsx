@@ -85,19 +85,19 @@ const EventComponent = ({ updateEvent, updateParty }) => {
     return (
         <>
         <Navbar expand="lg" className="bg-body-tertiary">
-        <Container>
-                <Navbar.Brand style={{ fontWeight: 'bold', fontSize: '34px' }}>Events</Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="me-auto">
-                </Nav>
-                <Link className="nav-link me-4" onClick={openNotification}>
-                    <IoNotifications style={{ fontSize: '24px', fill: "#000000", fillOpacity: "54%" }}/> <Badge pill variant="primary">{notificationCount}</Badge>
-                </Link>
-                <Link className="nav-link" onClick={openModal}>
-                    <IoAddCircle style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/>
-                </Link>
-            </Navbar.Collapse>
+        <Container style={{flexWrap:"nowrap" }}>
+          <Navbar.Brand style={{ width:"50%", fontWeight: 'bold', fontSize: '34px' }}>Events</Navbar.Brand>
+          <Nav className="me-auto" style={{width:"50%", flexDirection:"row-reverse", flexWrap:"nowrap" }}>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Link className="nav-link me-4" onClick={openModal}>
+                <IoAddCircle style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/>
+            </Link>            
+            <Link className="nav-link" onClick={openNotification}>
+                <IoNotifications style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/> <Badge pill variant="primary">{notificationCount}</Badge>
+            </Link>
+          </Nav>            
+          <Navbar.Collapse id="basic-navbar-nav">
+          </Navbar.Collapse>
         </Container>
         </Navbar>
         <Outlet />  
