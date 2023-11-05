@@ -155,7 +155,7 @@ function WishList() {
                     <Form.Select onChange={(e) => {setLocation(e.target.value)}}>
                     <option value="Singapore">Singapore</option>
                     <option value="Johor Bahru">Johor Bahru</option>
-                    <option value="Sweden">Sweden</option>
+                    <option value="Yio Chu Kang">Yio Chu Kang</option>
                     {/* Add more location options */}
                     </Form.Select>
                     <br/>

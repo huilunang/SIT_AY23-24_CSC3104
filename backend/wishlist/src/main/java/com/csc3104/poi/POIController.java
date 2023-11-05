@@ -1,5 +1,6 @@
 package com.csc3104.poi;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,10 @@ public class POIController {
     @GetMapping("/suggestions")
     public Map<String, String[]> getSuggestions(@RequestParam String location, @RequestParam String userInput) {
         return poiService.getAutoCompleteSuggestion(location, userInput);
+    }
+
+    @GetMapping("/recommendations/{location}")
+    public ArrayList<POI> getListOfPOIDetails(@PathVariable String location) {
+        return poiService.getPOIByArea(location);
     }
 }   

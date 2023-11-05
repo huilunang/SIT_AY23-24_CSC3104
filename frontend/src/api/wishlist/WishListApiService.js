@@ -48,3 +48,11 @@ export function deleteWishListItemByBusinessId(businessId) {
     console.error(error);
   }
 }
+
+export function getListOfPOIDetails(location) {
+  try {
+    return apiClient.get(`/api/v1/poi/recommendations/${location}`);
+  } catch (error) {
+    console.error(error);
+  }
+}

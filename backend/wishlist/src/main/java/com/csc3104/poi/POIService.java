@@ -3,6 +3,7 @@ package com.csc3104.poi;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,6 +16,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 
 @Service
@@ -174,5 +178,54 @@ public class POIService {
         return poi;
     }
 
+    // Set Radius
+    public static final int radius=3000;
 
+    // public ArrayList<POI> getPOIByArea(String location, String[] categories){
+    public ArrayList<POI> getPOIByArea(String location){
+        // Set Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+        // Initialize ArrayList of POIs and Radius
+        ArrayList<POI> POIs = new ArrayList<>();
+        // if (categories.length>0){
+        //     for (int i=0; i<categories.length;i++){
+        //         String category = categories[i];
+        //     }
+        // }
+        // Encode location string into UTF-8 Format
+        // location = "Yio Chu Kang";
+        // try {
+        //     location = URLEncoder.encode(location, "UTF-8");
+        // } catch (UnsupportedEncodingException e) {
+        //     e.printStackTrace();
+        // }
+        String locQuery = "&location=" + location;
+        String url = yelpBaseUrl + "/businesses/search?radius=3000&limit=40&category=food" + locQuery;
+        
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            try{
+                String response = responseEntity.getBody();
+                JSONObject jsonResponse = new JSONObject(response);
+                JSONArray businesses = jsonResponse.getJSONArray("businesses");
+
+                for (int i = 0; i < businesses.length(); i++) {
+                    JSONObject business = businesses.getJSONObject(i);
+                    POI poi = new POI();
+                    poi.setName(business.getString("name"));
+                    poi.setCategory(business.getJSONArray("categories").getJSONObject(0).getString("title"));
+                    poi.setAddress(business.getJSONObject("location").getString("address1"));
+                    poi.setImageUrl(business.getString("image_url"));
+                    poi.setRating(business.getString("rating"));
+                    POIs.add(poi);
+                }
+            }catch(JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return POIs;
+    }
 }
