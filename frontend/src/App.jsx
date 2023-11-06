@@ -8,6 +8,7 @@ import GalleryPage from "./pages/gallery";
 import WishListPage from "./pages/wishlist";
 import POIPage from "./pages/poi";
 import RandomizerPage from "./pages/randomizer";
+import EventPage from "./pages/events";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
@@ -75,6 +76,14 @@ export default function App() {
               element={
                 <AuthenticatedRoute>
                   <RandomizerPage />
+                </AuthenticatedRoute>
+              }
+            ></Route>
+            <Route
+              path="/events"
+              element={
+                <AuthenticatedRoute>
+                  <EventPage />
                 </AuthenticatedRoute>
               }
             ></Route>

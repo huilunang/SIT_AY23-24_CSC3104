@@ -49,20 +49,25 @@ export default function CustomNavbar() {
 
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav className="mr-auto mb-2 mb-lg-0">
-              <MDBNavbarItem style={{ marginRight: "30px" }}>
+              <MDBNavbarItem className="nav-item-space">
                 <MDBNavbarLink href="/gallery">
                   <MDBIcon far icon="images" /> Gallery
                 </MDBNavbarLink>
               </MDBNavbarItem>
-              <MDBNavbarItem>
+              <MDBNavbarItem className="nav-item-space">
                 <MDBNavbarLink href="/friends">
                   <MDBIcon fas icon="user-friends" /> Friends
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+                <MDBNavbarLink href="/events">
+                  <MDBIcon far icon="calendar" /> Events
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
 
             <MDBNavbarNav className="justify-content-end">
-              <MDBNavbarItem style={{ marginRight: "30px" }}>
+              <MDBNavbarItem className="nav-item-space">
                 <MDBNavbarLink href="/notifications">
                   <MDBIcon fas icon="bell" /> Notifications
                 </MDBNavbarLink>
