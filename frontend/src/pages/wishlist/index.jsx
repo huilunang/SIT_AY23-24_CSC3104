@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { FaTrash } from "react-icons/fa";
+import CustomNavbar from "../../components/navbar";
 
 function WishList() {
   const [wishlistitemById, setWishlistitemById] = useState([]);
@@ -124,97 +125,100 @@ function WishList() {
   };
 
   return (
-    <div className="container wishlist-container">
-      <h1>WishList</h1>
-      <table className="table table-bordered">
-        <tbody>
-          {wishlistitemById.map((wish, index) => (
-            <tr key={index} className={"table-light"}>
-              <td
-                className="table-hover wishlistitem-cell"
-                onClick={() => handleItemClick(wish.businessId, wish.id)}
-              >
-                {wish.name}
-              </td>
-              <td
-                className="trash-can-cell"
-                onClick={() => openDeleteModal(wish.businessId)}
-              >
-                <FaTrash />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Button variant="primary" onClick={handleModalShow}>
-        Add New
-      </Button>
-      {/* Modal for adding new POI */}
-      <Modal show={showModal} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>New Place of Interest</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>POI Name</Form.Label>
-              <Form.Select
-                onChange={(e) => {
-                  setLocation(e.target.value);
-                }}
-              >
-                <option value="Singapore">Singapore</option>
-                <option value="Johor Bahru">Johor Bahru</option>
-                <option value="Sweden">Sweden</option>
-                {/* Add more location options */}
-              </Form.Select>
-              <br />
-              <Form.Control
-                type="text"
-                placeholder="Search for shops..."
-                value={userInput}
-                onChange={handleInputChange}
-                autoComplete="off"
-              />
-              <br />
-              <Form.Select onChange={(e) => handleSelect(e.target.value)}>
-                {Object.entries(suggestions).map(([businessId, details]) => (
-                  <option key={businessId} value={businessId}>
-                    {details[0]}
-                  </option>
-                ))}
-              </Form.Select>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleModalClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleAddNewPOI}>
-            Add New
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      {/* Modal for confirm deletion */}
-      <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirm Delete</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this POI?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseDeleteModal}>
-            Close
-          </Button>
-          <Button
-            variant="primary"
-            onClick={() => handleDelete(businessIdToDelete)}
-          >
-            Confirm Delete
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+    <>
+      <CustomNavbar />
+      <div className="container wishlist-container">
+        <h1>WishList</h1>
+        <table className="table table-bordered">
+          <tbody>
+            {wishlistitemById.map((wish, index) => (
+              <tr key={index} className={"table-light"}>
+                <td
+                  className="table-hover wishlistitem-cell"
+                  onClick={() => handleItemClick(wish.businessId, wish.id)}
+                >
+                  {wish.name}
+                </td>
+                <td
+                  className="trash-can-cell"
+                  onClick={() => openDeleteModal(wish.businessId)}
+                >
+                  <FaTrash />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Button variant="primary" onClick={handleModalShow}>
+          Add New
+        </Button>
+        {/* Modal for adding new POI */}
+        <Modal show={showModal} onHide={handleModalClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>New Place of Interest</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>POI Name</Form.Label>
+                <Form.Select
+                  onChange={(e) => {
+                    setLocation(e.target.value);
+                  }}
+                >
+                  <option value="Singapore">Singapore</option>
+                  <option value="Johor Bahru">Johor Bahru</option>
+                  <option value="Sweden">Sweden</option>
+                  {/* Add more location options */}
+                </Form.Select>
+                <br />
+                <Form.Control
+                  type="text"
+                  placeholder="Search for shops..."
+                  value={userInput}
+                  onChange={handleInputChange}
+                  autoComplete="off"
+                />
+                <br />
+                <Form.Select onChange={(e) => handleSelect(e.target.value)}>
+                  {Object.entries(suggestions).map(([businessId, details]) => (
+                    <option key={businessId} value={businessId}>
+                      {details[0]}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleModalClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleAddNewPOI}>
+              Add New
+            </Button>
+          </Modal.Footer>
+        </Modal>
+        {/* Modal for confirm deletion */}
+        <Modal show={showDeleteModal} onHide={handleCloseDeleteModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Confirm Delete</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Are you sure you want to delete this POI?</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleCloseDeleteModal}>
+              Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => handleDelete(businessIdToDelete)}
+            >
+              Confirm Delete
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    </>
   );
 }
 

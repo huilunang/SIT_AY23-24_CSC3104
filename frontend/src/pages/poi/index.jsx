@@ -7,6 +7,7 @@ import {
   updatePOIVisited,
 } from "../../api/wishlist/WishListApiService";
 import { FaCheck, FaEdit, FaStar, FaStarHalfAlt } from "react-icons/fa";
+import CustomNavbar from "../../components/navbar";
 
 const Details = () => {
   const { wishlistId, businessId } = useParams();
@@ -80,60 +81,63 @@ const Details = () => {
   };
 
   return (
-    <div className="details-container">
-      <div className="image-container">
-        <img src={details.imageUrl} />
-      </div>
-      <div className="details-info">
-        <div className="details1">
-          <h2>{details.name}</h2>
-          <div className="rating">
-            <p>{details.rating}</p>
-            <div className="stars" id="stars">
-              {renderStars(details.rating)}
+    <>
+      <CustomNavbar />
+      <div className="details-container">
+        <div className="image-container">
+          <img src={details.imageUrl} />
+        </div>
+        <div className="details-info">
+          <div className="details1">
+            <h2>{details.name}</h2>
+            <div className="rating">
+              <p>{details.rating}</p>
+              <div className="stars" id="stars">
+                {renderStars(details.rating)}
+              </div>
+            </div>
+            <p>{details.category}</p>
+          </div>
+          <div className="details2">
+            <p>Address: {details.address}</p>
+          </div>
+          <p>Remarks:</p>
+          <div className="remarks-section">
+            <div className="input-container">
+              <textarea
+                className={`remarks-input ${isEditing ? "editing" : ""}`}
+                type="text"
+                value={isEditing ? remarks : details.remarks}
+                readOnly={!isEditing}
+                onChange={(e) => setRemarks(e.target.value)}
+              />
+              {isEditing && (
+                <FaCheck className="tick-icon" onClick={handleSave} />
+              )}
+              {!isEditing && (
+                <FaEdit
+                  className="edit-icon"
+                  onClick={() => setIsEditing(true)}
+                />
+              )}
             </div>
           </div>
-          <p>{details.category}</p>
         </div>
-        <div className="details2">
-          <p>Address: {details.address}</p>
-        </div>
-        <p>Remarks:</p>
-        <div className="remarks-section">
-          <div className="input-container">
-            <textarea
-              className={`remarks-input ${isEditing ? "editing" : ""}`}
-              type="text"
-              value={isEditing ? remarks : details.remarks}
-              readOnly={!isEditing}
-              onChange={(e) => setRemarks(e.target.value)}
-            />
-            {isEditing && (
-              <FaCheck className="tick-icon" onClick={handleSave} />
-            )}
-            {!isEditing && (
-              <FaEdit
-                className="edit-icon"
-                onClick={() => setIsEditing(true)}
-              />
-            )}
-          </div>
+        <div className="wentOrNot">
+          <input
+            type="checkbox"
+            id="wentCheckbox"
+            name="wentCheckbox"
+            checked={hasWent}
+            onChange={handleWentChange}
+            style={{ marginRight: "5px" }}
+          />
+          <label htmlFor="wentCheckbox" style={{ marginRight: "5px" }}>
+            {hasWent ? "Went" : "Yet to go"}
+          </label>
         </div>
       </div>
-      <div className="wentOrNot">
-        <input
-          type="checkbox"
-          id="wentCheckbox"
-          name="wentCheckbox"
-          checked={hasWent}
-          onChange={handleWentChange}
-          style={{ marginRight: "5px" }}
-        />
-        <label htmlFor="wentCheckbox" style={{ marginRight: "5px" }}>
-          {hasWent ? "Went" : "Yet to go"}
-        </label>
-      </div>
-    </div>
+    </>
   );
 };
 
