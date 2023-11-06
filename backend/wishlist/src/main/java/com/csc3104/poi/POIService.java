@@ -2,6 +2,7 @@ package com.csc3104.poi;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -16,10 +17,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
 
 @Service
 public class POIService {
@@ -178,31 +175,19 @@ public class POIService {
         return poi;
     }
 
+    // ----- Phil's Code -----
+    
+
     // Set Radius
     public static final int radius=3000;
 
-    // public ArrayList<POI> getPOIByArea(String location, String[] categories){
-    public ArrayList<POI> getPOIByArea(String location){
+    public ArrayList<POI> getListOfPOIDetails (String url){
         // Set Header
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
-        // Initialize ArrayList of POIs and Radius
-        ArrayList<POI> POIs = new ArrayList<>();
-        // if (categories.length>0){
-        //     for (int i=0; i<categories.length;i++){
-        //         String category = categories[i];
-        //     }
-        // }
-        // Encode location string into UTF-8 Format
-        // location = "Yio Chu Kang";
-        // try {
-        //     location = URLEncoder.encode(location, "UTF-8");
-        // } catch (UnsupportedEncodingException e) {
-        //     e.printStackTrace();
-        // }
-        String locQuery = "&location=" + location;
-        String url = yelpBaseUrl + "/businesses/search?radius=3000&limit=40&term=food" + locQuery;
         
+        ArrayList<POI> POIs = new ArrayList<>();
+
         ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
@@ -225,7 +210,26 @@ public class POIService {
                 e.printStackTrace();
             }
         }
-
         return POIs;
     }
+
+    public ArrayList<POI> getPOIByArea(String[] location){
+        String url = yelpBaseUrl;
+        String latlongQuery = "&latitude="+ location[0] +"&longitude=" + location[1];
+        url = url+"/businesses/search?radius=2000&limit=40&term=food" + latlongQuery;
+        return getListOfPOIDetails(url);
+    }
+    public ArrayList<POI> getPOIByCategories(String[] categories){
+        String url = yelpBaseUrl;
+        String categoryQuery="";
+        if (categories.length>0){
+            for (int i=0; i<categories.length; i++){
+                categoryQuery += "&categories="+ categories[i];
+            }
+        }
+        url = url+"/businesses/search?&limit=40&term=food"+categoryQuery;
+        return getListOfPOIDetails(url);
+    }
+
+    
 }

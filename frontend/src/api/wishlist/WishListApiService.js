@@ -60,7 +60,7 @@ export function deleteGallery(id) {
 
 export function getAllWishListItem() {
   try {
-    return apiClient.get("/api/v1/wishlist");
+    return apiClient.get("/api/v1/wishlist/all");
   } catch (error) {
     console.log(error);
   }
@@ -91,14 +91,6 @@ export function getPOIDetails() {
   }
 }
 
-// export function deleteWishListItemByBusinessId(businessId) {
-//   try {
-//     return apiClient.delete(`/api/v1/wishlist/delete/${businessId}`);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
 export function deleteWishListItemByObjectId(objectId) {
   try {
     return apiClient.delete(`/api/v1/wishlist/delete/${objectId}`);
@@ -107,9 +99,17 @@ export function deleteWishListItemByObjectId(objectId) {
   }
 }
 
-export function getListOfPOIDetails(location) {
+export function getListOfPOIDetailsByNearby(location) {
   try {
     return apiClient.get(`/api/v1/poi/recommendations/${location}`);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function getListOfPOIDetailsByCategories(categories) {
+  try {
+    return apiClient.get(`/api/v1/poi/recommendations/${categories}`);
   } catch (error) {
     console.error(error);
   }
