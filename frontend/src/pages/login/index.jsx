@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import "./style.css";
 import { Button } from "react-bootstrap";
@@ -13,21 +13,22 @@ const initialValues = {
 };
 
 const Login = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
   const authContext = useAuth();
+
+  const [err, setErr] = useState(false);
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
     useFormik({
       initialValues,
       validationSchema: loginSchema,
       onSubmit: async (values, action) => {
+        setErr(false);
+
         if (await authContext.login(values.email, values.password)) {
-          navigate("/home");
+          navigate("/gallery");
         } else {
-          action.resetForm();
+          alert("Your email or password is incorrect");
         }
       },
     });
@@ -45,6 +46,11 @@ const Login = () => {
                 <div className="row justify-content-center">
                   <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                     <p className="text-center h1 fw-bold mb-5 mt-4">Log in</p>
+                    {err && (
+                      <small className="text-danger mt-1">
+                        Email or Password is incorrect
+                      </small>
+                    )}
                     <form onSubmit={handleSubmit}>
                       <div className="row mt-3">
                         <div className="col text-left">

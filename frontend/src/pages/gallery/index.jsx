@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+
 import { getAllGallery } from "../../api/wishlist/WishListApiService";
 
+import CustomNavbar from "../../components/navbar";
 import GridCardComponent from "../../components/gridcard";
 
-import "./index.css";
-
-import { Button } from "react-bootstrap";
 import Handler from "./handler";
 import ModalContent from "./modalcontent";
 
-function Gallery() {
+import "./index.css";
+
+function GalleryPage() {
   const [gallery, setGallery] = useState();
   const [modalShow, setModalShow] = useState(false);
   const [formData, setFormData] = useState({ title: "", imageFile: null });
@@ -55,6 +57,7 @@ function Gallery() {
 
   return (
     <>
+      <CustomNavbar />
       <div className="header">
         <h1>Gallery</h1>
       </div>
@@ -82,4 +85,4 @@ function Gallery() {
   );
 }
 
-export default Gallery;
+export default GalleryPage;

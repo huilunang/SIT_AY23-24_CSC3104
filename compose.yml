@@ -1,8 +1,7 @@
-# Use root/example as user/password credentials
 version: '3.8'
 
 services:
-  mongodb:
+  wishlist-mongodb:
     image: mongo
     restart: always
     container_name: mongodb
@@ -14,3 +13,39 @@ services:
     #   MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
     #   MONGO_DB_USERNAME: ${MONGO_USER}
     #   MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
+  account:
+    build:
+      context: backend
+      dockerfile: ./account/Dockerfile
+    restart: always
+    ports:
+      - "9191:9191"
+    depends_on:
+      - account-mysqldb
+    # volumes:
+    #   - ./backend/account:/app
+  account-mysqldb:
+    image: "mysql"
+    restart: always
+    # volumes:
+    #   - account-mysqldb_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: ${ACCOUNT_MYSQL_DATABASE}
+      MYSQL_USER: ${ACCOUNT_MYSQL_USER}
+      MYSQL_PASSWORD: ${ACCOUNT_MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ACCOUNT_MYSQL_ROOT_PASSWORD}
+  client:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend/src:/app/src
+    depends_on:
+      - account
+    stdin_open: true
+    tty: true
+
+# volumes:
+#   account-mysqldb_data:
