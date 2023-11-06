@@ -11,5 +11,8 @@ public class POI {
     private String imageUrl;
     private String rating;
     private String remarks;
+<<<<<<< HEAD
+=======
     private boolean visited; 
+>>>>>>> main
 }

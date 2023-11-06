@@ -169,6 +169,10 @@ public class POIService {
         poi.setCategory(categories);
         poi.setAddress(address);
         poi.setRating(rating);
+<<<<<<< HEAD
+        poi.setRemarks("");
+=======
+>>>>>>> main
 
         return poi;
     }
