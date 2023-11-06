@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllWishListItem, getPOIDetails, getListOfPOIDetailsByNearby } from "../../api/wishlist/WishListApiService";
+import { getAllWishListItem, getPOIDetailsByBusinessId, getListOfPOIDetailsByNearby, getListOfPOIDetailsByCategories } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,85 +14,173 @@ import { FaTrash } from 'react-icons/fa';
 
 function WishList() {
 
-    const [data, setData] = useState([]);
-    const [curatedPOIList, setCuratedPOIList] = useState([]);
-    const [userCoordinates, setUserCoordinates] = useState([]);
-    const [businessIdList, setBusinessIdList] = useState([]);
+  const [data, setData] = useState([]);
+  const [curatedPOIListNearby, setCuratedPOIListNearby] = useState([]);
+  const [curatedPOIListCategory, setCuratedPOIListCategory] = useState([]);
+  const [userCoordinates, setUserCoordinates] = useState([]);
+  const [businessIdList, setBusinessIdList] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [curatedCategories, setCuratedCategories] = useState([]);
 
-    const findCurrentLocation = () => {
-      const success = (position) => {
+
+  // Find Current Location and set User Coordinates
+  const findCurrentLocation = () => {
+    const success = (position) => {
       const latitude = position.coords.latitude.toString();
       const longitude = position.coords.longitude.toString();
       setUserCoordinates([latitude, longitude]);
-      };
-      const error = () => {
-        console.log('Unable to retrieve your location');
-      };
-      navigator.geolocation.getCurrentPosition(success, error);
+      console.log(userCoordinates);
     };
-  
-    useEffect(() => {
-      findCurrentLocation();
-    }, []); // The empty dependency array ensures this only runs once
+    const error = () => {
+      console.log('Unable to retrieve your location');
+    };
+    navigator.geolocation.getCurrentPosition(success, error);
+  };
+  useEffect(() => {
+    findCurrentLocation();
+  }, []);
 
-    const handleRefreshForNearby = async () => {
-      try {
-        const response = await getListOfPOIDetailsByNearby(userCoordinates);
-        setData(response.data);
-        console.log(data);
-      } catch (error) {
-        console.error(error);
+  // Handle Refresh for Nearby POIs
+  const handleRefreshForNearby = async () => {
+    try {
+      const response = await getListOfPOIDetailsByNearby(userCoordinates);
+      setData(response.data);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleRefreshForCategory = async () => {
+    try {
+      console.log(curatedCategories);
+      const response = await getListOfPOIDetailsByCategories(curatedCategories, userCoordinates);
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Fetch Wish List Items
+  const fetchWishListItems = async () => {
+    try {
+      const response = await getAllWishListItem();
+      const ids = response.data.map((item) => item.businessId.toString());
+      setBusinessIdList(ids);
+      fetchPOIDetailsAndCategories(ids); // Moved function call
+    } catch (error) {
+      console.error('Error fetching wish list items:', error);
+    }
+  };
+  useEffect(() => {
+    fetchWishListItems();
+  }, []);
+
+
+  // Randomizer to select 3
+  // Method for selecting random items from the data list
+  const selectRandomItems = (data, setSize) => {
+    const selectedIndices = new Set();
+    const selectedItems = [];
+    while (selectedIndices.size < setSize && selectedIndices.size < data.length) {
+      const randomIndex = Math.floor(Math.random() * data.length);
+      if (!selectedIndices.has(randomIndex)) {
+        selectedIndices.add(randomIndex);
+        selectedItems.push(data[randomIndex]);
       }
-    };
+    }
+    return selectedItems;
+  };
 
-    const fetchWishListItems = async () => {
-      try {
-        const response = await getAllWishListItem();
-        const ids = response.data.map((item) => item.businessId);
-        setBusinessIdList(ids);
-        console.log("List of business ids", businessIdList);
-      } catch (error) {
-        console.error('Error fetching wish list items:', error);
-      }
-    };
-    useEffect(() => {
-      fetchWishListItems();
-    }, []);
+  // Set curated POI list using the randomizer method
+  useEffect(() => {
+    if (data.length > 0) {
+      const selectedPOIs = selectRandomItems(data, 3);
+      setCuratedPOIListNearby(selectedPOIs);
+    }
+  }, [data]);
 
-    useEffect(() => {
-      if (data.length > 0) {
-        const selectedIndices = new Set();
-        const selectedPOIs = [];
-        while (selectedIndices.size < 3) {
-          const randomIndex = Math.floor(Math.random() * data.length);
-          if (!selectedIndices.has(randomIndex)) {
-            selectedIndices.add(randomIndex);
-            selectedPOIs.push(data[randomIndex]);
+
+  // Fetch POI Details and Create Categories
+  const fetchPOIDetailsAndCategories = async (businessIdList) => {
+    try {
+      const categories = [];
+      const poiDetailsList = [];
+      if (businessIdList.length > 0) {
+
+        for (let i = 0; i < businessIdList.length; i++) {
+          const response = await getPOIDetailsByBusinessId(businessIdList[i]);
+          if (response && response.data) {
+            const { category } = response.data;
+            const categoryArray = category.split(',').map((item) => item.trim().toLowerCase()); // Convert each category to lowercase
+            categories.push(...categoryArray);
+            poiDetailsList.push(response.data);
           }
         }
-        setCuratedPOIList(selectedPOIs);
-        console.log(curatedPOIList);
       }
-    }, [data]);
+      createCuratedCategories(categories);
+    } catch (error) {
+      console.error('Error fetching POI details:', error);
+    }
+  };
 
-    return (
-        <div className="container">
-        <br/><br/><br/>
-        <h1>For you</h1>
-          <button onClick={handleRefreshForNearby} className="btn btn-info">Refresh</button>    
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-            {curatedPOIList.map((poi) => (
-                <div key={poi.name} style={{ margin: '10px', padding: '10px', border: '1px solid #ddd' }}>
-                <img src={poi.imageUrl} alt="POI Image" style={{ width: '400px', height: '300px' }} />
-                <p>Name: {poi.name}</p>
-                <p>Category: {poi.category}</p>
-                <p>Address: {poi.address}</p>
-                <p>Rating: {poi.rating}</p>
-                </div>
-            ))}
+
+  // Create Curated Categories
+  const createCuratedCategories = (categories) => {
+    let categoryCount = {};
+    categories.forEach(category => {
+      categoryCount[category] = (categoryCount[category] || 0) + 1;
+    });
+
+    let curatedCategories = Object.keys(categoryCount).sort((a, b) => categoryCount[b] - categoryCount[a]).slice(0, 4);
+
+    setCuratedCategories(curatedCategories);
+  };
+
+  // User Interface
+  return (
+    <div className="container">
+      <br /><br /><br />
+      <h1>For you</h1>
+      <div>
+        <button onClick={handleRefreshForCategory} className="btn btn-info">Refresh</button>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {curatedPOIListCategory.map((poi) => (
+            <div key={poi.name} style={{ margin: '10px', padding: '10px', border: '1px solid #ddd' }}>
+              <img src={poi.imageUrl} alt="POI Image" style={{ width: '400px', height: '300px' }} />
+              <p>Name: {poi.name}</p>
+              <p>Category: {poi.category}</p>
+              <p>Address: {poi.address}</p>
+              <p>Rating: {poi.rating}</p>
             </div>
+          ))}
         </div>
-    );
+      </div>
+      <div>
+        <h1>Nearby you</h1>
+        <button onClick={handleRefreshForNearby} className="btn btn-info">Refresh</button>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {curatedPOIListNearby.map((poi) => (
+            <div key={poi.name} style={{ margin: '10px', padding: '10px', border: '1px solid #ddd' }}>
+              <img src={poi.imageUrl} alt="POI Image" style={{ width: '400px', height: '300px' }} />
+              <p>Name: {poi.name}</p>
+              <p>Category: {poi.category}</p>
+              <p>Address: {poi.address}</p>
+              <p>Rating: {poi.rating}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h2>Curated Categories:</h2>
+        <ul>
+          {curatedCategories.map((category, index) => (
+            <li key={index}>{category}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 }
 
 export default WishList;

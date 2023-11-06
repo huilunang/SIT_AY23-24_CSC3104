@@ -1,9 +1,7 @@
 package com.csc3104.poi;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.NoSuchElementException;
 
 import com.csc3104.wishlistitem.*;
@@ -28,8 +26,27 @@ public class POIController {
     @Autowired
     private POIService poiService;
 
+    @GetMapping("/{businessId}")
+    public POI getPOIDetails(@PathVariable String businessId) {
+        return poiService.getPOIRecord(businessId);
+    }
+
     @Autowired
     private WishListItemService wishListItemService;
+
+    // ----- Phil's Code -----
+
+    @GetMapping("/nearby/{location}")
+    public ArrayList<POI> getListOfPOIDetailsByNearby(@PathVariable String[] location) {
+        return poiService.getPOIByArea(location);
+    }
+
+    @GetMapping("/category/{categories}/{location}")
+    public ArrayList<POI> getListOfPOIDetailsByCategories(@PathVariable String[] categories, @PathVariable String[] location) {
+        return poiService.getPOIByCategories(categories, location);
+    }
+
+    // Ends here
 
     @GetMapping("/{wishlistId}/{businessId}")
     public POI getPOIDetails(@PathVariable String wishlistId, @PathVariable String businessId) {
@@ -70,17 +87,5 @@ public class POIController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<>("Wish list item not found", HttpStatus.NOT_FOUND);
         }
-    }
-
-    // ----- Phil's Code -----
-
-    @GetMapping("/recommendations/{location}")
-    public ArrayList<POI> getListOfPOIDetailsByNearby(@PathVariable String[] location) {
-        return poiService.getPOIByArea(location);
-    }
-
-    @GetMapping("/recommendations/{categories}")
-    public ArrayList<POI> getListOfPOIDetailsByCategories(@PathVariable String[] categories) {
-        return poiService.getPOIByCategories(categories);
     }
 }   

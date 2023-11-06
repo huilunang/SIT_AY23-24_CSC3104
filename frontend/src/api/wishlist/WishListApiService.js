@@ -144,17 +144,25 @@ export function deleteWishListItemByObjectId(objectId) {
   }
 }
 
-export function getListOfPOIDetailsByNearby(location) {
+export function getPOIDetailsByBusinessId(businessId) {
   try {
-    return apiClient.get(`/api/v1/poi/recommendations/${location}`);
+    return apiClient.get(`/api/v1/poi/${businessId}`);
   } catch (error) {
     console.error(error);
   }
 }
 
-export function getListOfPOIDetailsByCategories(categories) {
+export function getListOfPOIDetailsByNearby(location) {
   try {
-    return apiClient.get(`/api/v1/poi/recommendations/${categories}`);
+    return apiClient.get(`/api/v1/poi/nearby/${location}`);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function getListOfPOIDetailsByCategories(categories, location) {
+  try {
+    return apiClient.get(`/api/v1/poi/category/${categories}/${location}`);
   } catch (error) {
     console.error(error);
   }

@@ -2,7 +2,6 @@ package com.csc3104.poi;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
 
@@ -25,7 +24,8 @@ public class POIService {
 
     // @Value("${api.key}")
     // private String apiKey = "T-x0gy1cReiguaj6wrR7t3Bbh1VLvXOdQtqWD5S_utPY-MSF55xx5HSe916Ffh3l3HufmaMviu-ty2XUKTLeyta6v2MkWOX0I3H7sOWUOOWQM_OVdCrPMIGS3SI6ZXYx";
-    private String apiKey = "lFi7n2tg44VwsQ7e4BPhXBWHBzLQOR416CZKIRRbBJogKhgbyxdp4FA9Tpu-ujdPVwwESp_iDZ8ZvUaT-MVRuQF3p6c7k1B6N-gcyoeHqZIHjEkFkVxCvbov_mZHZXYx";
+    private String apiKey = "bKZb6ad2PaRTvv2minej6_7cdsidzUsPwa4XuhROqF1RWn77M1gipqEzh8quh9yixPF8KMLR2y_51fiOCHAmzyJPUo1Z3y4GS_RG1irOC-cet0H7GGJGlX66jRtJZXYx";
+    // private String apiKey = "lFi7n2tg44VwsQ7e4BPhXBWHBzLQOR416CZKIRRbBJogKhgbyxdp4FA9Tpu-ujdPVwwESp_iDZ8ZvUaT-MVRuQF3p6c7k1B6N-gcyoeHqZIHjEkFkVxCvbov_mZHZXYx";
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -218,17 +218,18 @@ public class POIService {
         url = url+"/businesses/search?radius=2000&limit=40&term=food" + latlongQuery;
         return getListOfPOIDetails(url);
     }
-    public ArrayList<POI> getPOIByCategories(String[] categories){
+
+
+    public ArrayList<POI> getPOIByCategories(String[] categories, String[] location){
         String url = yelpBaseUrl;
         String categoryQuery="";
+        String latlongQuery = "&latitude="+ location[0] +"&longitude=" + location[1];
         if (categories.length>0){
             for (int i=0; i<categories.length; i++){
                 categoryQuery += "&categories="+ categories[i];
             }
         }
-        url = url+"/businesses/search?&limit=40&term=food"+categoryQuery;
+        url = url+"/businesses/search?radius=0000&limit=40&term=food"+categoryQuery+latlongQuery;
         return getListOfPOIDetails(url);
     }
-
-    
 }
