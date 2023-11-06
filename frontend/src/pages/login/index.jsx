@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
 import "./style.css";
 import { Button } from "react-bootstrap";
@@ -13,9 +13,6 @@ const initialValues = {
 };
 
 const Login = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
   const authContext = useAuth();
 
