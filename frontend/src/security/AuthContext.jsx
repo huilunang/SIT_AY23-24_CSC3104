@@ -59,6 +59,18 @@ export default function AuthProvider({ children }) {
         localStorage.setItem("jwtToken", jwtToken);
         localStorage.setItem("isAuthenticated", "true");
 
+<<<<<<< HEAD
+=======
+        // NOT OPEARTIONAL
+        // apiClient.interceptors.request.use((config) => {
+        //   console.log("intercepting and adding a token");
+        //   config.headers.Authorization = localStorage.getItem("jwtToken");
+        //   setEmail(localStorage.getItem("email"));
+        //   setToken(localStorage.getItem("email"));
+        //   return config;
+        // });
+
+>>>>>>> main
         return true;
       } else {
         logout();
@@ -76,8 +88,11 @@ export default function AuthProvider({ children }) {
     localStorage.removeItem("email");
     localStorage.removeItem("jwtToken");
     localStorage.removeItem("isAuthenticated");
+<<<<<<< HEAD
 
     window.location.href = "/login";
+=======
+>>>>>>> main
   }
 
   return (

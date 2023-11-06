@@ -40,8 +40,12 @@ const Registration = () => {
       );
 
       if (httpStatus == HttpStatusResponse.OK) {
+<<<<<<< HEAD
         alert("User is successfully created.");
         navigate("/login");
+=======
+        navigate("/home");
+>>>>>>> main
       } else if (httpStatus == HttpStatusResponse.USER_ALREADY_EXISTS) {
         alert("User with this email already exists");
         action.resetForm();
