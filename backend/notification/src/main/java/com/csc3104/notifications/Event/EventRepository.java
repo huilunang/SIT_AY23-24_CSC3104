@@ -1,4 +1,4 @@
-package com.csc3104.notifications;
+package com.csc3104.notifications.Event;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

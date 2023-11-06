@@ -1,10 +1,13 @@
-package com.csc3104.notifications;
+package com.csc3104.notifications.Notification;
 
 import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.csc3104.notifications.PastNotification.PastNotification;
+import com.csc3104.notifications.PastNotification.PastNotificationRepository;
 
 import reactor.core.publisher.Flux;
 

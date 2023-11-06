@@ -1,7 +1,11 @@
-package com.csc3104.notifications;
+package com.csc3104.notifications.Notification;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.csc3104.notifications.PastNotification.PastNotification;
+import com.csc3104.notifications.PastNotification.PastNotificationRepository;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.mail.javamail.MimeMessageHelper;

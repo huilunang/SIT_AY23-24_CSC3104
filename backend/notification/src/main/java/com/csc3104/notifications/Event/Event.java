@@ -1,14 +1,14 @@
-package com.csc3104.notifications;
+package com.csc3104.notifications.Event;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Document(collection = "past-notifications")
-class PastNotification {
+// @Entity
+@Document(collection = "events")
+class Event {
   @Id
   public String id;
   @Field("key")
@@ -28,7 +28,7 @@ class PastNotification {
   @Field("invites")
   public String invites;
   @Field("timestamp")
-  public LocalDateTime timestamp;
+  public String timestamp;
   @Field("type")
   public String type;
   @Field("notify")
@@ -36,9 +36,9 @@ class PastNotification {
   @Field("status")
   public String status;
 
-  PastNotification() {}
+  Event() {}
 
-  PastNotification(String key, String owner, String member, String title, String date, String time, String description, String invites, LocalDateTime timestamp, String type, String notify, String status) {
+  Event(String key, String owner, String member, String title, String date, String time, String description, String invites, String timestamp, String type, String notify, String status) {
     this.key = key;
     this.owner = owner;
     this.member = member;
@@ -90,7 +90,7 @@ class PastNotification {
     return this.invites;
   }
 
-  public LocalDateTime getTimestamp() {
+  public String getTimestamp() {
     return this.timestamp;
   }
 
@@ -143,7 +143,7 @@ class PastNotification {
     this.invites = invites;
   }
 
-  public void setTimestamp(LocalDateTime timestamp) {
+  public void setTimestamp(String timestamp) {
     this.timestamp = timestamp;
   }
 
@@ -163,11 +163,11 @@ class PastNotification {
   public boolean equals(Object o) {
     if (this == o)
       return true;
-    if (!(o instanceof PastNotification))
+    if (!(o instanceof Event))
       return false;
-    PastNotification pastNotification = (PastNotification) o;
-    return Objects.equals(this.id, pastNotification.id) && Objects.equals(this.owner, pastNotification.owner)
-        && Objects.equals(this.title, pastNotification.title);
+    Event event = (Event) o;
+    return Objects.equals(this.id, event.id) && Objects.equals(this.owner, event.owner)
+        && Objects.equals(this.title, event.title);
   }
 
   @Override
@@ -178,7 +178,7 @@ class PastNotification {
   @Override
   public String toString() {
     return String.format(
-        "PastNotification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s']",
+        "Event[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s']",
         id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status);
   }
 }

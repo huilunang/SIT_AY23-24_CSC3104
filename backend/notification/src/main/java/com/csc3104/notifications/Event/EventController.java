@@ -1,4 +1,4 @@
-package com.csc3104.notifications;
+package com.csc3104.notifications.Event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
