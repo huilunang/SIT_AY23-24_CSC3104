@@ -90,6 +90,12 @@ export function deleteWishListItemByBusinessId(businessId) {
   }
 }
 
+<<<<<<< HEAD
+// testing based on specific business ID
+export function getPOIDetails() {
+  try {
+    return apiClient.get("/api/v1/poi/rSRC0t8hLeTQsOzmgQfUEA");
+=======
 // autocomplete suggestions to add to wishlist
 export function getSuggestions(location, input) {
   try {
@@ -103,10 +109,13 @@ export function getSuggestions(location, input) {
 export function getPOIDetails(wishlistId, businessId) {
   try {
     return apiClient.get(`/api/v1/poi/${wishlistId}/${businessId}`);
+>>>>>>> main
   } catch (error) {
     console.log(error);
   }
 }
+<<<<<<< HEAD
+=======
 
 // update poi remarks
 export function updatePOIRemarks(wishlistId, businessId, remarks) {
@@ -135,3 +144,4 @@ export function updatePOIVisited(wishlistId, businessId, visited) {
     console.error(error);
   }
 }
+>>>>>>> main
