@@ -82,11 +82,11 @@ export const EventModal = ({ isOpen, onClose }) => {
         <Modal.Header className="pt-2 pb-0" style={{ display: "block" }}>
           <Modal.Title>
             <Form.Group as={Row} className="mt-3" controlId="formTitle">
-                <Col sm="11">
+                <Col xs="10">
                     <Form.Control type="text" aria-label="formTitle" placeholder="New Event" style={{ border: "none", fontSize: 24 }} value={title} onChange={(e) => setTitle(e.target.value)}/>
                 </Col>
-                <Form.Label column sm="1">
-                    <IoPencil style={{ fontSize: '28px' }}/>
+                <Form.Label column xs="2">
+                    <IoPencil style={{ fontSize: '28px', float:"right" }}/>
                 </Form.Label>
             </Form.Group>
           </Modal.Title>
@@ -132,11 +132,11 @@ export const EventModal = ({ isOpen, onClose }) => {
                     <div className="mt-3">
                         {invites.map((user) => (
                             <span key={user} className="user-tag" style={{display: "inline-block"}}>
-                                <div style={{ backgroundColor: "#BEFFC5", border: "1.5px solid #A5A5A5", borderRadius: "15px", width: "100%"}}>
+                                <div style={{ backgroundColor: "#BEFFC5", border: "1px solid #a1a3a4", borderRadius: "15px", width: "100%"}}>
                                     <div className="p-1 ms-2">
                                         <span style={{ fontWeight: "500" }}>{user}</span>
                                         <span className="me-1 remove-button" onClick={() => handleRemoveUser(user)}>
-                                            <IoClose style={{ fontSize: '24px', float: "right", fill: "#000000", fillOpacity: "54%"}}/>
+                                            <IoClose style={{ fontSize: '24px', float: "right", fill: "#000", fillOpacity: "54%"}}/>
                                         </span>
                                     </div>
                                 </div>
@@ -145,10 +145,10 @@ export const EventModal = ({ isOpen, onClose }) => {
                     </div>
                 </Form.Group>
                 <Form.Group as={Row} className="mb-3" controlId="formNotify">
-                    <Form.Label column sm="2">
+                    <Form.Label column xs="2">
                         Notify Email
                     </Form.Label>
-                    <Col sm="10">
+                    <Col xs="10">
                         <Form.Check type="checkbox" aria-label="formNotify" checked={notify} onChange={(e) => setNotify(e.target.checked)}/>
                         <Form.Text className="text-muted" aria-label="formNotify" >
                         We'll send an email notification with everyone.
