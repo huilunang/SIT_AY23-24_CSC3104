@@ -2,3 +2,7 @@
   padding-right: 0.5rem; /* Adjust the padding as needed */
   background-image: none !important; /* Remove the background image */
 }
+
+.nav-item-space {
+  margin-right: 30px;
+}
