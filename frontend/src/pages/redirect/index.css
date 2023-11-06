@@ -1,9 +1,0 @@
-/* HomePage.css */
-
-.HomePage {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Set the height of the container to the full viewport height */
-}
-
-

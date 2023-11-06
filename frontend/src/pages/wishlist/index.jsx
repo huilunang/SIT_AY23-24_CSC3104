@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
-import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByBusinessId } from "../../api/wishlist/WishListApiService";
-=======
 import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByBusinessId, getSuggestions } from "../../api/wishlist/WishListApiService";
->>>>>>> main
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -46,18 +42,11 @@ function WishList() {
         }
     }
 
-<<<<<<< HEAD
-    const handleItemClick = (businessId) => {
-        if (businessId) {
-            // const objectIdString = businessId.toString(); // Convert the ObjectId to a string
-            navigate(`/POI/${businessId}`);
-=======
     const handleItemClick = (businessId, wishlistId) => {
         if (businessId) {
 
             // const objectIdString = businessId.toString(); // Convert the ObjectId to a string
             navigate(`/poi/${wishlistId}/${businessId}`);
->>>>>>> main
         }
       };
     
@@ -71,15 +60,8 @@ function WishList() {
         const input = e.target.value;
         setUserInput(input);
         try {
-<<<<<<< HEAD
-            const response = await fetch(
-                `http://localhost:8080/api/v1/poi/suggestions?location=${location}&userInput=${input}`
-            );
-            const data = await response.json();
-=======
             const response = await getSuggestions(location, input);
             const data = response.data;
->>>>>>> main
             setSuggestions(data);
             
             const keys = Object.keys(data);
@@ -149,11 +131,7 @@ function WishList() {
                         className={"table-light"}
                     >
                         <td className="table-hover wishlistitem-cell"
-<<<<<<< HEAD
-                        onClick={() => handleItemClick(wish.businessId)}>{wish.name}</td>
-=======
                         onClick={() => handleItemClick(wish.businessId, wish.id)}>{wish.name}</td>
->>>>>>> main
                         <td className="trash-can-cell" onClick={() => openDeleteModal(wish.businessId)} >
                             <FaTrash/>
                         </td>
@@ -185,10 +163,7 @@ function WishList() {
                     placeholder="Search for shops..."
                     value={userInput}
                     onChange={handleInputChange}
-<<<<<<< HEAD
-=======
                     autoComplete="off"
->>>>>>> main
                     />
                     <br/>
                     <Form.Select onChange={(e) => handleSelect(e.target.value)}>

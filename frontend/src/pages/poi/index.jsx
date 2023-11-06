@@ -1,37 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css'; 
-<<<<<<< HEAD
-import { getPOIDetails } from '../../api/wishlist/WishListApiService';
-import { FaCheck, FaEdit, FaStar, FaStarHalfAlt } from 'react-icons/fa';
-
-const Details = ({ businessId }) => {
-  const [details, setDetails] = useState({
-    name: '',
-    imageURL: '',
-    category: '',
-    address: '',
-    rating: '',
-    remarks: ''
-  });
-
-  const [editedRemarks, setEditedRemarks] = useState('');
-  const [isEditing, setIsEditing] = useState(false);
-
-  const handleEdit = () => {
-    setEditedRemarks(details.remarks);
-    setIsEditing(true);
-  };
-
-  const handleSave = () => {
-    setDetails({ ...details, remarks: editedRemarks });
-    setIsEditing(false);
-  };
-
-  const [hasWent, setHasWent] = useState(false);
-
-  const handleWentChange = (e) => {
-    setHasWent(e.target.checked);
-=======
 import { useParams } from 'react-router-dom';
 import { getPOIDetails, updatePOIRemarks, updatePOIVisited  } from '../../api/wishlist/WishListApiService';
 import { FaCheck, FaEdit, FaStar, FaStarHalfAlt } from 'react-icons/fa';
@@ -68,33 +36,23 @@ const Details = () => {
       // If the update fails, revert the checkbox state
       setHasWent(!isChecked);
     }
->>>>>>> main
   };
 
   useEffect(() => {
     
     const fetchData = async () => {
       try {
-<<<<<<< HEAD
-        const res = await getPOIDetails();
-        setDetails(res.data);
-=======
         const res = await getPOIDetails(wishlistId, businessId);
         setDetails(res.data);
         setRemarks(res.data.remarks);
         setHasWent(res.data.visited);
->>>>>>> main
       } catch (error) {
         console.error('Error fetching details:', error);
       }
     };
 
     fetchData();
-<<<<<<< HEAD
-  }, [businessId]);
-=======
   }, [wishlistId, businessId]);
->>>>>>> main
 
   const renderStars = (rating) => {
     const starElements = [];
@@ -140,15 +98,9 @@ const Details = () => {
             <textarea
               className={`remarks-input ${isEditing ? 'editing' : ''}`}
               type="text"
-<<<<<<< HEAD
-              value={isEditing ? editedRemarks : details.remarks}
-              readOnly={!isEditing}
-              onChange={(e) => setEditedRemarks(e.target.value)}
-=======
               value={isEditing ? remarks : details.remarks}
               readOnly={!isEditing}
               onChange={(e) => setRemarks(e.target.value)}
->>>>>>> main
             />
             {isEditing && (
               <FaCheck className="tick-icon" onClick={handleSave} />
