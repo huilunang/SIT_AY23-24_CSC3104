@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByObjectId } from "../../api/wishlist/WishListApiService";
+import { getAllWishListItemByAlbumId, createWishListItem, deleteWishListItemByObjectId, getSuggestions } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -138,7 +138,7 @@ function WishList() {
                         className={"table-light"}
                     >
                         <td className="table-hover wishlistitem-cell"
-                        onClick={() => handleItemClick(wish.businessId)}>{wish.name}</td>
+                        onClick={() => handleItemClick(wish.businessId, wish.id)}>{wish.name}</td>
                         <td className="trash-can-cell" onClick={() => openDeleteModal(wish.id)} >
                             <FaTrash/>
                         </td>
