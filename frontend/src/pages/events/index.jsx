@@ -32,9 +32,9 @@ const EventPage = () => {
   return (
     <>
     <EventComponent updateEvent={(event) => setEvents(event)} updateParty={(party) => setParties(party)}/>
-    <div className="nav-link me-4" onClick={friendRequestApi}>
+    {/* <div className="nav-link me-4" onClick={friendRequestApi}>
       click me
-    </div>
+    </div> */}
     {[...events].reverse().map((event, index) => (
       <Card as={Row} key={index} style={{width: '100%'}}>
         <Card.Body className="ps-5 pe-5">

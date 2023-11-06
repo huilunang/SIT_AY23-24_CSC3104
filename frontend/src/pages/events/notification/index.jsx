@@ -188,7 +188,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       <ToastContainer
         className="p-3"
         // position="top-end"
-        style={{ zIndex: 1, top: 200, right: 0, height: "100px"}}
+        style={{ zIndex: 1, top: 150, right: 0, height: "100px"}}
       >   
       {[newNotifications].reverse().filter((newNotifications) => newNotifications.type === "event-request" || newNotifications.type === "friend-request" || newNotifications.type === "event" ).map((notification, index) => (
         <Toast onClose={() => setNewNotification(false)} show={newNotification} delay={3000} autohide>
@@ -253,7 +253,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
 
       <ToastContainer
           className="p-3"
-          style={{ zIndex: 1, top: 200, right: 0, height: "100px"}}
+          style={{ zIndex: 1, top: 150, right: 0, height: "100px"}}
         >
         <Toast onClose={() => { onClose(); resetCount(); }} show={isOpen} animation={false}>
           <Toast.Header>
@@ -265,7 +265,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
             <strong className="me-auto">Notification <Badge pill variant="primary">{count}</Badge></strong>
             <small></small>
           </Toast.Header>
-          <Toast.Body style={{ height: "650px", overflow: "scroll"}}>
+          <Toast.Body style={{ height: "650px", overflowY: "scroll"}}>
             <ListGroup variant="flush">
             {[...notifications].reverse().map((notification, index) => (
               <ListGroup.Item as={Row} key={index} style={{display:"flex", flexWrap:"nowrap", flexDirection:"row"}}>
