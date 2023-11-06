@@ -90,58 +90,11 @@ export function deleteWishListItemByBusinessId(businessId) {
   }
 }
 
-<<<<<<< HEAD
 // testing based on specific business ID
 export function getPOIDetails() {
   try {
     return apiClient.get("/api/v1/poi/rSRC0t8hLeTQsOzmgQfUEA");
-=======
-// autocomplete suggestions to add to wishlist
-export function getSuggestions(location, input) {
-  try {
-    return apiClient.get(`/api/v1/poi/suggestions?location=${location}&userInput=${input}`);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// retrieve business details
-export function getPOIDetails(wishlistId, businessId) {
-  try {
-    return apiClient.get(`/api/v1/poi/${wishlistId}/${businessId}`);
->>>>>>> main
   } catch (error) {
     console.log(error);
   }
 }
-<<<<<<< HEAD
-=======
-
-// update poi remarks
-export function updatePOIRemarks(wishlistId, businessId, remarks) {
-  try {
-    return apiClient.put(`/api/v1/poi/${wishlistId}/${businessId}/remarks`, { remarks } );
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// update poi visited
-export function updatePOIVisited(wishlistId, businessId, visited) {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json', 
-      }
-    };
-
-    return apiClient.put(
-      `/api/v1/poi/${wishlistId}/${businessId}/visited`,
-      visited,
-      config
-    );
-  } catch (error) {
-    console.error(error);
-  }
-}
->>>>>>> main
