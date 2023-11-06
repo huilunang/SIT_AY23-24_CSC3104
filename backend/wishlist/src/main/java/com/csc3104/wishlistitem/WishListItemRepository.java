@@ -11,10 +11,7 @@ public interface WishListItemRepository extends MongoRepository<WishListItem, Ob
     List<WishListItem> findAllByAlbumId(String albumId);
 
     WishListItem findByBusinessId(String businessId);
-<<<<<<< HEAD
-=======
 
     WishListItem findByIdAndBusinessId(String id, String businessId);
 
->>>>>>> main
 }
