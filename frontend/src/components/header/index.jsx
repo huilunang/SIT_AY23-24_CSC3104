@@ -25,11 +25,6 @@ function HeaderComponent() {
                     </Link>
                   </li>
                   <li className="nav-item fs-5">
-                    <Link className="nav-link" to="/todos">
-                      Events
-                    </Link>
-                  </li>
-                  <li className="nav-item fs-5">
                     <Link className="nav-link" to="/events">
                       Events
                     </Link>
