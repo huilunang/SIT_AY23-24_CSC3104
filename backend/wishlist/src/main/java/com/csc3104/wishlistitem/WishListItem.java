@@ -17,7 +17,6 @@ public class WishListItem {
     private String remarks;
     private boolean visited;
 
-
     public WishListItem(String name, String businessId, String albumId, String remarks, boolean visited) {
         this.name = name;
         this.businessId = businessId;
@@ -25,4 +24,5 @@ public class WishListItem {
         this.remarks = remarks;
         this.visited = visited;
     }
+
 }

@@ -34,7 +34,7 @@ export default function App() {
             {/* Routes to bypass authentication here */}
             <Route path="/gallery" element={<Gallery />}></Route>
             <Route path="wishlist/:id" element={<WishListPage />}></Route>
-            <Route path="poi/:id" element={<POIPage />}></Route>
+            <Route path="poi/:wishlistId/:businessId" element={<POIPage />}></Route>
             <Route path="randomizer" element={<RandomizerPage />}></Route>
             {/* Until here */}
             <Route path="/" element={<LoginPage />}></Route>

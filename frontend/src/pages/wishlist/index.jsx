@@ -49,10 +49,11 @@ function WishList() {
         }
     }
 
-    const handleItemClick = (businessId) => {
+    const handleItemClick = (businessId, wishlistId) => {
         if (businessId) {
+
             // const objectIdString = businessId.toString(); // Convert the ObjectId to a string
-            navigate(`/POI/${businessId}`);
+            navigate(`/poi/${wishlistId}/${businessId}`);
         }
       };
     
@@ -66,10 +67,8 @@ function WishList() {
         const input = e.target.value;
         setUserInput(input);
         try {
-            const response = await fetch(
-                `http://localhost:8080/api/v1/poi/suggestions?location=${location}&userInput=${input}`
-            );
-            const data = await response.json();
+            const response = await getSuggestions(location, input);
+            const data = response.data;
             setSuggestions(data);
             
             const keys = Object.keys(data);
@@ -171,6 +170,7 @@ function WishList() {
                     placeholder="Search for shops..."
                     value={userInput}
                     onChange={handleInputChange}
+                    autoComplete="off"
                     />
                     <br/>
                     <Form.Select onChange={(e) => handleSelect(e.target.value)}>
