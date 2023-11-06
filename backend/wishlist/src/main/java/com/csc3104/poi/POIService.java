@@ -169,7 +169,6 @@ public class POIService {
         poi.setCategory(categories);
         poi.setAddress(address);
         poi.setRating(rating);
-        poi.setRemarks("");
 
         return poi;
     }

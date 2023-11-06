@@ -63,7 +63,7 @@ export default function App() {
               }
             ></Route>
             <Route
-              path="/poi/:id"
+              path="poi/:wishlistId/:businessId"
               element={
                 <AuthenticatedRoute>
                   <POIPage />

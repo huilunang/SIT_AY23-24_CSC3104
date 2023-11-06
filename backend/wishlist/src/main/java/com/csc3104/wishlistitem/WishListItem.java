@@ -10,20 +10,20 @@ import lombok.Data;
 @Document(collection = "wishlist")
 public class WishListItem {
     @Id
-    private ObjectId id;
+    private String id;
     private String name;
     private String businessId;
     private String albumId;
     private String remarks;
     private boolean visited;
 
-
     public WishListItem(String name, String businessId, String albumId, String remarks, boolean visited) {
-        this.id = new ObjectId();
+        this.id = new ObjectId().toString();
         this.name = name;
         this.businessId = businessId;
         this.albumId = albumId;
         this.remarks = remarks;
         this.visited = visited;
     }
+
 }
