@@ -25,7 +25,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
 
   useEffect(() => {
     const email = localStorage.getItem("email");
-    const eventSource = new EventSource(`http://localhost:8082/notification/stream?to=${email}`);
+    const eventSource = new EventSource(`http://localhost:8083/notification/stream?to=${email}`);
     
     eventSource.onmessage = (event) => {
       // Use the functional update to ensure all notifications are included

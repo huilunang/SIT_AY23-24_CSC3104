@@ -1,14 +1,20 @@
-server.port: 8080
+server:
+  port: 8082
+spring:
+  data:
+    mongodb:
+      database: travelexp
+      host: wishlist-mongodb
+      port: 27017
+      username: csc3104
+      password: csc3104
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
 
-spring.data.mongodb.database=travelexp
-spring.data.mongodb.host=localhost
-spring.data.mongodb.port=27017
 # spring.data.mongodb.username=${env.MONGO_ROOT_USER}
 # spring.data.mongodb.password=${env.MONGO_ROOT_PASSWORD}
-
-# Multipart Properties
-spring.servlet.multipart.max-file-size=100MB
-spring.servlet.multipart.max-request-size=100MB
 
 # Yelp Fusion API Configuration
 # api.baseurl=https://api.yelp.com/v3
