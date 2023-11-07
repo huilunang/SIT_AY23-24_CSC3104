@@ -70,6 +70,29 @@ services:
       MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - ./db:/docker-entrypoint-initdb.d
+  friends:
+    build:
+      context: backend
+      dockerfile: ./friends/Dockerfile
+    restart: always
+    ports:
+      - "8084:8084"
+    depends_on:
+      - friends-mongodb
+  friends-mongodb:
+    image: mongo
+    restart: always
+    container_name: friends-mongodb
+    ports:
+      - ${MONGO_FRIENDS_PORT}:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+      MONGO_DB_USER: ${MONGO_USER}
+      MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d
   client:
     build:
       context: frontend

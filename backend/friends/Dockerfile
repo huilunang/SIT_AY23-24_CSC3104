@@ -1,14 +1,20 @@
-# Use a base image with Java pre-installed
-FROM openjdk:17-jdk
+FROM maven:3.9.5-eclipse-temurin-21-alpine AS build
 
-# Set the working directory inside the container
-WORKDIR /backend
+WORKDIR /app
 
-# Copy the built JAR file from your Spring Boot application
-COPY target/friends-0.0.1-SNAPSHOT.jar friends.jar
+COPY pom.xml .
 
-# Expose the port the Spring Boot app runs on
-EXPOSE 8083
+WORKDIR /app/friends
 
-# Command to run the Spring Boot application
-CMD ["java", "-jar", "friends.jar"]
+COPY ./friends/pom.xml .
+COPY ./friends/src ./src
+
+RUN mvn clean package
+
+FROM openjdk:21-slim
+
+WORKDIR /app
+
+COPY --from=build /app/friends/target/friends-1.0-SNAPSHOT.jar ./friends-1.0-SNAPSHOT.jar
+
+ENTRYPOINT ["java", "-jar", "friends-1.0-SNAPSHOT.jar"]

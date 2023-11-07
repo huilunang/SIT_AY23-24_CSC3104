@@ -44,7 +44,7 @@ public class FriendService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
 
-        String url = "http://localhost:9191/api/v1/user/{email}";
+        String url = "http://account:8081/api/v1/user/{email}";
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class, email);
@@ -69,7 +69,7 @@ public class FriendService {
 
     public Map<String, Map<String, Object>> listFriends(List<String> friends, String token) throws JsonProcessingException {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
-        String url = "http://localhost:9191/api/v1/user/";
+        String url = "http://account:8081/api/v1/user/";
 
         // Set up the headers
         HttpHeaders headers = new HttpHeaders();
@@ -226,7 +226,7 @@ public class FriendService {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token); // Assuming it's a Bearer token
 
-        String url = "http://localhost:9191/api/v1/user/";
+        String url = "http://account:8081/api/v1/user/";
 
         for (Friend friend : friends) {
             Map<String, Object> attributes = new HashMap<>();
