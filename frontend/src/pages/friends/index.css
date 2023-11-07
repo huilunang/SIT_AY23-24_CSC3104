@@ -1,0 +1,206 @@
+/* index.css */
+
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Search dropdown styles */
+
+
+
+/* Container styles */
+.FriendPage {
+  padding: 20px;
+}
+
+/* Heading styles */
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Search bar styles */
+.friends-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.friends-section h2 {
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-bar h2 {
+  margin-right: 20px;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+.no-mapping-message {
+  padding: 10px 20px;
+  border: 1px solid grey;
+  border-radius: 5px;
+
+}
+
+.search-dropdown {
+  position: absolute;
+  display: none;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  z-index: 1;
+  padding: 10px;
+  top: calc(100%);
+  left: 13.5%;
+}
+
+.search-dropdown.show {
+  display: block;
+}
+
+.search-message {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  margin-left: 10px; 
+}
+
+.search-message-green {
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+  margin-left: 10px; 
+  color: green;
+  font-weight: bold;
+}
+
+/* CSS for the red search message */
+.search-message-red {
+  padding: 10px;
+  border-radius: 5px;
+  width: 300px;
+  margin-left: 10px; 
+  color: red;
+  font-weight: bold;
+}
+
+input[type="text"] {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px; /* Create space between the input and button */
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Friend grid styles */
+.friend-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+/* ... (previous styles) */
+
+.friend-box {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  margin-bottom: 0; /* Remove margin between friend boxes */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.friend-box p {
+  font-weight: bold;
+  margin: 0;
+  flex: 1; /* Allow the name to take up available space */
+}
+
+.friend-box button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ... (other styles remain the same) */
+
+/* Friend requests styles */
+.request-box {
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  margin-bottom: 0; /* Remove margin between request boxes */
+  display: flex;
+  justify-content: space-between; /* Align the text to the left and buttons to the right */
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.request-box p {
+  font-weight: bold;
+  margin: 0; /* Remove top and bottom margin */
+  flex: 1; /* Allow the text to take up available space */
+  text-align: left;
+}
+
+.request-box button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.request-box button.accept {
+  background-color: #28a745;
+  color: white;
+}
+
+.request-box button.reject {
+  background-color: #dc3545;
+  color: white;
+}
+
