@@ -14,7 +14,7 @@
 
 	<name>account</name>
 	<!-- FIXME change it to the project's website -->
-	<url>http://www.example.com</url>
+	<url>http://localhost:8081/</url>
 
 	<properties>
 		<java.version>21</java.version>
@@ -80,6 +80,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>3.0.12</version>
 				<executions>
 					<execution>
 						<goals>
