@@ -1,0 +1,47 @@
+/* style.css */
+
+.container {
+    padding: 20px;
+  }
+  
+  .container h1 {
+    text-align: center;
+  }
+  
+  .container button {
+    margin-bottom: 20px;
+  }
+  
+  .card-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .card {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+  
+  .card img {
+    width: 400px;
+    height: 300px;
+  }
+  
+  .card p {
+    margin: 5px 0;
+  }
+  
+  .curated-categories {
+    margin-top: 50px;
+  }
+  
+  .curated-categories ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .curated-categories li {
+    margin: 5px 0;
+  }
+  

@@ -44,18 +44,19 @@ function WishList() {
   const handleRefreshForNearby = async () => {
     try {
       const response = await getListOfPOIDetailsByNearby(userCoordinates);
-      setData(response.data);
-
+      const selectedPOIs = selectRandomItems(response.data, 3);
+      setCuratedPOIListNearby(selectedPOIs);
     } catch (error) {
       console.error(error);
     }
   };
-
+  
   const handleRefreshForCategory = async () => {
     try {
       console.log(curatedCategories);
       const response = await getListOfPOIDetailsByCategories(curatedCategories, userCoordinates);
-      setData(response.data);
+      const selectedPOIs = selectRandomItems(response.data, 3);
+      setCuratedPOIListCategory(selectedPOIs);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +97,7 @@ function WishList() {
   useEffect(() => {
     if (data.length > 0) {
       const selectedPOIs = selectRandomItems(data, 3);
-      setCuratedPOIListNearby(selectedPOIs);
+      // setCuratedPOIListNearby(selectedPOIs);
     }
   }, [data]);
 
@@ -135,6 +136,8 @@ function WishList() {
     let curatedCategories = Object.keys(categoryCount).sort((a, b) => categoryCount[b] - categoryCount[a]).slice(0, 4);
 
     setCuratedCategories(curatedCategories);
+    // handleRefreshForCategory();
+    // handleRefreshForNearby();
   };
 
   // User Interface
