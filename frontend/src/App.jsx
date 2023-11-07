@@ -51,7 +51,7 @@ export default function App() {
               path="/friends"
               element={
                 <AuthenticatedRoute>
-                  <GalleryPage />
+                  <FriendsPage />
                 </AuthenticatedRoute>
               }
             ></Route>

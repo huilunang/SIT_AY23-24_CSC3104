@@ -10,6 +10,7 @@ import {
   removeFriendRequest,
   removeFriend,
 } from "../../api/friends/FriendsApiService";
+import CustomNavbar from "../../components/navbar";
 // import { friendRequest } from "../../../api/notification/NotificationApiService"; (For notifications)
 
 function FriendsPage() {
@@ -242,6 +243,8 @@ function FriendsPage() {
   }, []);
 
   return (
+    <>
+    <CustomNavbar/>
     <div className="FriendPage">
       <div className="friends-section">
         <div className="search-bar">
@@ -317,7 +320,9 @@ function FriendsPage() {
         </div>
       )}
     </div>
+    </>
   );
+  
 }
 
 export default FriendsPage;
