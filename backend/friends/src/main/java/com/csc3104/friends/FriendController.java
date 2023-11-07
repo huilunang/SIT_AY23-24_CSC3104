@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,16 +23,17 @@ public class FriendController {
     @GetMapping("/getFriends")
     public ResponseEntity<List<String>> getFriends(@RequestParam String email) {
         List<String> friends = friendService.getFriends(email);
-        if (friends != null) {
-            return ResponseEntity.ok(friends);
-        } else {
-            return ResponseEntity.notFound().build();
+        if (friends == null) {
+            ArrayList<String> thisList = new ArrayList<>();
+            return ResponseEntity.ok(thisList);
         }
+        return ResponseEntity.ok(friends);
     }
 
     @GetMapping("/getUsersByName")
     public ResponseEntity<Map<String, Map<String, Object>>> getUsersByName(@RequestParam String email) throws JsonProcessingException {
-        Map<String, Map<String, Object>> users  = friendService.getUsersFromName(email);
+        String token = retrieveTokenFromRequest();
+        Map<String, Map<String, Object>> users  = friendService.getUsersFromName(email, token);
         if (users != null) {
             return ResponseEntity.ok(users);
         } else {
@@ -40,7 +43,8 @@ public class FriendController {
 
     @PostMapping("/listFriends")
     public ResponseEntity<Map<String, Map<String, Object>>> listFriends(@RequestBody List<String> friends) throws JsonProcessingException {
-        Map<String, Map<String, Object>> result = friendService.listFriends(friends);
+        String token = retrieveTokenFromRequest();
+        Map<String, Map<String, Object>> result = friendService.listFriends(friends, token);
         return ResponseEntity.ok(result);
     }
 
@@ -93,13 +97,14 @@ public class FriendController {
 
     @GetMapping("/listFriendRequests")
     public ResponseEntity<Map<String, Map<String, Object>>> listFriendRequests(@RequestParam String email) throws JsonProcessingException {
-        Map<String, Map<String, Object>> result = friendService.listFriendRequests(email);
+        String token = retrieveTokenFromRequest();
+        Map<String, Map<String, Object>> result = friendService.listFriendRequests(email, token);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/test")
-    public int getFriends() {
-        return 4;
+    private String retrieveTokenFromRequest() {
+        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
+        return attr.getRequest().getHeader("Authorization");
     }
 }
 

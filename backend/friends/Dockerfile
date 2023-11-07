@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk
 
 # Set the working directory inside the container
-WORKDIR /friends
+WORKDIR /backend
 
 # Copy the built JAR file from your Spring Boot application
 COPY target/friends-0.0.1-SNAPSHOT.jar friends.jar

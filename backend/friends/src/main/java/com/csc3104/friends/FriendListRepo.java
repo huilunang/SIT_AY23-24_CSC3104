@@ -6,6 +6,6 @@ import java.util.List;
 @Repository
 public interface FriendListRepo extends MongoRepository<FriendList, String>{
 
-    FriendList findFriendsByEmail(String email);
+    FriendList findFriendListByEmail(String email);
 
 }

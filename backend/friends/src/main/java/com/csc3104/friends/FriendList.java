@@ -1,19 +1,26 @@
 package com.csc3104.friends;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@Data
 @Document(collection = "friendlist")
 public class FriendList {
     @Id
-    @Field("id")
-    private int id;
-    private List<String> friends;
+    @Field("email")
     private String email;
+    @Field("friends")
+    private List<String> friends;
 
+    public FriendList() {
+        this.friends = new ArrayList<>(); // Initialize the blank list as an empty ArrayList
+    }
     public List<String> getFriends() {
         return friends;
     }

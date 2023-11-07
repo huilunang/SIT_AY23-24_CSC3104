@@ -153,7 +153,7 @@ function FriendsPage() {
     makeFriendRequest(userEmail)
       .then((response) => {
         successfulResponse(response);
-        if (response === true) {
+        if (response.data === true) {
           setSearchMessage("Friend request sent successfully");
         } else {
           setSearchMessage("Failed to send friend request");
@@ -168,6 +168,7 @@ function FriendsPage() {
       .catch((error) => errorResponse(error))
       .finally(() => console.log("Map API cleanup"));
   }
+  
 
   // Remove your friend >:((
   function handleRemoveFriend(friendId) {
@@ -296,7 +297,7 @@ function FriendsPage() {
           )}
         </div>
       </div>
-
+      <br></br>
       <h2>Pending</h2>
       {Object.keys(friendRequests).length === 0 ? (
         <div className="no-mapping-message">
