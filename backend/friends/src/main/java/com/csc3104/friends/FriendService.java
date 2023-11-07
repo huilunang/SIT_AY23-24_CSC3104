@@ -39,7 +39,7 @@ public class FriendService {
         String url = "http://localhost:9191/api/v1/user/";
         Map<String, String> params = new HashMap<>();
         params.put("email", email);
-        ResponseEntity<String> response = restTemplate.getForEntity(url + "?param1={param1}", String.class, params);
+        ResponseEntity<String> response = restTemplate.getForEntity(url + "{param1}", String.class, params);
         String responseBody = response.getBody();
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonNode = objectMapper.readTree(responseBody);
@@ -67,7 +67,7 @@ public class FriendService {
             // Make API call to accounts
             Map<String, String> params = new HashMap<>();
             params.put("email", email);
-            ResponseEntity<String> response = restTemplate.getForEntity(url + "?param1={param1}", String.class, params);
+            ResponseEntity<String> response = restTemplate.getForEntity(url + "{param1}", String.class, params);
             String responseBody = response.getBody();
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(responseBody);
@@ -184,7 +184,7 @@ public class FriendService {
             Map<String, Object> attributes = new HashMap<>();
             Map<String, String> params = new HashMap<>();
             params.put("email", friend.getSender());
-            ResponseEntity<String> response = restTemplate.getForEntity(url + "?param1={param1}", String.class, params);
+            ResponseEntity<String> response = restTemplate.getForEntity(url + "{param1}", String.class, params);
             String responseBody = response.getBody();
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(responseBody);
