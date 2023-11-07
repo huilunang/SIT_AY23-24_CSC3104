@@ -1,13 +1,12 @@
 server:
-  port: 8082
-
+  port: 8083
 spring:
   application:
     name: notification
   data:
     mongodb:
-      database: travelexp_db
-      host: localhost
+      database: travelexp
+      host: notification-mongodb
       port: 27017
       username: csc3104
       password: csc3104
