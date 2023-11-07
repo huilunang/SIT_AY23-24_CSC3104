@@ -9,6 +9,7 @@ import WishListPage from "./pages/wishlist";
 import POIPage from "./pages/poi";
 import RandomizerPage from "./pages/randomizer";
 import EventPage from "./pages/events";
+import FriendsPage from "./pages/friends";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
@@ -46,7 +47,14 @@ export default function App() {
                 isAuthenticated ? <Navigate to="/gallery" /> : <RegisterPage />
               }
             ></Route>
-
+            <Route
+              path="/friends"
+              element={
+                <AuthenticatedRoute>
+                  <FriendsPage />
+                </AuthenticatedRoute>
+              }
+            ></Route>
             <Route
               path="/gallery"
               element={
