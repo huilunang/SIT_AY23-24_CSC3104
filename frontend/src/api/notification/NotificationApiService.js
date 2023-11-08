@@ -184,8 +184,8 @@ export function friendRequest(member, notify, type, status) {
     return notificationClient.post(
       `/notification/friend-request`,
       {
-        owner: owner,
-        member: member,
+        owner: member,
+        member: email,
         type: type,
         notify: notify,
         status: status,

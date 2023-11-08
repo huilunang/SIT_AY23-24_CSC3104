@@ -142,6 +142,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   // This will update both friends and friend details
   async function handleAcceptFriendRequest(senderEmail) {
     try {
+      console.log('s'+senderEmail)
       const response = await addFriend(senderEmail);
       successfulFriendRequestResponse(response);
       setFriends((prevFriends) => [...prevFriends, senderEmail]);
@@ -285,11 +286,10 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
-    handleAcceptFriendRequest(member);
+    handleAcceptFriendRequest(owner);
     try {
       await friendRequest(
         owner,
-        member,
         notify,
         type + "-" + "accepted",
         status
@@ -318,11 +318,10 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
-    handleRejectFriendRequest(member);
+    handleRejectFriendRequest(owner);
     try {
       await friendRequest(
         owner,
-        member,
         notify,
         type + "-" + "rejected",
         status
