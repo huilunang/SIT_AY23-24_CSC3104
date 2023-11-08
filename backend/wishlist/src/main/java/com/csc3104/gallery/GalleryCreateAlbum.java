@@ -8,10 +8,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class GalleryCreateAlbum extends Gallery {
+    private String email;
     private ObjectId imageId;
 
-    public GalleryCreateAlbum(String title, ObjectId imageId) {
+    public GalleryCreateAlbum(String title, String email, ObjectId imageId) {
         super(title);
+        this.email = email;
         this.imageId = imageId;
     }
 }

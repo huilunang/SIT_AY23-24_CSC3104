@@ -24,31 +24,33 @@ public class GalleryController {
     @Autowired
     private GalleryService galleryService;
 
-    @GetMapping
-    public ResponseEntity<List<GalleryCreateImage>> getAllGallery() {
-        return new ResponseEntity<List<GalleryCreateImage>>(galleryService.allGallery(), HttpStatus.OK);
+    @GetMapping("/{email}")
+    public ResponseEntity<List<GalleryCreateImage>> getAllGallery(@PathVariable String email) {
+        return new ResponseEntity<List<GalleryCreateImage>>(galleryService.allGallery(email), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/album/{id}")
     public ResponseEntity<GalleryCreateImage> getOneGallery(@PathVariable String id) {
         return new ResponseEntity<GalleryCreateImage>(galleryService.oneGallery(id),
                 HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/album/create")
     public ResponseEntity<GalleryCreateAlbum> createGallery(@RequestParam("title") String title,
+            @RequestParam("email") String email,
             @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-        return new ResponseEntity<GalleryCreateAlbum>(galleryService.addGallery(title, imageFile), HttpStatus.CREATED);
+        return new ResponseEntity<GalleryCreateAlbum>(galleryService.addGallery(title, email, imageFile),
+                HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/album/{id}")
     public ResponseEntity<String> updateGallery(@PathVariable String id,
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) throws IOException {
         return new ResponseEntity<String>(galleryService.updateGallery(id, title, imageFile), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/album/{id}")
     public ResponseEntity<String> deleteGallery(@PathVariable String id) {
         return new ResponseEntity<String>(galleryService.deleteGallery(id), HttpStatus.OK);
     }
