@@ -1,10 +1,12 @@
 package com.csc3104.wishlistitem;
 
+import java.util.List;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.mongodb.repository.Query;
-import java.util.List;
+import org.springframework.stereotype.Repository;
+
 @Repository
 public interface WishListItemRepository extends MongoRepository<WishListItem, ObjectId> {
     @Query("{ 'albumId' : ?0 }")

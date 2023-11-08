@@ -66,7 +66,7 @@ function Handler(state) {
     e.preventDefault();
 
     const image =
-      state.preview.get !== null ? state.preview.get : formdata.get.imageFile;
+      state.preview.get !== undefined ? state.preview.get : formdata.get.imageFile;
 
     try {
       const res = await updateGallery(
