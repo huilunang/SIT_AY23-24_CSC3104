@@ -9,7 +9,7 @@ import WishListPage from "./pages/wishlist";
 import POIPage from "./pages/poi";
 import RandomizerPage from "./pages/randomizer";
 import EventPage from "./pages/events";
-
+import HeaderComponent from "./components/header";
 import AuthProvider from "./security/AuthContext.jsx";
 
 function AuthenticatedRoute({ children }) {
