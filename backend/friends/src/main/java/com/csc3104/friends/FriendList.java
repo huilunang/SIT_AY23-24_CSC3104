@@ -1,4 +1,5 @@
 package com.csc3104.friends;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -37,4 +38,3 @@ public class FriendList {
         this.email = email;
     }
 }
-

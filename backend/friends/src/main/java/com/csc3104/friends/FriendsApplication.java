@@ -1,4 +1,5 @@
 package com.csc3104.friends;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,4 +23,3 @@ public class FriendsApplication {
 		};
 	}
 }
-

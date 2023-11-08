@@ -1,6 +1,5 @@
 package com.csc3104.security;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -12,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -34,17 +32,15 @@ public class JwtService {
 
     public String generateToken(
             Map<String, Object> extraClaims,
-            UserDetails userDetails
-    ) {
-        //    @Value("${application.security.jwt.expiration}")
+            UserDetails userDetails) {
+        // @Value("${application.security.jwt.expiration}")
         long jwtExpiration = 86400000;
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
     public String generateRefreshToken(
-            UserDetails userDetails
-    ) {
-        //    @Value("${application.security.jwt.refresh-token.expiration}")
+            UserDetails userDetails) {
+        // @Value("${application.security.jwt.refresh-token.expiration}")
         long refreshExpiration = 604800000;
         return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
@@ -52,8 +48,7 @@ public class JwtService {
     private String buildToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails,
-            long expiration
-    ) {
+            long expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
@@ -87,7 +82,7 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        //    @Value("${application.security.jwt.secret-key}")
+        // @Value("${application.security.jwt.secret-key}")
         String secretKey = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);

@@ -15,12 +15,12 @@ public class NotificationApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(NotificationApplication.class, args);
 	}
-	
-    @Override
-    public void run(String... args) throws Exception {
-    }  
 
-  @Bean
+	@Override
+	public void run(String... args) throws Exception {
+	}
+
+	@Bean
 	public WebMvcConfigurer corsConfigurer() {
 		return new WebMvcConfigurer() {
 			public void addCorsMappings(CorsRegistry registry) {
