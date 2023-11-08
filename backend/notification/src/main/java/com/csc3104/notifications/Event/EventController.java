@@ -3,6 +3,12 @@ package com.csc3104.notifications.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -53,5 +59,31 @@ public class EventController {
                 status));
 
         return ResponseEntity.ok("Event created : " + key);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<String> getUserData(@RequestHeader("Authorization") String token, @RequestParam("email") String email) {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", token); // Replace with your actual token
+
+            HttpEntity<String> entity = new HttpEntity<>(headers);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(
+                "http://account:8081/api/v1/user/" + email, 
+                HttpMethod.GET, 
+                entity, 
+                String.class
+            );
+
+            // Retrieve the response body
+            String response = responseEntity.getBody();
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            e.printStackTrace(); // Log the exception
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
     }
 }

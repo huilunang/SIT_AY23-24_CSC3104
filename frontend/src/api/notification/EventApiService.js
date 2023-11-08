@@ -1,5 +1,19 @@
 import { eventClient } from "./ApiClient";
 
+export function getUserName(email) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  return eventClient.get(
+    `/events/user?email=${email}`,
+    {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    }
+  ); 
+}
+
 export function getAllEvents() {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");

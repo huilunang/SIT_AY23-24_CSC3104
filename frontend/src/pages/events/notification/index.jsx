@@ -2,10 +2,16 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 
 import { pushEvent } from "../../../api/notification/EventApiService";
+
 import { getAllNotifications } from "../../../api/notification/NotificationApiService";
 import { scheduleInviteNotification } from "../../../api/notification/NotificationApiService";
 import { eventInviteNotification } from "../../../api/notification/NotificationApiService";
 import { friendRequest } from "../../../api/notification/NotificationApiService";
+
+import { addFriend } from "../../../api/friends/FriendsApiService";
+import { removeFriendRequest } from "../../../api/friends/FriendsApiService";
+
+import { getUserName } from "../../../api/notification/EventApiService";
 
 import Toast from "react-bootstrap/Toast";
 import ToastContainer from "react-bootstrap/ToastContainer";
@@ -32,7 +38,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     eventSource.onmessage = (event) => {
       // Use the functional update to ensure all notifications are included
       let content = JSON.parse(event.data);
-      console.log(content);
+      // content.owner = getUser(content.owner);
+      // content.member = getUser(content.member);
       setNotifications((prevNotifications) => [...prevNotifications, content]); // All past notification
       setNewNotifications(content); // Popup when arrived-notification
       setCount((prevCount) => prevCount + 1); // Count unread notification
@@ -51,7 +58,15 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       .catch((error) => errorResponse(error))
       .finally(() => console.log("Notifications Loaded"));
 
-    function successfulResponse(content) {
+    async function successfulResponse(content) {
+      // console.log(content)
+      if (content.length > 0){
+        for (let i = 0; i < content.length; i++) {
+          let user = await getUser(content[i].owner);
+          content[i].owner = user.firstname + " " + user.lastname;
+          content[i].member = user.firstname + " " + user.lastname;
+        }
+      }
       setNotifications(content);
 
       // Count the number of unread notifications
@@ -77,6 +92,16 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
 
   function errorResponse(error) {
     console.log(error);
+  }
+
+  async function getUser (email) {
+    try {
+      const response = await getUserName(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
   }
 
   const refreshNotification = async () => {
@@ -241,6 +266,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
+    handleAcceptFriendRequest(member);
     try {
       await friendRequest(
         owner,
@@ -273,6 +299,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
+    handleRejectFriendRequest(member);
     try {
       await friendRequest(
         owner,
