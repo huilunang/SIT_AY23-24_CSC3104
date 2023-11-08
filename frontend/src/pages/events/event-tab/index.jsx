@@ -4,10 +4,10 @@ import { Link, Outlet } from "react-router-dom";
 import { IoNotifications } from "react-icons/io5";
 import { IoAddCircle } from "react-icons/io5";
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Badge from 'react-bootstrap/Badge';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Badge from "react-bootstrap/Badge";
 
 import { EventModal } from "../event-modal";
 
@@ -15,94 +15,181 @@ import Notification from "../notification";
 
 import { readAllNotifications } from "../../../api/notification/NotificationApiService";
 
-import { getAllEvents } from "../../../api/notification/EventApiService";
+import { getAllEvents, getUserName } from "../../../api/notification/EventApiService";
 import { getAllParty } from "../../../api/notification/EventApiService";
 
 const EventComponent = ({ updateEvent, updateParty }) => {
-    const [notificationCount, setNotificationCount] = useState(0); // Initialize the count to 0
-    const [isNotificationOpen, setNotificationOpen] = useState(false);
+  const [notificationCount, setNotificationCount] = useState(0); // Initialize the count to 0
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
 
-    const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const parties = [];
 
-    const getEvent = async () => {
-        getAllEvents()
-          .then((response) => successfulResponse(response.data))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("Current Event Loaded"));
-    
-        async function successfulResponse(content) { 
-          const partyPromises = content.map((event) => getParty(event.key));
-          await Promise.all(partyPromises); // Wait for all getParty calls to complete
+  function successfulResponse(response) {
+    // console.log("successful. here's data " + JSON.stringify(response.data));
+  }
 
-          updateEvent(content);
-        }
-    
-        function errorResponse(error) {
-          console.log(error);
-        }
-      };
-    
-      const getParty = async (key) => {
-        try {  
-          const response = await getAllParty(key);
-          const content = response.data;
-          updateParty([...content]); // Update the parent component's state
-          console.log(content)
-        } catch (error) {
-          console.error("An error occurred:", error);
-          // Handle errors as needed
-        }
-      };
-      
-    useEffect(() =>{
-        getEvent();
-    }, []);
-    
-    const openNotification = () => {
-        setNotificationOpen(true);
-        getEvent();
-    };
-    
-    const closeNotification = () => {
-        setNotificationOpen(false);
-        setNotificationCount(0);
-        readAllNotifications()
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error))
-        .finally(() => console.log("read"));
+  function errorResponse(error) {
+    console.log(error);
+  }
 
-        getEvent();
-    };
-    
-    const openModal = () => {
-        setModalOpen(true);
-    };
-    
-    const closeModal = () => {
-        setModalOpen(false);
-        getEvent();
-    };
+  async function getUser(email) {
+    try {
+      const response = await getUserName(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
+  }
 
-    return (
-        <>
-        <Navbar expand="lg" className="bg-body-tertiary">
-        <Container style={{flexWrap:"nowrap" }}>
-          <Navbar.Brand style={{ width:"50%", fontWeight: 'bold', fontSize: '34px' }}>Events</Navbar.Brand>
-          <Nav className="me-auto" style={{width:"50%", flexDirection:"row-reverse", flexWrap:"nowrap", gap:"10px" }}>
+  async function fetchEvent() {
+    try {
+      const response = await getAllEvents();
+      const content = response.data;
+
+      const updatedContent = await Promise.all(
+        content.map(async (item) => {
+          const user = await getUser(item.owner);
+          item.ownername = user.firstname + " " + user.lastname;
+
+          const invitees = item.invites.split(",").map((invite) => invite.trim());
+
+          const inviteePromises = invitees.map(async (invite) => {
+            const user = await getUser(invite);
+            return { email: invite, name: user.firstname + " " + user.lastname };
+          });
+
+          const inviteeData = await Promise.all(inviteePromises);
+
+          item.invitation = inviteeData;
+
+          return item; // Return the updated content
+        })
+      )
+
+      const promises = content.map((event) => fetchParty(event.key));
+      const parties = await Promise.all(promises);
+
+      const uniquePartyMap = new Map();
+      parties.forEach((party) => {
+        party.forEach((item) => {
+          uniquePartyMap.set(item.id, item);
+        });
+      });
+      const uniquePartyArray = Array.from(uniquePartyMap.values());
+      updateEvent(updatedContent);
+      updateParty(uniquePartyArray);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
+  async function fetchParty(key) {
+    try{
+
+    const response = await getAllParty(key);
+    const content = response.data;
+
+    const updatedContent = await Promise.all(
+      content.map(async (item) => {
+        const user = await getUser(item.member);
+        item.membername = user.firstname + " " + user.lastname;
+        return item;
+      })
+    );
+
+    return updatedContent;
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
+  const openNotification = () => {
+    setNotificationOpen(true);
+    setNotificationCount(0);
+    readAllNotifications()
+      .then((response) => successfulResponse(response))
+      .catch((error) => errorResponse(error))
+      .finally(() => console.log("read"));
+    fetchEvent();
+  };
+
+  const closeNotification = () => {
+    setNotificationOpen(false);
+    setNotificationCount(0);
+    readAllNotifications()
+      .then((response) => successfulResponse(response))
+      .catch((error) => errorResponse(error))
+      .finally(() => console.log("read"));
+    fetchEvent();
+  };
+
+  const openModal = () => {
+    setModalOpen(true);
+    fetchEvent();
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    fetchEvent();
+  };
+
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+
+  return (
+    <>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container style={{ flexWrap: "nowrap" }}>
+          <Navbar.Brand
+            style={{ width: "50%", fontWeight: "bold", fontSize: "34px" }}
+          >
+            Events
+          </Navbar.Brand>
+          <Nav
+            className="me-auto"
+            style={{
+              width: "50%",
+              flexDirection: "row-reverse",
+              flexWrap: "nowrap",
+              gap: "10px",
+            }}
+          >
             <Link className="nav-link me-4" onClick={openModal}>
-                <IoAddCircle style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/>
-            </Link>            
-            <Link className="nav-link" onClick={openNotification}>
-                <IoNotifications style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/> <Badge pill variant="primary">{notificationCount}</Badge>
+              <IoAddCircle
+                style={{
+                  fontSize: "30px",
+                  fill: "#000000",
+                  fillOpacity: "54%",
+                }}
+              />
             </Link>
-          </Nav>            
+            <Link className="nav-link" onClick={openNotification}>
+              <IoNotifications
+                style={{
+                  fontSize: "30px",
+                  fill: "#000000",
+                  fillOpacity: "54%",
+                }}
+              />{" "}
+              <Badge pill variant="primary">
+                {notificationCount}
+              </Badge>
+            </Link>
+          </Nav>
         </Container>
-        </Navbar>
-        <Outlet />  
-        <Notification isOpen={isNotificationOpen} onClose={closeNotification} updateNotificationCount={(count) => setNotificationCount(count)}/>
-        <EventModal isOpen={isModalOpen} onClose={closeModal}/>
-        </>    
-    )
-}
+      </Navbar>
+      <Outlet />
+      <Notification
+        isOpen={isNotificationOpen}
+        onClose={closeNotification}
+        updateNotificationCount={(count) => setNotificationCount(count)}
+      />
+      <EventModal isOpen={isModalOpen} onClose={closeModal} />
+    </>
+  );
+};
 
 export default EventComponent;

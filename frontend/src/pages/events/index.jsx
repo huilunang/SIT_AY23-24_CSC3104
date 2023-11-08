@@ -6,28 +6,21 @@ import Card from "react-bootstrap/Card";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 
-import { friendRequest } from "../../api/notification/NotificationApiService";
 import CustomNavbar from "../../components/navbar";
 
 const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [parties, setParties] = useState([]);
 
-  // This is a test to send friend requests notification. (To remove later)
-  async function friendRequestApi() {
-    try {
-      const email = localStorage.getItem("email");
-
-      await friendRequest("", email, "false", "friend-request", "requested")
-        .then((response) => successfulResponse(response))
-        .catch((error) => errorResponse(error))
-        .finally(() => console.log("cleanup"));
-    } catch (error) {
-      console.error("An error occurred:", error);
-    }
+  function isAccepted(key, invitee) {
+    // Check if invitee exists in the parties array with membername
+    return parties.some((party) => key === party.key && party.member === invitee.email);
   }
-
-  useEffect(() => {}, []);
+    
+  function getMemberName(key, invitee) {
+    const matchingParty = parties.find((party) => key === party.key && party.member === invitee.email);
+    return matchingParty ? matchingParty.membername : invitee.name;
+  }
 
   return (
     <>
@@ -36,9 +29,6 @@ const EventPage = () => {
         updateEvent={(event) => setEvents(event)}
         updateParty={(party) => setParties(party)}
       />
-      {/* <div className="nav-link me-4" onClick={friendRequestApi}>
-      click me
-    </div> */}
       {[...events].reverse().map((event, index) => (
         <Card as={Row} key={index} style={{ width: "100%" }}>
           <Card.Body className="ps-5 pe-5">
@@ -49,26 +39,37 @@ const EventPage = () => {
                 </Card.Title>
                 <Card.Text>
                   <>
-                    Creator: {event.owner}
+                    Creator: {event.ownername}
                     <br />
-                    Date: {event.description}
+                    Date: {event.date}
                     <br />
                     Time: {event.time}
                     <br />
                     Description: {event.description}
                     <br />
-                    Party: {event.invites}
-                    <br />
-                    Accepted:&nbsp;
-                    {parties
-                      .filter(
-                        (party) =>
-                          event.key === party.key &&
-                          event.member == party.member
-                      )
-                      .map((party) => (
-                        <span key={party.key}>{party.member}&nbsp;</span>
-                      ))}
+                    Party:{" "}
+                    <span
+                      key={index}
+                      style={{
+                        color: "green",
+                        // textDecoration: "underline"
+                        fontWeight: 500
+                      }}
+                    >
+                      {event.ownername}
+                    </span>
+                    {event.invitation.map((invitee, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          color: isAccepted(event.key, invitee)
+                            ? "green"
+                            : "grey",
+                        }}
+                      >
+                        , {getMemberName(event.key, invitee)}
+                      </span>
+                    ))}
                     <br />
                     Notify: {event.notify}
                   </>
