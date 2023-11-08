@@ -15,7 +15,7 @@ import Notification from "../notification";
 
 import { readAllNotifications } from "../../../api/notification/NotificationApiService";
 
-import { getAllEvents } from "../../../api/notification/EventApiService";
+import { getAllEvents, getUserName } from "../../../api/notification/EventApiService";
 import { getAllParty } from "../../../api/notification/EventApiService";
 
 const EventComponent = ({ updateEvent, updateParty }) => {
@@ -25,36 +25,93 @@ const EventComponent = ({ updateEvent, updateParty }) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const parties = [];
 
+  function successfulResponse(response) {
+    // console.log("successful. here's data " + JSON.stringify(response.data));
+  }
+
+  function errorResponse(error) {
+    console.log(error);
+  }
+
+  async function getUser(email) {
+    try {
+      const response = await getUserName(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
+  }
+
   async function fetchEvent() {
     try {
       const response = await getAllEvents();
       const content = response.data;
-      const promises = content.map((event) => fetchParty(event.key, parties));
-      await Promise.all(promises);
+
+      const updatedContent = await Promise.all(
+        content.map(async (item) => {
+          const user = await getUser(item.owner);
+          item.ownername = user.firstname + " " + user.lastname;
+
+          const invitees = item.invites.split(",").map((invite) => invite.trim());
+
+          const inviteePromises = invitees.map(async (invite) => {
+            const user = await getUser(invite);
+            return { email: invite, name: user.firstname + " " + user.lastname };
+          });
+
+          const inviteeData = await Promise.all(inviteePromises);
+
+          item.invitation = inviteeData;
+
+          return item; // Return the updated content
+        })
+      )
+
+      const promises = content.map((event) => fetchParty(event.key));
+      const parties = await Promise.all(promises);
 
       const uniquePartyMap = new Map();
-      parties.forEach((par) => {
-        uniquePartyMap.set(par.id, par);
+      parties.forEach((party) => {
+        party.forEach((item) => {
+          uniquePartyMap.set(item.id, item);
+        });
       });
       const uniquePartyArray = Array.from(uniquePartyMap.values());
-
-      updateEvent(content);
+      updateEvent(updatedContent);
       updateParty(uniquePartyArray);
     } catch (error) {
       console.error("An error occurred:", error);
     }
   }
 
-  async function fetchParty(key, parties) {
+  async function fetchParty(key) {
+    try{
+
     const response = await getAllParty(key);
     const content = response.data;
-    content.forEach((item) => {
-      parties.push(item);
-    });
+
+    const updatedContent = await Promise.all(
+      content.map(async (item) => {
+        const user = await getUser(item.member);
+        item.membername = user.firstname + " " + user.lastname;
+        return item;
+      })
+    );
+
+    return updatedContent;
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
   }
 
   const openNotification = () => {
     setNotificationOpen(true);
+    setNotificationCount(0);
+    readAllNotifications()
+      .then((response) => successfulResponse(response))
+      .catch((error) => errorResponse(error))
+      .finally(() => console.log("read"));
     fetchEvent();
   };
 
@@ -62,8 +119,8 @@ const EventComponent = ({ updateEvent, updateParty }) => {
     setNotificationOpen(false);
     setNotificationCount(0);
     readAllNotifications()
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error))
+      .then((response) => successfulResponse(response))
+      .catch((error) => errorResponse(error))
       .finally(() => console.log("read"));
     fetchEvent();
   };

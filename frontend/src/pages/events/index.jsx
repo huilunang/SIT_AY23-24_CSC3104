@@ -12,6 +12,16 @@ const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [parties, setParties] = useState([]);
 
+  function isAccepted(key, invitee) {
+    // Check if invitee exists in the parties array with membername
+    return parties.some((party) => key === party.key && party.member === invitee.email);
+  }
+    
+  function getMemberName(key, invitee) {
+    const matchingParty = parties.find((party) => key === party.key && party.member === invitee.email);
+    return matchingParty ? matchingParty.membername : invitee.name;
+  }
+
   return (
     <>
       <CustomNavbar />
@@ -29,7 +39,7 @@ const EventPage = () => {
                 </Card.Title>
                 <Card.Text>
                   <>
-                    Creator: {event.owner}
+                    Creator: {event.ownername}
                     <br />
                     Date: {event.date}
                     <br />
@@ -37,14 +47,29 @@ const EventPage = () => {
                     <br />
                     Description: {event.description}
                     <br />
-                    Party: {event.invites}
-                    <br />
-                    Accepted:&nbsp;
-                    {parties
-                      .filter((party) => event.key === party.key)
-                      .map((party) => (
-                        <span key={party.key}>{party.member}&nbsp;</span>
-                      ))}
+                    Party:{" "}
+                    <span
+                      key={index}
+                      style={{
+                        color: "green",
+                        // textDecoration: "underline"
+                        fontWeight: 500
+                      }}
+                    >
+                      {event.ownername}
+                    </span>
+                    {event.invitation.map((invitee, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          color: isAccepted(event.key, invitee)
+                            ? "green"
+                            : "grey",
+                        }}
+                      >
+                        , {getMemberName(event.key, invitee)}
+                      </span>
+                    ))}
                     <br />
                     Notify: {event.notify}
                   </>
