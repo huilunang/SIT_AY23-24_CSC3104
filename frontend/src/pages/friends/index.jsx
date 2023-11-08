@@ -156,11 +156,11 @@ function FriendsPage() {
         successfulResponse(response);
         if (response.data === true) {
           setSearchMessage("Friend request sent successfully");
+          friendRequestApi(userEmail);
         } else {
           setSearchMessage("Failed to send friend request");
         }
         setFriends((prevFriends) => [...prevFriends, userEmail]);
-        friendRequestApi(userEmail);
 
         // Call notifs method here
 

@@ -173,6 +173,9 @@ public class FriendService {
 
     public Boolean makeFriendRequest(String email, String recipient) {
         // Step 1: Check if the user with 'id' exists
+        if (email == recipient) {
+            return false;
+        }
         Friend Friend = FriendRepo.findBySenderAndRecipient(email, recipient);
         Friend Friend2 = FriendRepo.findBySenderAndRecipient(recipient, email);
         FriendList user = FriendListRepo.findFriendListByEmail(email);
