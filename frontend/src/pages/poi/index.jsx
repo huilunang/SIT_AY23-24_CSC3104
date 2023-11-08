@@ -123,6 +123,9 @@ const Details = () => {
             </div>
           </div>
         </div>
+        <div className="createEvent">
+          <button className="btnEvt" >Create Event</button>
+        </div>
         <div className="wentOrNot">
           <input
             type="checkbox"
