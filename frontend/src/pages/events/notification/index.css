@@ -1,0 +1,5 @@
+.notification-text {
+  white-space: normal;
+  max-width: 100%;
+  word-wrap: break-word;
+}

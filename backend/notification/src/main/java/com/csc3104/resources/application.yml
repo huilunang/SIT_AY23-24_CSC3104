@@ -4,3 +4,21 @@ server:
 spring:
   application:
     name: notification
+  data:
+    mongodb:
+      database: travelexp_db
+      host: localhost
+      port: 27017
+      username: csc3104
+      password: csc3104
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: w08277427@gmail.com
+    password: inqq zlpy tmji drol
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
