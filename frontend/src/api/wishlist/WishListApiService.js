@@ -2,7 +2,7 @@ import { apiClient } from "./ApiClient";
 
 export function getAllGallery() {
   try {
-    return apiClient.get("/api/v1/gallery");
+    return apiClient.get(`/api/v1/gallery/${localStorage.getItem("email")}`);
   } catch (error) {
     console.log(error);
   }
@@ -10,7 +10,7 @@ export function getAllGallery() {
 
 export function getOneGallery(id) {
   try {
-    return apiClient.get(`/api/v1/gallery/${id}`);
+    return apiClient.get(`/api/v1/gallery/album/${id}`);
   } catch (error) {
     console.log(error);
   }
@@ -25,9 +25,10 @@ export function createGallery(title, imageFile) {
     };
     const formData = new FormData();
     formData.append("title", title);
+    formData.append("email", localStorage.getItem("email"));
     formData.append("imageFile", imageFile);
 
-    return apiClient.post("/api/v1/gallery/create", formData, config);
+    return apiClient.post("/api/v1/gallery/album/create", formData, config);
   } catch (error) {
     console.log(error);
   }
@@ -44,7 +45,7 @@ export function updateGallery(id, title, imageFile) {
     formData.append("title", title);
     formData.append("imageFile", imageFile);
 
-    return apiClient.put(`/api/v1/gallery/${id}`, formData, config);
+    return apiClient.put(`/api/v1/gallery/album/${id}`, formData, config);
   } catch (error) {
     console.log(error);
   }
@@ -52,7 +53,7 @@ export function updateGallery(id, title, imageFile) {
 
 export function deleteGallery(id) {
   try {
-    return apiClient.delete(`/api/v1/gallery/${id}`);
+    return apiClient.delete(`/api/v1/gallery/album/${id}`);
   } catch (error) {
     console.log(error);
   }
@@ -93,7 +94,9 @@ export function deleteWishListItemByBusinessId(businessId) {
 // autocomplete suggestions to add to wishlist
 export function getSuggestions(location, input) {
   try {
-    return apiClient.get(`/api/v1/poi/suggestions?location=${location}&userInput=${input}`);
+    return apiClient.get(
+      `/api/v1/poi/suggestions?location=${location}&userInput=${input}`
+    );
   } catch (error) {
     console.error(error);
   }
@@ -111,7 +114,9 @@ export function getPOIDetails(wishlistId, businessId) {
 // update poi remarks
 export function updatePOIRemarks(wishlistId, businessId, remarks) {
   try {
-    return apiClient.put(`/api/v1/poi/${wishlistId}/${businessId}/remarks`, { remarks } );
+    return apiClient.put(`/api/v1/poi/${wishlistId}/${businessId}/remarks`, {
+      remarks,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -122,8 +127,8 @@ export function updatePOIVisited(wishlistId, businessId, visited) {
   try {
     const config = {
       headers: {
-        'Content-Type': 'application/json', 
-      }
+        "Content-Type": "application/json",
+      },
     };
 
     return apiClient.put(

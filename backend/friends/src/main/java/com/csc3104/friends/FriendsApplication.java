@@ -1,4 +1,4 @@
-package com.csc3104;
+package com.csc3104.friends;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,10 +7,9 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
-public class BackendApplication {
-
+public class FriendsApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		SpringApplication.run(FriendsApplication.class, args);
 	}
 
 	@Bean
@@ -19,8 +18,7 @@ public class BackendApplication {
 			public void addCorsMappings(CorsRegistry registry) {
 				registry.addMapping("/**")
 						.allowedMethods("*")
-						.allowedOrigins("*");
-
+						.allowedOrigins("http://localhost:5173");
 			}
 		};
 	}

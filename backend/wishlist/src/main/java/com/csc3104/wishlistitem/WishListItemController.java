@@ -37,7 +37,8 @@ public class WishListItemController {
         String albumId = payload.get("albumId");
         String remarks = payload.get("remarks");
         boolean visited = Boolean.parseBoolean(payload.get("visited"));
-        WishListItem newWishListItem = wishlistitemService.createWishListItem(name, businessId, albumId, remarks, visited);
+        WishListItem newWishListItem = wishlistitemService.createWishListItem(name, businessId, albumId, remarks,
+                visited);
 
         return new ResponseEntity<>(newWishListItem, HttpStatus.CREATED);
     }

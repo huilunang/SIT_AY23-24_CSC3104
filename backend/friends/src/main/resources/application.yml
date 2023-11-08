@@ -1,0 +1,10 @@
+server:
+  port: 8084
+spring:
+  data:
+    mongodb:
+      database: travelexp
+      host: friends-mongodb
+      port: 27017
+      username: csc3104
+      password: csc3104

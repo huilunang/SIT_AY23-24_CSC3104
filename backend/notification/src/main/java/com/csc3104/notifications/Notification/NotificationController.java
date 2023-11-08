@@ -44,19 +44,25 @@ public class NotificationController {
         Instant instant = Instant.ofEpochMilli(unixTimestamp);
         LocalDateTime utcTimestamp = instant.atZone(ZoneId.of("UTC")).toLocalDateTime();
 
-        if (status.equals("requested")){
-            notificationService.pushNotificationToQueue("key", owner, member, "title", "date", "time", "description", "invites", utcTimestamp, type, notify, status);
-            pastRepository.save(new PastNotification("key", owner, member, "title", "date", "time", "description", "invites", utcTimestamp, type, notify, "unread"));
-        }else if (status.equals("accepted")){
-            List<PastNotification> pastNotifications = pastRepository.findAllByOwnerAndMemberAndType(owner, member, "friend-request");
+        if (status.equals("requested")) {
+            notificationService.pushNotificationToQueue("key", owner, member, "title", "date", "time", "description",
+                    "invites", utcTimestamp, type, notify, status);
+            pastRepository.save(new PastNotification("key", owner, member, "title", "date", "time", "description",
+                    "invites", utcTimestamp, type, notify, "unread"));
+        } else if (status.equals("accepted")) {
+            List<PastNotification> pastNotifications = pastRepository.findAllByOwnerAndMemberAndType(owner, member,
+                    "friend-request");
             for (PastNotification notification : pastNotifications) {
                 notification.setType(type);
             }
             pastRepository.saveAll(pastNotifications);
-            notificationService.pushNotificationToQueue("key", member, owner, "title", "date", "time", "description", "invites", utcTimestamp, type, notify, status);
-            pastRepository.save(new PastNotification("key", member, owner, "title", "date", "time", "description", "invites", utcTimestamp, type, notify, "unread"));
-        }else if (status.equals("rejected")){
-            List<PastNotification> pastNotifications = pastRepository.findAllByOwnerAndMemberAndType(owner, member, "friend-request");
+            notificationService.pushNotificationToQueue("key", member, owner, "title", "date", "time", "description",
+                    "invites", utcTimestamp, type, notify, status);
+            pastRepository.save(new PastNotification("key", member, owner, "title", "date", "time", "description",
+                    "invites", utcTimestamp, type, notify, "unread"));
+        } else if (status.equals("rejected")) {
+            List<PastNotification> pastNotifications = pastRepository.findAllByOwnerAndMemberAndType(owner, member,
+                    "friend-request");
             for (PastNotification notification : pastNotifications) {
                 notification.setType(type);
             }
@@ -72,7 +78,8 @@ public class NotificationController {
         String member = payload.get("member");
         String type = payload.get("type");
 
-        List<PastNotification> pastNotifications = pastRepository.findAllByKeyAndOwnerAndMemberAndType(key, owner, member, "event-request");
+        List<PastNotification> pastNotifications = pastRepository.findAllByKeyAndOwnerAndMemberAndType(key, owner,
+                member, "event-request");
         for (PastNotification notification : pastNotifications) {
             notification.setType(type);
         }
@@ -81,7 +88,8 @@ public class NotificationController {
     }
 
     @PostMapping("/schedule")
-    public ResponseEntity<String> scheduleNotification(@RequestBody Map<String, String> payload, @RequestParam("to") String to) {
+    public ResponseEntity<String> scheduleNotification(@RequestBody Map<String, String> payload,
+            @RequestParam("to") String to) {
         String key = payload.get("key");
         String owner = payload.get("owner");
         String member = payload.get("member");
@@ -103,14 +111,18 @@ public class NotificationController {
         LocalDateTime utcTimestamp = instant.atZone(ZoneId.of("UTC")).toLocalDateTime();
 
         if (member.equals(to)) { // Check if the recipient matches the intended recipient
-            if (status.equals("requested")){
+            if (status.equals("requested")) {
                 notificationService.sendEmailRequest(owner, member, title, date, time, description, invites);
-                notificationService.pushNotificationToQueue(key, owner, member, title, date, time, description, invites, utcTimestamp, type, notify, status);
-                pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites, utcTimestamp, type, notify, "unread"));
-            }else if (status.equals("accepted")){
-                repository.save(new Notification(key, owner, member, title, date, time, description, invites, utcTimestamp, type, notify, status));
+                notificationService.pushNotificationToQueue(key, owner, member, title, date, time, description, invites,
+                        utcTimestamp, type, notify, status);
+                pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites,
+                        utcTimestamp, type, notify, "unread"));
+            } else if (status.equals("accepted")) {
+                repository.save(new Notification(key, owner, member, title, date, time, description, invites,
+                        utcTimestamp, type, notify, status));
             }
-            // notificationService.pushNotificationToQueue(name, role, message,recipient, sender, timestamp, type);
+            // notificationService.pushNotificationToQueue(name, role, message,recipient,
+            // sender, timestamp, type);
             return ResponseEntity.ok("Notification scheduled: user: " + member + ", msg: " + title);
         }
         return ResponseEntity.ok("Notification not scheduled for this recipient");
@@ -119,12 +131,12 @@ public class NotificationController {
     // Immediate Notification
     @GetMapping(path = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<ServerSentEvent<Notification>> streamNotifications(@RequestParam("to") String to) {
-        if (!notificationService.notificationQueue.isEmpty()){
+        if (!notificationService.notificationQueue.isEmpty()) {
             return notificationService.removeNotificationFromQueue(to)
-                .filter(notification -> notification.getMember().equals(to))
-                .map(notification -> ServerSentEvent.<Notification>builder()
-                    .data(notification)
-                    .build());
+                    .filter(notification -> notification.getMember().equals(to))
+                    .map(notification -> ServerSentEvent.<Notification>builder()
+                            .data(notification)
+                            .build());
         }
         return Flux.empty();
     }
@@ -139,25 +151,25 @@ public class NotificationController {
 
     @PostMapping("/read")
     public void readPastNotifications(@RequestBody Map<String, String> requestBody) {
-        String email = requestBody.get("email");        
+        String email = requestBody.get("email");
         String newStatus = "read";
 
         List<PastNotification> pastNotifications = pastRepository.findAllByMember(email);
         for (PastNotification notification : pastNotifications) {
             notification.setStatus(newStatus);
         }
-    
+
         pastRepository.saveAll(pastNotifications);
     }
 
     @PostMapping("/delete")
-    public void deletePastNotifications(@RequestBody Map<String, String> payload) {        
-        String key = payload.get("key");    
-        String member = payload.get("member");        
-        String type = payload.get("type");        
+    public void deletePastNotifications(@RequestBody Map<String, String> payload) {
+        String key = payload.get("key");
+        String member = payload.get("member");
+        String type = payload.get("type");
 
         List<PastNotification> pastNotifications = pastRepository.findAllByKeyAndMemberAndType(key, member, type);
-    
+
         // Delete documents from the collection
         pastRepository.deleteAll(pastNotifications);
     }

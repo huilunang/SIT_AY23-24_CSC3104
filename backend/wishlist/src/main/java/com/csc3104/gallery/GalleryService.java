@@ -28,8 +28,8 @@ public class GalleryService {
     @Autowired
     private GalleryRepository galleryRepository;
 
-    public List<GalleryCreateImage> allGallery() {
-        List<GalleryCreateAlbum> albums = galleryRepository.findAll();
+    public List<GalleryCreateImage> allGallery(String email) {
+        List<GalleryCreateAlbum> albums = galleryRepository.findAllByUserId(email);
         List<GalleryCreateImage> images = new ArrayList<>();
 
         for (GalleryCreateAlbum album : albums) {
@@ -57,14 +57,14 @@ public class GalleryService {
         return null;
     }
 
-    public GalleryCreateAlbum addGallery(String title, MultipartFile image) throws IOException {
+    public GalleryCreateAlbum addGallery(String title, String email, MultipartFile image) throws IOException {
         DBObject metadata = new BasicDBObject();
         metadata.put("fileSize", image.getSize());
         ObjectId imageId = gridFsTemplate.store(image.getInputStream(), image.getOriginalFilename(),
                 image.getContentType(),
                 metadata);
 
-        GalleryCreateAlbum album = galleryRepository.insert(new GalleryCreateAlbum(title, imageId));
+        GalleryCreateAlbum album = galleryRepository.insert(new GalleryCreateAlbum(title, email, imageId));
 
         return album;
     }
