@@ -1,4 +1,5 @@
 package com.csc3104.friends;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -107,5 +108,3 @@ public class FriendController {
         return attr.getRequest().getHeader("Authorization");
     }
 }
-
-

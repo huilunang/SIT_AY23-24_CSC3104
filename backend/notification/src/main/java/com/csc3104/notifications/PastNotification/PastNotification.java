@@ -8,8 +8,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Document(collection = "past-notifications")
-public
-class PastNotification {
+public class PastNotification {
   @Id
   public String id;
   @Field("key")
@@ -37,9 +36,11 @@ class PastNotification {
   @Field("status")
   public String status;
 
-  PastNotification() {}
+  PastNotification() {
+  }
 
-  public PastNotification(String key, String owner, String member, String title, String date, String time, String description, String invites, LocalDateTime timestamp, String type, String notify, String status) {
+  public PastNotification(String key, String owner, String member, String title, String date, String time,
+      String description, String invites, LocalDateTime timestamp, String type, String notify, String status) {
     this.key = key;
     this.owner = owner;
     this.member = member;
@@ -107,7 +108,7 @@ class PastNotification {
     return this.status;
   }
 
-  // Set 
+  // Set
   public void setId(String id) {
     this.id = id;
   }
@@ -120,7 +121,7 @@ class PastNotification {
     this.owner = owner;
   }
 
-  public void setMember (String member) {
+  public void setMember(String member) {
     this.member = member;
   }
 
