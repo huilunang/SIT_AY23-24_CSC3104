@@ -22,6 +22,13 @@ export const EventModal = ({ isOpen, onClose }) => {
   const [invites, setInvites] = useState([]);
   const [notify, setNotify] = useState(false);
 
+  function successfulResponse(response) {
+    // console.log("successful. here's data " + response.data);
+  }
+
+  function errorResponse(error) {
+    // console.log(error);
+  }
   const handleInviteChange = (e) => {
     setInviteValue(e.target.value);
   };
@@ -83,14 +90,6 @@ export const EventModal = ({ isOpen, onClose }) => {
       console.error("An error occurred:", error);
       // Handle errors as needed
     }
-  }
-
-  function successfulResponse(response) {
-    console.log("successful. here's data " + response.data);
-  }
-
-  function errorResponse(error) {
-    console.log(error);
   }
 
   return (

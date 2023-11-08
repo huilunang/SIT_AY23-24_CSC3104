@@ -28,6 +28,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const [newNotification, setNewNotification] = useState(0);
   const [count, setCount] = useState(0);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
     const email = localStorage.getItem("email");
@@ -35,11 +36,13 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       `http://localhost:8083/notification/stream?to=${email}`
     );
 
-    eventSource.onmessage = (event) => {
+    eventSource.onmessage = async (event) => {
       // Use the functional update to ensure all notifications are included
       let content = JSON.parse(event.data);
-      // content.owner = getUser(content.owner);
-      // content.member = getUser(content.member);
+
+      const user = await getUser(content.owner);
+      content["ownername"] = user.firstname + " " + user.lastname;
+
       setNotifications((prevNotifications) => [...prevNotifications, content]); // All past notification
       setNewNotifications(content); // Popup when arrived-notification
       setCount((prevCount) => prevCount + 1); // Count unread notification
@@ -53,32 +56,38 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   }, []);
 
   useEffect(() => {
-    getAllNotifications()
-      .then((response) => successfulResponse(response.data))
-      .catch((error) => errorResponse(error))
-      .finally(() => console.log("Notifications Loaded"));
+    if (!done) {
 
-    async function successfulResponse(content) {
-      // console.log(content)
-      if (content.length > 0){
-        for (let i = 0; i < content.length; i++) {
-          let user = await getUser(content[i].owner);
-          content[i].owner = user.firstname + " " + user.lastname;
-          content[i].member = user.firstname + " " + user.lastname;
+      getAllNotifications()
+        .then((response) => successfulResponse(response.data))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("Notifications Loaded"));
+
+      async function successfulResponse(content) {
+        if (content.length > 0) {
+          const updatedContent = await Promise.all(
+            content.map(async (item) => {
+              const user = await getUser(item.owner);
+              item.ownername = user.firstname + " " + user.lastname;
+              return item; // Return the updated content
+            })
+          );
+
+          setNotifications(updatedContent);
+
+          // Count the number of unread notifications
+          const unreadCount = updatedContent.filter(
+            (notification) => notification.status === "unread"
+          ).length;
+          setCount(unreadCount);
+          updateNotificationCount(unreadCount);
         }
       }
-      setNotifications(content);
 
-      // Count the number of unread notifications
-      const unreadCount = content.filter(
-        (notification) => notification.status === "unread"
-      ).length;
-      setCount(unreadCount);
-      updateNotificationCount(unreadCount);
-    }
-
-    function errorResponse(error) {
-      console.log(error);
+      function errorResponse(error) {
+        console.log(error);
+      }
+      setDone(true);
     }
   }, []);
 
@@ -87,11 +96,11 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   };
 
   function successfulResponse(response) {
-    console.log("successful. here's data " + response.data);
+    // console.log("successful. here's data " + JSON.stringify(response.data));
   }
 
   function errorResponse(error) {
-    console.log(error);
+    // console.log(error);
   }
 
   async function getUser (email) {
@@ -110,8 +119,18 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       .catch((error) => errorResponse(error))
       .finally(() => console.log("Notifications Loaded"));
 
-    function successfulResponse(content) {
-      setNotifications(content);
+    async function successfulResponse(content) {
+      if (content.length > 0) {
+        const updatedContent = await Promise.all(
+          content.map(async (item) => {
+            const user = await getUser(item.owner);
+            item.ownername = user.firstname + " " + user.lastname;
+            return item; // Return the updated content
+          })
+        );
+
+        setNotifications(updatedContent);
+      }
     }
 
     function errorResponse(error) {
@@ -355,7 +374,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     </Toast.Header>
                     <Toast.Body>
                       <b>
-                        You've been invited by {notification.owner} to{" "}
+                        You've been invited by {notification.ownername} to{" "}
                         {notification.title}!
                       </b>
                       <br />
@@ -378,7 +397,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <small>just now</small>
                     </Toast.Header>
                     <Toast.Body>
-                      <b>{notification.owner} have sent you a friend request</b>
+                      <b>
+                        {notification.ownername} have sent you a friend request
+                      </b>
                     </Toast.Body>
                   </>
                 ) : (
@@ -451,7 +472,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <Col sm="8">
                         <div className="notification-text">
                           <b>
-                            You've been invited by {notification.owner} to{" "}
+                            You've been invited by {notification.ownername} to{" "}
                             {notification.title}!
                           </b>
                           <br />
@@ -514,8 +535,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <Col sm="8">
                         <div className="notification-text">
                           <b>
-                            You've accepted the invite by {notification.owner}{" "}
-                            to {notification.title}!
+                            You've accepted the invite by{" "}
+                            {notification.ownername} to {notification.title}!
                           </b>
                           <br />
                           Date: {notification.date}
@@ -531,8 +552,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <Col sm="8">
                         <div className="notification-text">
                           <b>
-                            You've rejected the invite by {notification.owner}{" "}
-                            to {notification.title}!
+                            You've rejected the invite by{" "}
+                            {notification.ownername} to {notification.title}!
                           </b>
                           <br />
                           Date: {notification.date}
@@ -548,7 +569,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <Col sm="8">
                         <div className="notification-text">
                           <b>
-                            {notification.owner} have sent you a friend request
+                            {notification.ownername} have sent you a friend
+                            request
                           </b>
                         </div>
                       </Col>
@@ -602,14 +624,15 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                   ) : notification.type === "friend-accepted" ? (
                     <Col sm="8">
                       <div className="notification-text">
-                        <b>{notification.owner} is now your friend</b>
+                        <b>{notification.ownername} is now your friend</b>
                       </div>
                     </Col>
                   ) : notification.type === "friend-rejected" ? (
                     <Col sm="8">
                       <div className="notification-text">
                         <b>
-                          {notification.owner} have sent you a friend request
+                          {notification.ownername} have sent you a friend
+                          request
                         </b>
                       </div>
                     </Col>
@@ -617,7 +640,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     <Col sm="8">
                       <div className="notification-text">
                         <b>
-                          {notification.title} by {notification.owner}
+                          {notification.title} by {notification.ownername}
                         </b>
                         <br />
                         Date: {notification.date}
