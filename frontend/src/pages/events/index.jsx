@@ -31,7 +31,7 @@ const EventPage = () => {
                   <>
                     Creator: {event.owner}
                     <br />
-                    Date: {event.description}
+                    Date: {event.date}
                     <br />
                     Time: {event.time}
                     <br />
