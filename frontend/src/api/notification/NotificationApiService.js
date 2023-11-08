@@ -101,7 +101,7 @@ export function scheduleInviteNotification(key, owner, title, date, time, descri
   );
 }
 
-export function friendRequest(owner, member, notify, type, status) {
+export function friendRequest(member, notify, type, status) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
   if (type == "friend-request"){
