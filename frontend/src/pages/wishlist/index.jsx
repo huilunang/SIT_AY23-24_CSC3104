@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   getAllWishListItemByAlbumId,
   createWishListItem,
-  deleteWishListItemByBusinessId,
+  deleteWishListItemByObjectId,
   getSuggestions,
 } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from "react-router-dom";
@@ -213,7 +213,7 @@ function WishList() {
             </Button>
             <Button
               variant="primary"
-              onClick={() => handleDelete(businessIdToDelete)}
+              onClick={() => handleDelete(objectIdToDelete)}
             >
               Confirm Delete
             </Button>
