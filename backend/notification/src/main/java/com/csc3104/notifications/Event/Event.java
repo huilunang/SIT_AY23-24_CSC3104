@@ -36,9 +36,11 @@ class Event {
   @Field("status")
   public String status;
 
-  Event() {}
+  Event() {
+  }
 
-  Event(String key, String owner, String member, String title, String date, String time, String description, String invites, String timestamp, String type, String notify, String status) {
+  Event(String key, String owner, String member, String title, String date, String time, String description,
+      String invites, String timestamp, String type, String notify, String status) {
     this.key = key;
     this.owner = owner;
     this.member = member;
@@ -106,7 +108,7 @@ class Event {
     return this.status;
   }
 
-  // Set 
+  // Set
   public void setId(String id) {
     this.id = id;
   }
@@ -119,7 +121,7 @@ class Event {
     this.owner = owner;
   }
 
-  public void setMember (String member) {
+  public void setMember(String member) {
     this.member = member;
   }
 

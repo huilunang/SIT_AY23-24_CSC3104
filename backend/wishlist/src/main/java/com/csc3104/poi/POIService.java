@@ -16,7 +16,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 
-
 @Service
 public class POIService {
     // @Value("${api.baseurl}")
@@ -35,7 +34,7 @@ public class POIService {
     // Format location data from Yelp API to suitable address format
     public static String formatAddress(JSONObject location) throws JSONException {
         String address1 = location.getString("address1");
-        String address2 = location.optString("address2", ""); 
+        String address2 = location.optString("address2", "");
         String address3 = location.optString("address3", "");
         String city = location.getString("city");
         String zipCode = location.getString("zip_code");
@@ -51,24 +50,25 @@ public class POIService {
         return formattedAddress.toString();
     }
 
-    // Based on business ID, return the business details in array 
+    // Based on business ID, return the business details in array
     // Name: Name of the shop
     // Categories: Category of the shop (bar, cafe, etc.)
     // Location: Address of the shop
     // Image URL: Image of the shop
-    // Rating: Rating of the shop 
+    // Rating: Rating of the shop
     public Object[] getDetails(String businessId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
 
         String url = yelpBaseUrl + "/businesses/" + businessId;
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers),
+                String.class);
 
         try {
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 String response = responseEntity.getBody();
-                
+
                 JSONObject jsonObject = new JSONObject(response);
 
                 String name = jsonObject.getString("name");
@@ -106,25 +106,26 @@ public class POIService {
         }
     }
 
-    // Get Autocomplete suggestions 
+    // Get Autocomplete suggestions
     public Map<String, String[]> getAutoCompleteSuggestion(String location, String userInput) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + apiKey);
 
         String url = yelpBaseUrl + "/businesses/search?location=" + location + "&term=" + userInput;
 
-        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers),
+                String.class);
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             try {
                 String response = responseEntity.getBody();
-                
+
                 JSONObject jsonResponse = new JSONObject(response);
 
                 JSONArray suggestions = jsonResponse.getJSONArray("businesses");
-                
+
                 Map<String, String[]> suggestedShopInfo = new LinkedHashMap<>();
-                
+
                 int count = 0;
                 for (int i = 0; i < suggestions.length(); i++) {
                     if (count >= 5) {
@@ -135,16 +136,16 @@ public class POIService {
                     String name = business.getString("name");
                     JSONObject locationInfo = business.getJSONObject("location");
                     String address = locationInfo.getString("address1");
-    
+
                     String nameAndAddress = name + " | " + address;
-                    String[] details = {nameAndAddress, name, address};
-                    
+                    String[] details = { nameAndAddress, name, address };
+
                     if (name.toLowerCase().contains(userInput.toLowerCase())) {
                         suggestedShopInfo.put(businessId, details);
                         count++;
                     }
                 }
-    
+
                 return suggestedShopInfo;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -172,6 +173,4 @@ public class POIService {
 
         return poi;
     }
-
-
 }

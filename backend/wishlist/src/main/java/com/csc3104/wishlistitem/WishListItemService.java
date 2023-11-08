@@ -22,23 +22,24 @@ public class WishListItemService {
         Optional<WishListItem> wishlistitemopt = wishlistitemRepository.findById(id);
         if (wishlistitemopt.isPresent()) {
             WishListItem item = wishlistitemopt.get();
-    
+
             return item;
         }
         return null;
     }
 
-    public WishListItem createWishListItem(String name, String businessId, String albumId, String remarks, boolean visited) {
-        WishListItem wishlistItem = wishlistitemRepository.insert(new WishListItem(name, businessId, albumId, remarks, visited));
-    
+    public WishListItem createWishListItem(String name, String businessId, String albumId, String remarks,
+            boolean visited) {
+        WishListItem wishlistItem = wishlistitemRepository
+                .insert(new WishListItem(name, businessId, albumId, remarks, visited));
+
         return wishlistItem;
     }
-
 
     public List<WishListItem> allItemsByAlbumId(String albumId) {
         return wishlistitemRepository.findAllByAlbumId(albumId);
     }
-    
+
     public void deleteWishListItemByBusinessId(String businessId) {
         WishListItem wishlistItem = wishlistitemRepository.findByBusinessId(businessId);
         if (wishlistItem != null) {
@@ -57,7 +58,7 @@ public class WishListItemService {
 
         if (wishListItem != null) {
             wishListItem.setRemarks(remarks);
-            updateWishListItem(wishListItem); 
+            updateWishListItem(wishListItem);
         } else {
             throw new NoSuchElementException("Wish list item not found for the given IDs");
         }
@@ -68,7 +69,7 @@ public class WishListItemService {
 
         if (wishListItem != null) {
             wishListItem.setVisited(visited);
-            updateWishListItem(wishListItem); 
+            updateWishListItem(wishListItem);
         } else {
             throw new NoSuchElementException("Wish list item not found for the given IDs");
         }
