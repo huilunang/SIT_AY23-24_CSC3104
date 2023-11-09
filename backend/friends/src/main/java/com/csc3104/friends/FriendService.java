@@ -46,7 +46,7 @@ public class FriendService {
         Map<String, Object> attributes = new HashMap<>();
 
         // Establish gRPC channel
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("account", 9090).usePlaintext().build();
 
         // Create a stub using the channel
         UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
@@ -75,7 +75,7 @@ public class FriendService {
     public Map<String, Map<String, Object>> listFriends(List<String> friends, String token) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
 
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("account", 9090).usePlaintext().build();
         UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
 
         HttpHeaders headers = new HttpHeaders();
@@ -219,7 +219,7 @@ public class FriendService {
 
     public Map<String, Map<String, Object>> listFriendRequests(String email, String token) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("account", 9090).usePlaintext().build();
         UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
 
         HttpHeaders headers = new HttpHeaders();
