@@ -58,37 +58,38 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   }, []);
 
   useEffect(() => {
-    if (!lock) {
-      getAllNotifications()
-        .then((response) => successfulResponse(response.data))
-        .catch((error) => errorResponse(error))
-        .finally(() => console.log("Notifications Loaded"));
+    if (lock) {
+      return;
+    }
+    setLock(true);
+    getAllNotifications()
+      .then((response) => successfulResponse(response.data))
+      .catch((error) => errorResponse(error))
+      .finally(() => console.log("Notifications Loaded"));
 
-      async function successfulResponse(content) {
-        if (content.length > 0) {
-          const updatedContent = await Promise.all(
-            content.map(async (item) => {
-              const user = await getUser(item.owner);
-              item.ownername = user.firstname + " " + user.lastname;
-              return item; // Return the updated content
-            })
-          );
+    async function successfulResponse(content) {
+      if (content.length > 0) {
+        const updatedContent = await Promise.all(
+          content.map(async (item) => {
+            const user = await getUser(item.owner);
+            item.ownername = user.firstname + " " + user.lastname;
+            return item; // Return the updated content
+          })
+        );
 
-          setNotifications(updatedContent);
+        setNotifications(updatedContent);
 
-          // Count the number of unread notifications
-          const unreadCount = updatedContent.filter(
-            (notification) => notification.status === "unread"
-          ).length;
-          setCount(unreadCount);
-          updateNotificationCount(unreadCount);
-        }
+        // Count the number of unread notifications
+        const unreadCount = updatedContent.filter(
+          (notification) => notification.status === "unread"
+        ).length;
+        setCount(unreadCount);
+        updateNotificationCount(unreadCount);
       }
+    }
 
-      function errorResponse(error) {
-        console.log(error);
-      }
-      setLock(true);
+    function errorResponse(error) {
+      console.log(error);
     }
   }, []);
 
@@ -129,7 +130,6 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
             return item; // Return the updated content
           })
         );
-
         setNotifications(updatedContent);
       }
     }
@@ -179,63 +179,64 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
-    if (!eventLock) {
-      setEventLock(true);
-      try {
-        // Wait for the pushEvent and scheduleInviteNotification to complete
-        await pushEvent(
-          key,
-          owner,
-          title,
-          date,
-          time,
-          description,
-          invites,
-          notify,
-          type
-        ) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
+    if (eventLock) {
+      return;
+    }
+    setEventLock(true);
+    try {
+      // Wait for the pushEvent and scheduleInviteNotification to complete
+      await pushEvent(
+        key,
+        owner,
+        title,
+        date,
+        time,
+        description,
+        invites,
+        notify,
+        type
+      ) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
 
-        await scheduleInviteNotification(
-          key,
-          owner,
-          title,
-          date,
-          time,
-          description,
-          invites,
-          notify,
-          type,
-          status
-        ) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
+      await scheduleInviteNotification(
+        key,
+        owner,
+        title,
+        date,
+        time,
+        description,
+        invites,
+        notify,
+        type,
+        status
+      ) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
 
-        await eventInviteNotification(
-          key,
-          owner,
-          member,
-          title,
-          date,
-          time,
-          description,
-          invites,
-          notify,
-          type + "-" + "accepted",
-          status
-        ) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
-      } catch (error) {
-        console.error("An error occurred:", error);
-        // Handle errors as needed
-      } finally {
-        await refreshNotification();
-      }
+      await eventInviteNotification(
+        key,
+        owner,
+        member,
+        title,
+        date,
+        time,
+        description,
+        invites,
+        notify,
+        type + "-" + "accepted",
+        status
+      ) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle errors as needed
+    } finally {
+      await refreshNotification();
     }
     setEventLock(false);
   };
@@ -253,31 +254,32 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
-    if (!eventLock) {
-      setEventLock(true);
-      try {
-        await eventInviteNotification(
-          key,
-          owner,
-          member,
-          title,
-          date,
-          time,
-          description,
-          invites,
-          notify,
-          type + "-" + "rejected",
-          status
-        ) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
-      } catch (error) {
-        console.error("An error occurred:", error);
-        // Handle errors as needed
-      } finally {
-        await refreshNotification();
-      }
+    if (eventLock) {
+      return;
+    }
+    setEventLock(true);
+    try {
+      await eventInviteNotification(
+        key,
+        owner,
+        member,
+        title,
+        date,
+        time,
+        description,
+        invites,
+        notify,
+        type + "-" + "rejected",
+        status
+      ) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle errors as needed
+    } finally {
+      await refreshNotification();
     }
     setEventLock(false);
   };
@@ -295,20 +297,21 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
-    if (!friendLock) {
-      setFriendLock(true);
-      handleAcceptFriendRequest(owner);
-      try {
-        await friendRequest(owner, notify, type + "-" + "accepted", status) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
-      } catch (error) {
-        console.error("An error occurred:", error);
-        // Handle errors as needed
-      } finally {
-        await refreshNotification();
-      }
+    if (friendLock) {
+      return;
+    }
+    setFriendLock(true);
+    handleAcceptFriendRequest(owner);
+    try {
+      await friendRequest(owner, notify, type + "-" + "accepted", status) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle errors as needed
+    } finally {
+      await refreshNotification();
     }
     setFriendLock(false);
   };
@@ -326,20 +329,21 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     type,
     status
   ) => {
-    if (!friendLock) {
-      setFriendLock(true);
-      handleRejectFriendRequest(owner);
-      try {
-        await friendRequest(owner, notify, type + "-" + "rejected", status) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
-      } catch (error) {
-        console.error("An error occurred:", error);
-        // Handle errors as needed
-      } finally {
-        await refreshNotification();
-      }
+    if (friendLock) {
+      return;
+    }
+    setFriendLock(true);
+    handleRejectFriendRequest(owner);
+    try {
+      await friendRequest(owner, notify, type + "-" + "rejected", status) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
+    } catch (error) {
+      console.error("An error occurred:", error);
+      // Handle errors as needed
+    } finally {
+      await refreshNotification();
     }
     setFriendLock(false);
   };

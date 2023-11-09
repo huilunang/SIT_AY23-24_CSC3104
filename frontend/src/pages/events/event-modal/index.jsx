@@ -69,21 +69,16 @@ export const EventModal = ({ isOpen, onClose }) => {
   };
 
   const handleRemoveUser = (user) => {
-    // const updatedUsers = invites.filter((e) => e !== user);
-    // setInvites(updatedUsers);
     const inviteesIndex = invitees.findIndex((name) => name === user);
 
-    // Find the corresponding user email in invites array
-    // const userEmail = invites[inviteesIndex];
-
-    // Remove the user from invitees array
+    // Remove the user from invitees (user name) array
     const updatedInvitees = [
       ...invitees.slice(0, inviteesIndex),
       ...invitees.slice(inviteesIndex + 1),
     ];
     setInvitees(updatedInvitees);
 
-    // Remove the corresponding user email from invites array
+    // Remove the corresponding user email from invites (user email) array
     const updatedInvites = [
       ...invites.slice(0, inviteesIndex),
       ...invites.slice(inviteesIndex + 1),
@@ -93,48 +88,49 @@ export const EventModal = ({ isOpen, onClose }) => {
 
   let uniqueid = uniqid();
   async function createEventApi(e) {
-    if (!lock){
-      e.preventDefault();
-      setLock(true);
-      try {
-        // Wait for the pushEvent and scheduleInviteNotification to complete
-        uniqueid = uniqid();
-        await createEvent(
-          uniqueid,
-          title,
-          date,
-          time,
-          description,
-          invites,
-          notify,
-          "event"
-        ) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
-
-        await scheduleNotification(
-          uniqueid,
-          title,
-          date,
-          time,
-          description,
-          invites,
-          notify,
-          "event"
-        ) // Pass the parameters to the API function
-          .then((response) => successfulResponse(response))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("cleanup"));
-
-        // After both operations have completed, close the modal
-        onClose();
-      } catch (error) {
-        console.error("An error occurred:", error);
-        // Handle errors as needed
-      }
+    e.preventDefault();
+    if (lock) {
+      return;
     }
-    setLock(false);
+    setLock(true);
+    try {
+      // Wait for the pushEvent and scheduleInviteNotification to complete
+      uniqueid = uniqid();
+      await createEvent(
+        uniqueid,
+        title,
+        date,
+        time,
+        description,
+        invites,
+        notify,
+        "event"
+      ) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => console.log("cleanup"));
+
+      await scheduleNotification(
+        uniqueid,
+        title,
+        date,
+        time,
+        description,
+        invites,
+        notify,
+        "event"
+      ) // Pass the parameters to the API function
+        .then((response) => successfulResponse(response))
+        .catch((error) => errorResponse(error))
+        .finally(() => setLock(false));
+
+      // After both operations have completed, close the modal
+      onClose();
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setLock(false);
+      // Handle errors as needed
+    }
   }
 
   return (
@@ -271,7 +267,7 @@ export const EventModal = ({ isOpen, onClose }) => {
                   onChange={(e) => setNotify(e.target.checked)}
                 />
                 <Form.Text className="text-muted" aria-label="formNotify">
-                  We'll send an email notification with everyone.
+                  Send an email notification to everyone.
                 </Form.Text>
               </Col>
             </Form.Group>
@@ -280,7 +276,7 @@ export const EventModal = ({ isOpen, onClose }) => {
             <Button variant="secondary" onClick={onClose}>
               Cancel
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={lock}>
               Create
             </Button>
           </Modal.Footer>

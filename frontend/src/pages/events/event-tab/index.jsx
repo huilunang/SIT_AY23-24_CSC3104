@@ -14,7 +14,6 @@ import { getAllParty } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
 
 const EventComponent = ({ updateEvent, updateParty }) => {
-
   const [isModalOpen, setModalOpen] = useState(false);
 
   function successfulResponse(response) {
@@ -45,25 +44,30 @@ const EventComponent = ({ updateEvent, updateParty }) => {
           const user = await getUser(item.owner);
           item.ownername = user.firstname + " " + user.lastname;
 
-          const invitees = item.invites.split(",").map((invite) => invite.trim());
+          const invitees = item.invites
+            .split(",")
+            .map((invite) => invite.trim());
           if (invitees.length > 0) {
             const inviteePromises = invitees.map(async (invite) => {
-              if (invite != ''){
+              if (invite != "") {
                 const inviteUser = await getUser(invite);
-                return { email: invite, name: inviteUser.firstname + " " + inviteUser.lastname };
-              }else{
-                return '';                
+                return {
+                  email: invite,
+                  name: inviteUser.firstname + " " + inviteUser.lastname,
+                };
+              } else {
+                return "";
               }
             });
             const inviteeData = await Promise.all(inviteePromises);
             item.invitation = inviteeData;
-          }else{
+          } else {
             item.invitation = [];
           }
 
           return item; // Return the updated content
         })
-      )
+      );
 
       const promises = content.map((event) => fetchParty(event.key));
       const parties = await Promise.all(promises);
@@ -83,7 +87,7 @@ const EventComponent = ({ updateEvent, updateParty }) => {
   }
 
   async function fetchParty(key) {
-    try{
+    try {
       const response = await getAllParty(key);
       const content = response.data;
 
@@ -126,10 +130,7 @@ const EventComponent = ({ updateEvent, updateParty }) => {
 
   return (
     <>
-      <Navbar
-        expand="lg"
-        className="bg-body-tertiary"
-      >
+      <Navbar expand="lg" className="bg-body-tertiary">
         <Container style={{ flexWrap: "nowrap" }}>
           <Navbar.Brand
             style={{ width: "50%", fontWeight: "bold", fontSize: "34px" }}
