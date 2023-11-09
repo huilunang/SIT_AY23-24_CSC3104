@@ -5,9 +5,12 @@ import com.csc3104.poi.grpc.POIDetails;
 // import com.csc3104.poi.POIService;
 import com.csc3104.poi.grpc.POIServiceGrpc.POIServiceImplBase;
 
+import org.lognet.springboot.grpc.GRpcService;
+
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
+@GRpcService
 public class POIServiceImpl extends POIServiceImplBase {
 
     private final POIService poiService;
