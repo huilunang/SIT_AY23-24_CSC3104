@@ -11,6 +11,7 @@ import uniqid from "uniqid";
 
 import { scheduleNotification } from "../../../api/notification/NotificationApiService";
 import { createEvent } from "../../../api/notification/EventApiService";
+import { getUserName } from "../../../api/notification/EventApiService";
 
 export const EventModal = ({ isOpen, onClose }) => {
   const [inviteValue, setInviteValue] = useState("");
@@ -20,6 +21,7 @@ export const EventModal = ({ isOpen, onClose }) => {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [invites, setInvites] = useState([]);
+  const [invitees, setInvitees] = useState([]);
   const [notify, setNotify] = useState(false);
 
   function successfulResponse(response) {
@@ -29,29 +31,68 @@ export const EventModal = ({ isOpen, onClose }) => {
   function errorResponse(error) {
     // console.log(error);
   }
+
+  async function getUser(email) {
+    try {
+      const response = await getUserName(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
+  }
+
   const handleInviteChange = (e) => {
     setInviteValue(e.target.value);
   };
 
-  const handleInviteKeyDown = (e) => {
+  const handleInviteKeyDown = async (e) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
+      const email = localStorage.getItem("email");
       const newUser = inviteValue.trim();
 
-      if (newUser && !invites.includes(newUser)) {
+      if (newUser && !invites.includes(newUser) && newUser != email) {
         setInvites([...invites, newUser]);
+
+        const user = await getUser(newUser);
+        if (user) {
+          setInvitees([...invitees, user.firstname + " " + user.lastname]);
+        } else {
+          setInvitees([...invitees, newUser]);
+        }
+
         setInviteValue("");
       }
     }
   };
 
   const handleRemoveUser = (user) => {
-    const updatedUsers = invites.filter((e) => e !== user);
-    setInvites(updatedUsers);
+    // const updatedUsers = invites.filter((e) => e !== user);
+    // setInvites(updatedUsers);
+    const inviteesIndex = invitees.findIndex((name) => name === user);
+
+    // Find the corresponding user email in invites array
+    // const userEmail = invites[inviteesIndex];
+
+    // Remove the user from invitees array
+    const updatedInvitees = [
+      ...invitees.slice(0, inviteesIndex),
+      ...invitees.slice(inviteesIndex + 1),
+    ];
+    setInvitees(updatedInvitees);
+
+    // Remove the corresponding user email from invites array
+    const updatedInvites = [
+      ...invites.slice(0, inviteesIndex),
+      ...invites.slice(inviteesIndex + 1),
+    ];
+    setInvites(updatedInvites);
   };
 
   let uniqueid = uniqid();
   async function createEventApi(e) {
+        console.log(invites);
     e.preventDefault();
     try {
       // Wait for the pushEvent and scheduleInviteNotification to complete
@@ -179,7 +220,7 @@ export const EventModal = ({ isOpen, onClose }) => {
                 />
               </Col>
               <div className="mt-3">
-                {invites.map((user) => (
+                {invitees.map((user) => (
                   <span
                     key={user}
                     className="user-tag"

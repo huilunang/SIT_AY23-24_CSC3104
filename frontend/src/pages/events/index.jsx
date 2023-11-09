@@ -14,12 +14,18 @@ const EventPage = () => {
 
   function isAccepted(key, invitee) {
     // Check if invitee exists in the parties array with membername
-    return parties.some((party) => key === party.key && party.member === invitee.email);
+    return parties.some(
+      (party) => key === party.key && party.member === invitee.email
+    );
   }
-    
+
   function getMemberName(key, invitee) {
-    const matchingParty = parties.find((party) => key === party.key && party.member === invitee.email);
-    return matchingParty ? matchingParty.membername : invitee.name;
+    const matchingParty = parties.find(
+      (party) => key === party.key && party.member === invitee.email
+    );
+    return matchingParty
+      ? ", " + matchingParty.membername
+      : ", " + invitee.name;
   }
 
   return (
@@ -33,7 +39,8 @@ const EventPage = () => {
         <Card as={Row} key={index} style={{ width: "100%" }}>
           <Card.Body className="ps-5 pe-5">
             <Row>
-              <Col sm="10">
+              <Col sm="1"></Col>
+              <Col sm="8">
                 <Card.Title style={{ fontSize: "36px" }}>
                   {event.title}
                 </Card.Title>
@@ -53,23 +60,25 @@ const EventPage = () => {
                       style={{
                         color: "green",
                         // textDecoration: "underline"
-                        fontWeight: 500
+                        fontWeight: 500,
                       }}
                     >
                       {event.ownername}
                     </span>
-                    {event.invitation.map((invitee, index) => (
-                      <span
-                        key={index}
-                        style={{
-                          color: isAccepted(event.key, invitee)
-                            ? "green"
-                            : "grey",
-                        }}
-                      >
-                        , {getMemberName(event.key, invitee)}
-                      </span>
-                    ))}
+                    {event.invitation.map((invitee, index) =>
+                      invitee !== "" ? (
+                        <span
+                          key={index}
+                          style={{
+                            color: isAccepted(event.key, invitee)
+                              ? "green"
+                              : "grey",
+                          }}
+                        >
+                          {getMemberName(event.key, invitee)}
+                        </span>
+                      ) : null
+                    )}
                     <br />
                     Notify: {event.notify}
                   </>
@@ -80,6 +89,7 @@ const EventPage = () => {
                   <Card.Img variant="top" src="holder.js/100px180" />
                 </Card.Text>
               </Col>
+              <Col sm="1"></Col>
             </Row>
           </Card.Body>
         </Card>
