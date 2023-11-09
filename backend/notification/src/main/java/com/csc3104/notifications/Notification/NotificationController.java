@@ -118,6 +118,9 @@ public class NotificationController {
                 pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, "unread"));
             } else if (status.equals("accepted")) {
+                if (notify.equals("true")){
+                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites);
+                }
                 repository.save(new Notification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, status));
             }
@@ -163,14 +166,12 @@ public class NotificationController {
     }
 
     @PostMapping("/delete")
-    public void deletePastNotifications(@RequestBody Map<String, String> payload) {
+    public void deleteNotifications(@RequestBody Map<String, String> payload) {
         String key = payload.get("key");
-        String member = payload.get("member");
-        String type = payload.get("type");
 
-        List<PastNotification> pastNotifications = pastRepository.findAllByKeyAndMemberAndType(key, member, type);
+        List<Notification> notifications = repository.findAllByKey(key);
 
         // Delete documents from the collection
-        pastRepository.deleteAll(pastNotifications);
+        repository.deleteAll(notifications);
     }
 }
