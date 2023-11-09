@@ -1,9 +1,9 @@
 package com.csc3104.poi;
 
-import com.csc3104.poi.grpc.POIRequest;
-import com.csc3104.poi.grpc.POIDetails;
+import com.csc3104.grpc.POIRequest;
+import com.csc3104.grpc.POIDetails;
 // import com.csc3104.poi.POIService;
-import com.csc3104.poi.grpc.POIServiceGrpc.POIServiceImplBase;
+import com.csc3104.grpc.POIServiceGrpc.POIServiceImplBase;
 
 import net.devh.boot.grpc.server.service.GrpcService;
 
