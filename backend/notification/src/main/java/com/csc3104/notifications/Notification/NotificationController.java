@@ -118,6 +118,9 @@ public class NotificationController {
                 pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, "unread"));
             } else if (status.equals("accepted")) {
+                if (notify.equals("true")){
+                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites);
+                }
                 repository.save(new Notification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, status));
             }
