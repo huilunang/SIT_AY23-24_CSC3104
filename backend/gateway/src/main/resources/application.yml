@@ -26,10 +26,24 @@ spring:
           predicates:
             - Path=/api/v1/user/**
 
-        - id: wishlist
+        - id: wishlist_gallery
           uri: http://wishlist:8082
           predicates:
             - Path=/api/v1/gallery/**
+          filters:
+            - AuthenticationFilter
+
+        - id: wishlist_list
+          uri: http://wishlist:8082
+          predicates:
+            - Path=/api/v1/wishlist/**
+          filters:
+            - AuthenticationFilter
+
+        - id: wishlist_poi
+          uri: http://wishlist:8082
+          predicates:
+            - Path=/api/v1/poi/**
           filters:
             - AuthenticationFilter
 
