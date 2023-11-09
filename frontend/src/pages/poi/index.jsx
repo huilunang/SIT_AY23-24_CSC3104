@@ -80,6 +80,12 @@ const Details = () => {
     return starElements;
   };
 
+  const handleBtnClick = (businessId) => {
+    if (businessId) {
+      navigate(`/events/${businessId}`);
+    }
+  };
+
   return (
     <>
       <CustomNavbar />
@@ -124,7 +130,7 @@ const Details = () => {
           </div>
         </div>
         <div className="createEvent">
-          <button className="btnEvt" >Create Event</button>
+          <button onClick={handleBtnClick} className="btnEvt" >Create Event</button>
         </div>
         <div className="wentOrNot">
           <input
