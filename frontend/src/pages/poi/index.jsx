@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./styles.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getPOIDetails,
   updatePOIRemarks,
@@ -11,6 +11,7 @@ import CustomNavbar from "../../components/navbar";
 
 const Details = () => {
   const { wishlistId, businessId } = useParams();
+  const navigate = useNavigate();
 
   const [details, setDetails] = useState({});
 
@@ -80,7 +81,7 @@ const Details = () => {
     return starElements;
   };
 
-  const handleBtnClick = (businessId) => {
+  const handleBtnClick = () => {
     if (businessId) {
       navigate(`/events/${businessId}`);
     }
