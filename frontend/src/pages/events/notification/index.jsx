@@ -342,7 +342,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
       <ToastContainer
         className="p-3"
         // position="top-end"
-        style={{ zIndex: 1, top: 200, right: 0, height: "100px" }}
+        style={{ zIndex: 1, top: 40, right: 0, height: "100px" }}
       >
         {[newNotifications]
           .reverse()
@@ -430,7 +430,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
 
       <ToastContainer
         className="p-3"
-        style={{ zIndex: 1, top: 170, right: 0, height: "100px" }}
+        style={{ zIndex: 1, top: 40, right: 0, height: "100px" }}
       >
         <Toast
           onClose={() => {
@@ -446,7 +446,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
               className="rounded me-2"
               alt=""
             />
-            <strong className="me-auto">
+            <strong
+              className="me-auto"
+            >
               Notification{" "}
               <Badge pill variant="primary">
                 {count}
@@ -468,7 +470,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                 >
                   {notification.type === "event-request" ? (
                     <>
-                      <Col sm="8">
+                      <Col sm="9">
                         <div className="notification-text">
                           <b>
                             You've been invited by {notification.ownername} to{" "}
@@ -531,7 +533,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     </>
                   ) : notification.type === "event-accepted" ? (
                     <>
-                      <Col sm="8">
+                      <Col sm="9">
                         <div className="notification-text">
                           <b>
                             You've accepted the invite by{" "}
@@ -548,7 +550,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     </>
                   ) : notification.type === "event-rejected" ? (
                     <>
-                      <Col sm="8">
+                      <Col sm="9">
                         <div className="notification-text">
                           <b>
                             You've rejected the invite by{" "}
@@ -565,7 +567,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     </>
                   ) : notification.type === "friend-request" ? (
                     <>
-                      <Col sm="8">
+                      <Col sm="9">
                         <div className="notification-text">
                           <b>
                             {notification.ownername} have sent you a friend
@@ -621,13 +623,13 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       </Col>
                     </>
                   ) : notification.type === "friend-accepted" ? (
-                    <Col sm="8">
+                    <Col sm="9">
                       <div className="notification-text">
                         <b>{notification.ownername} is now your friend</b>
                       </div>
                     </Col>
                   ) : notification.type === "friend-rejected" ? (
-                    <Col sm="8">
+                    <Col sm="9">
                       <div className="notification-text">
                         <b>
                           {notification.ownername} have sent you a friend
@@ -636,7 +638,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       </div>
                     </Col>
                   ) : (
-                    <Col sm="8">
+                    <Col sm="9">
                       <div className="notification-text">
                         <b>
                           {notification.title} by {notification.ownername}
