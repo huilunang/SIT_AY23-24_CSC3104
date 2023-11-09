@@ -33,12 +33,6 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    @GetMapping("testing")
-    public String testing() {
-        return "Controller's working..";
-    }
-
-
     @PostMapping("/friend-request")
     public ResponseEntity<String> friendRequestNotification(@RequestBody Map<String, String> payload) {
         String owner = payload.get("owner");

@@ -19,12 +19,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-
-    @GetMapping("testing")
-    public String testing() {
-        return "Controller's working..";
-    }
-
     @PostMapping("/all")
     public List<Event> getCurrentEvents(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");

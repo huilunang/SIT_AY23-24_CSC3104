@@ -24,16 +24,6 @@ public class GalleryController {
     @Autowired
     private GalleryService galleryService;
 
-    @GetMapping("testing")
-    public String testing() {
-        return "Controller's working..";
-    }
-
-    @GetMapping("/testing")
-    public String testingController() {
-        return "It works";
-    }
-
     @GetMapping("/{email}")
     public ResponseEntity<List<GalleryCreateImage>> getAllGallery(@PathVariable String email) {
         return new ResponseEntity<List<GalleryCreateImage>>(galleryService.allGallery(email), HttpStatus.OK);
