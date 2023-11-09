@@ -35,6 +35,13 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   const email = localStorage.getItem("email");
 
   useEffect(() => {
+    if (isOpen) {
+      // Call the refreshNotification function when the modal is open
+      refreshNotification();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     const eventSource = new EventSource(
       `http://localhost:8083/notification/stream?to=${email}`
     );
@@ -132,6 +139,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
           })
         );
         setNotifications(updatedContent);
+      } else {
+        setNotifications([]);
       }
     }
 
