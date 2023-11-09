@@ -13,7 +13,12 @@ import { getAllEvents } from "../../../api/notification/EventApiService";
 import { getAllParty } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
 
-const EventComponent = ({ updateEvent, updateParty }) => {
+const EventComponent = ({
+  updateEvent,
+  updateParty,
+  onRemoveEvent,
+  pageRefresh,
+}) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   function successfulResponse(response) {
@@ -127,6 +132,13 @@ const EventComponent = ({ updateEvent, updateParty }) => {
   useEffect(() => {
     fetchEvent();
   }, []);
+
+  useEffect(() => {
+    if (pageRefresh) {
+      refreshEvents();
+      onRemoveEvent();
+    }
+  }, [pageRefresh, onRemoveEvent]);
 
   return (
     <>

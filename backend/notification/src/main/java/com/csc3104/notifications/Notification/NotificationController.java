@@ -166,14 +166,12 @@ public class NotificationController {
     }
 
     @PostMapping("/delete")
-    public void deletePastNotifications(@RequestBody Map<String, String> payload) {
+    public void deleteNotifications(@RequestBody Map<String, String> payload) {
         String key = payload.get("key");
-        String member = payload.get("member");
-        String type = payload.get("type");
 
-        List<PastNotification> pastNotifications = pastRepository.findAllByKeyAndMemberAndType(key, member, type);
+        List<Notification> notifications = repository.findAllByKey(key);
 
         // Delete documents from the collection
-        pastRepository.deleteAll(pastNotifications);
+        repository.deleteAll(notifications);
     }
 }

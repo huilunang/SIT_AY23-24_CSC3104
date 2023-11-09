@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -85,4 +86,16 @@ public class EventController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
         }
     }
+
+    @PostMapping("/delete")
+    public void deleteEvent(@RequestBody Map<String, String> payload) {
+        String key = payload.get("key");
+        String type = payload.get("type");
+
+        List<Event> event = repository.findAllByKeyAndType(key, type);
+
+        // Delete documents from the collection
+        repository.deleteAll(event);
+    }
+
 }

@@ -3,15 +3,12 @@ import { eventClient } from "./ApiClient";
 export function getUserName(email) {
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return eventClient.get(
-    `/events/user?email=${email}`,
-    {
-      headers: {
-        Authorization: jwtToken,
-        "Content-Type": "application/json",
-      },
-    }
-  ); 
+  return eventClient.get(`/events/user?email=${email}`, {
+    headers: {
+      Authorization: jwtToken,
+      "Content-Type": "application/json",
+    },
+  });
 }
 
 export function getAllEvents() {
@@ -139,6 +136,24 @@ export function pushEvent(
       type: type,
       notify: notify,
       status: status,
+    }, // Pass the message in the request payload
+    {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+}
+
+export function deleteEvent(key, type) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  return eventClient.post(
+    `/events/delete`,
+    {
+      key: key,
+      type: type,
     }, // Pass the message in the request payload
     {
       headers: {

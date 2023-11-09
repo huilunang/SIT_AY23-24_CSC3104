@@ -28,12 +28,13 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   const [newNotifications, setNewNotifications] = useState([]);
   const [newNotification, setNewNotification] = useState(0);
   const [count, setCount] = useState(0);
+
   const [lock, setLock] = useState(false);
   const [eventLock, setEventLock] = useState(false);
   const [friendLock, setFriendLock] = useState(false);
+  const email = localStorage.getItem("email");
 
   useEffect(() => {
-    const email = localStorage.getItem("email");
     const eventSource = new EventSource(
       `http://localhost:8083/notification/stream?to=${email}`
     );

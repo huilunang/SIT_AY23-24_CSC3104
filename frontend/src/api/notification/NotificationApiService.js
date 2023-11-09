@@ -200,48 +200,12 @@ export function friendRequest(member, notify, type, status) {
   }
 }
 
-export function deleteInviteNotification(
-  key,
-  owner,
-  title,
-  date,
-  time,
-  description,
-  invites,
-  notify,
-  type,
-  status
-) {
-  const email = localStorage.getItem("email");
+export function deleteNotification(key) {
   const jwtToken = localStorage.getItem("jwtToken");
-
-  // Create a Date object with your date and time
-  let localTimeStr = date + " " + time;
-  let localTime = new Date(localTimeStr);
-
-  let invite = "";
-  if (invites.length > 0) {
-    invite = invites.toString();
-  }
-
-  // Obtain the Unix timestamp (milliseconds since Jan 1, 1970)
-  const unixTimestampMillis = localTime.getTime();
-
   return notificationClient.post(
     `/notification/delete`,
     {
       key: key,
-      owner: owner,
-      member: email,
-      title: title,
-      date: date,
-      time: time,
-      description: description,
-      invites: invite,
-      timestamp: unixTimestampMillis,
-      type: type,
-      notify: notify,
-      status: status,
     }, // Pass the message in the request payload
     {
       headers: {

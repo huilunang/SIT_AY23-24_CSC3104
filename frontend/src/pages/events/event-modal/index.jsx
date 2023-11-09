@@ -23,7 +23,9 @@ export const EventModal = ({ isOpen, onClose }) => {
   const [invites, setInvites] = useState([]);
   const [invitees, setInvitees] = useState([]);
   const [notify, setNotify] = useState(false);
+
   const [lock, setLock] = useState(false);
+  const email = localStorage.getItem("email");
 
   function successfulResponse(response) {
     // console.log("successful. here's data " + response.data);
@@ -50,7 +52,6 @@ export const EventModal = ({ isOpen, onClose }) => {
   const handleInviteKeyDown = async (e) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
-      const email = localStorage.getItem("email");
       const newUser = inviteValue.trim();
 
       if (newUser && !invites.includes(newUser) && newUser != email) {
