@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: account
+  name: account
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: account
+    spec:
+      containers:
+      - image: sit_ay23-24_csc3104-account
+        name: sit-ay23-24-csc3104-account
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: travelexp-conf
+        resources: {}
+status: {}

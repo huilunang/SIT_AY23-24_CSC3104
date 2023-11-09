@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: friends
+  name: friends
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: friends
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: friends
+    spec:
+      containers:
+      - image: sit_ay23-24_csc3104-friends
+        name: sit-ay23-24-csc3104-friends-n8kkl
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: travelexp-conf
+        resources: {}
+status: {}

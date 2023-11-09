@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: wishlist-mongodb
+  name: wishlist-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wishlist-mongodb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wishlist-mongodb
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        envFrom:
+        - configMapRef:
+            name: travelexp-conf
+        resources: {}
+        volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d
+          name: mongo-init
+      volumes:
+      - name: mongo-init
+        hostPath:
+          path: /db
+status: {}

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: notification-mongodb
+  name: notification-mongodb
+spec:
+  ports:
+  - name: 27018-27017
+    port: 27018
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: notification-mongodb
+  type: ClusterIP
+status:
+  loadBalancer: {}

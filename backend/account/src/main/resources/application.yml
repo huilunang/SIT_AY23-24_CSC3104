@@ -1,6 +1,8 @@
 server:
   port: 8081
 spring:
+  application:
+    name: account
   datasource:
     url: jdbc:mysql://account-mysqldb:3306/account
     username: csc3104
