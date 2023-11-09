@@ -129,4 +129,26 @@ public class NotificationService {
             // Handle the exception or log it
         }
     }
+
+    public void sendEmailUpcoming(String owner, String member, String title, String date, String time,
+            String description, String invites) {
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+
+        try {
+            helper.setTo(member);
+            helper.setSubject("You have an upcoming event by " + owner + " to " + title);
+            helper.setText(
+                    "Description: " + description
+                            + "<br>" +
+                            "Date: " + date
+                            + "<br>" +
+                            "Time: " + time,
+                    true);
+
+            javaMailSender.send(message);
+        } catch (MessagingException e) {
+            // Handle the exception or log it
+        }
+    }
 }

@@ -1,108 +1,176 @@
 import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 
-import { IoNotifications } from "react-icons/io5";
-import { IoAddCircle } from "react-icons/io5";
+import { MDBIcon } from "mdb-react-ui-kit";
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Badge from 'react-bootstrap/Badge';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
 
 import { EventModal } from "../event-modal";
 
-import Notification from "../notification";
-
-import { readAllNotifications } from "../../../api/notification/NotificationApiService";
-
 import { getAllEvents } from "../../../api/notification/EventApiService";
 import { getAllParty } from "../../../api/notification/EventApiService";
+import { getUserName } from "../../../api/notification/EventApiService";
 
-const EventComponent = ({ updateEvent, updateParty }) => {
-    const [notificationCount, setNotificationCount] = useState(0); // Initialize the count to 0
-    const [isNotificationOpen, setNotificationOpen] = useState(false);
+const EventComponent = ({
+  updateEvent,
+  updateParty,
+  onRemoveEvent,
+  pageRefresh,
+}) => {
+  const [isModalOpen, setModalOpen] = useState(false);
 
-    const [isModalOpen, setModalOpen] = useState(false);
+  function successfulResponse(response) {
+    // console.log("successful. here's data " + JSON.stringify(response.data));
+  }
 
-    const getEvent = async () => {
-        getAllEvents()
-          .then((response) => successfulResponse(response.data))
-          .catch((error) => errorResponse(error))
-          .finally(() => console.log("Current Event Loaded"));
-    
-        async function successfulResponse(content) { 
-          const partyPromises = content.map((event) => getParty(event.key));
-          await Promise.all(partyPromises); // Wait for all getParty calls to complete
+  function errorResponse(error) {
+    console.log(error);
+  }
 
-          updateEvent(content);
-        }
-    
-        function errorResponse(error) {
-          console.log(error);
-        }
-      };
-    
-      const getParty = async (key) => {
-        try {  
-          const response = await getAllParty(key);
-          const content = response.data;
-          updateParty([...content]); // Update the parent component's state
-          console.log(content)
-        } catch (error) {
-          console.error("An error occurred:", error);
-          // Handle errors as needed
-        }
-      };
-      
-    useEffect(() =>{
-        getEvent();
-    }, []);
-    
-    const openNotification = () => {
-        setNotificationOpen(true);
-        getEvent();
-    };
-    
-    const closeNotification = () => {
-        setNotificationOpen(false);
-        setNotificationCount(0);
-        readAllNotifications()
-        .then((response) => console.log(response.data))
-        .catch((error) => console.log(error))
-        .finally(() => console.log("read"));
+  async function getUser(email) {
+    try {
+      const response = await getUserName(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
+  }
 
-        getEvent();
-    };
-    
-    const openModal = () => {
-        setModalOpen(true);
-    };
-    
-    const closeModal = () => {
-        setModalOpen(false);
-        getEvent();
-    };
+  async function fetchEvent() {
+    try {
+      const response = await getAllEvents();
+      const content = response.data;
 
-    return (
-        <>
-        <Navbar expand="lg" className="bg-body-tertiary">
-        <Container style={{flexWrap:"nowrap" }}>
-          <Navbar.Brand style={{ width:"50%", fontWeight: 'bold', fontSize: '34px' }}>Events</Navbar.Brand>
-          <Nav className="me-auto" style={{width:"50%", flexDirection:"row-reverse", flexWrap:"nowrap", gap:"10px" }}>
-            <Link className="nav-link me-4" onClick={openModal}>
-                <IoAddCircle style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/>
-            </Link>            
-            <Link className="nav-link" onClick={openNotification}>
-                <IoNotifications style={{ fontSize: '30px', fill: "#000000", fillOpacity: "54%" }}/> <Badge pill variant="primary">{notificationCount}</Badge>
+      const updatedContent = await Promise.all(
+        content.map(async (item) => {
+          const user = await getUser(item.owner);
+          item.ownername = user.firstname + " " + user.lastname;
+
+          const invitees = item.invites
+            .split(",")
+            .map((invite) => invite.trim());
+          if (invitees.length > 0) {
+            const inviteePromises = invitees.map(async (invite) => {
+              if (invite != "") {
+                const inviteUser = await getUser(invite);
+                return {
+                  email: invite,
+                  name: inviteUser.firstname + " " + inviteUser.lastname,
+                };
+              } else {
+                return "";
+              }
+            });
+            const inviteeData = await Promise.all(inviteePromises);
+            item.invitation = inviteeData;
+          } else {
+            item.invitation = [];
+          }
+
+          return item; // Return the updated content
+        })
+      );
+
+      const promises = content.map((event) => fetchParty(event.key));
+      const parties = await Promise.all(promises);
+
+      const uniquePartyMap = new Map();
+      parties.forEach((party) => {
+        party.forEach((item) => {
+          uniquePartyMap.set(item.id, item);
+        });
+      });
+      const uniquePartyArray = Array.from(uniquePartyMap.values());
+      updateEvent(updatedContent);
+      updateParty(uniquePartyArray);
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
+  async function fetchParty(key) {
+    try {
+      const response = await getAllParty(key);
+      const content = response.data;
+
+      if (content.length > 0) {
+        const updatedContent = await Promise.all(
+          content.map(async (item) => {
+            const user = await getUser(item.member);
+            item.membername = user.firstname + " " + user.lastname;
+            return item;
+          })
+        );
+
+        return updatedContent;
+      } else {
+        // Handle the case where there are no party items
+        return [];
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+    }
+  }
+
+  const openModal = () => {
+    setModalOpen(true);
+    fetchEvent();
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    fetchEvent();
+  };
+
+  const refreshEvents = async () => {
+    await fetchEvent();
+  };
+
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+
+  useEffect(() => {
+    if (pageRefresh) {
+      refreshEvents();
+      onRemoveEvent();
+    }
+  }, [pageRefresh, onRemoveEvent]);
+
+  return (
+    <>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container style={{ flexWrap: "nowrap" }}>
+          <Navbar.Brand
+            style={{ width: "50%", fontWeight: "bold", fontSize: "34px" }}
+          >
+            Events
+          </Navbar.Brand>
+          <Nav
+            className="me-auto"
+            style={{
+              width: "50%",
+              flexDirection: "row-reverse",
+              flexWrap: "nowrap",
+              gap: "10px",
+            }}
+          >
+            <Link className="nav-link me-4" onClick={refreshEvents}>
+              <MDBIcon fas icon="redo" style={{ fontSize: "24px" }} />{" "}
             </Link>
-          </Nav>            
+            <Link className="nav-link me-4" onClick={openModal}>
+              <MDBIcon fas icon="plus-circle" style={{ fontSize: "24px" }} />{" "}
+            </Link>
+          </Nav>
         </Container>
-        </Navbar>
-        <Outlet />  
-        <Notification isOpen={isNotificationOpen} onClose={closeNotification} updateNotificationCount={(count) => setNotificationCount(count)}/>
-        <EventModal isOpen={isModalOpen} onClose={closeModal}/>
-        </>    
-    )
-}
+      </Navbar>
+      <Outlet />
+      <EventModal isOpen={isModalOpen} onClose={closeModal} />
+    </>
+  );
+};
 
 export default EventComponent;
