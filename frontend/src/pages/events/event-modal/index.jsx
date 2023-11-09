@@ -23,6 +23,7 @@ export const EventModal = ({ isOpen, onClose }) => {
   const [invites, setInvites] = useState([]);
   const [invitees, setInvitees] = useState([]);
   const [notify, setNotify] = useState(false);
+  const [lock, setLock] = useState(false);
 
   function successfulResponse(response) {
     // console.log("successful. here's data " + response.data);
@@ -92,44 +93,48 @@ export const EventModal = ({ isOpen, onClose }) => {
 
   let uniqueid = uniqid();
   async function createEventApi(e) {
-    e.preventDefault();
-    try {
-      // Wait for the pushEvent and scheduleInviteNotification to complete
-      uniqueid = uniqid();
-      await createEvent(
-        uniqueid,
-        title,
-        date,
-        time,
-        description,
-        invites,
-        notify,
-        "event"
-      ) // Pass the parameters to the API function
-        .then((response) => successfulResponse(response))
-        .catch((error) => errorResponse(error))
-        .finally(() => console.log("cleanup"));
+    if (!lock){
+      e.preventDefault();
+      setLock(true);
+      try {
+        // Wait for the pushEvent and scheduleInviteNotification to complete
+        uniqueid = uniqid();
+        await createEvent(
+          uniqueid,
+          title,
+          date,
+          time,
+          description,
+          invites,
+          notify,
+          "event"
+        ) // Pass the parameters to the API function
+          .then((response) => successfulResponse(response))
+          .catch((error) => errorResponse(error))
+          .finally(() => console.log("cleanup"));
 
-      await scheduleNotification(
-        uniqueid,
-        title,
-        date,
-        time,
-        description,
-        invites,
-        notify,
-        "event"
-      ) // Pass the parameters to the API function
-        .then((response) => successfulResponse(response))
-        .catch((error) => errorResponse(error))
-        .finally(() => console.log("cleanup"));
+        await scheduleNotification(
+          uniqueid,
+          title,
+          date,
+          time,
+          description,
+          invites,
+          notify,
+          "event"
+        ) // Pass the parameters to the API function
+          .then((response) => successfulResponse(response))
+          .catch((error) => errorResponse(error))
+          .finally(() => console.log("cleanup"));
 
-      // After both operations have completed, close the modal
-      onClose();
-    } catch (error) {
-      console.error("An error occurred:", error);
-      // Handle errors as needed
+        // After both operations have completed, close the modal
+        onClose();
+      } catch (error) {
+        console.error("An error occurred:", error);
+        // Handle errors as needed
+      }
     }
+    setLock(false);
   }
 
   return (
