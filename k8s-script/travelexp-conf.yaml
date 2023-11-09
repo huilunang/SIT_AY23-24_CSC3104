@@ -8,10 +8,10 @@ data:
   MONGO_ROOT_USER: root
   MONGO_USER: csc3104
   MONGO_WISHLIST_PORT: "27017"
-  MYSQL_ACCOUNT_DATABASE: account
-  MYSQL_PASSWORD: csc3104
   MYSQL_ROOT_PASSWORD: root
+  MYSQL_DATABASE: account
   MYSQL_USER: csc3104
+  MYSQL_PASSWORD: csc3104
 kind: ConfigMap
 metadata:
   creationTimestamp: null

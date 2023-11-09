@@ -3,16 +3,16 @@ kind: Service
 metadata:
   creationTimestamp: null
   labels:
-    app: account
-  name: account
+    app: account-mysqldb
+  name: account-mysqldb
 spec:
   ports:
-  - name: 8081-8081
-    port: 8081
+  - name: 3306-3306
+    port: 3306
     protocol: TCP
-    targetPort: 8081
+    targetPort: 3306
   selector:
-    app: account
+    app: account-mysqldb
   type: ClusterIP
 status:
   loadBalancer: {}

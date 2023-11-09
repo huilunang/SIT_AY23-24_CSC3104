@@ -3,26 +3,23 @@ kind: Deployment
 metadata:
   creationTimestamp: null
   labels:
-    app: account
-  name: account
+    app: client
+  name: client
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: account
+      app: client
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: account
+        app: client
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-account
-        name: sit-ay23-24-csc3104-account
+      - image: sit_ay23-24_csc3104-client
+        name: sit-ay23-24-csc3104-client
         imagePullPolicy: Never
-        envFrom:
-        - configMapRef:
-            name: travelexp-conf
         resources: {}
 status: {}
