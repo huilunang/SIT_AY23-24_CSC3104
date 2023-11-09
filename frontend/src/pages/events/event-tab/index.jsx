@@ -18,17 +18,8 @@ const EventComponent = ({
   updateParty,
   onRemoveEvent,
   pageRefresh,
-  businessId
 }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-
-  useEffect(() => {
-    if (businessId) {
-      setModalOpen(true);
-    } else {
-      setModalOpen(false);
-    }
-  }, [businessId]);
 
   function successfulResponse(response) {
     // console.log("successful. here's data " + JSON.stringify(response.data));
@@ -177,7 +168,7 @@ const EventComponent = ({
         </Container>
       </Navbar>
       <Outlet />
-      <EventModal isOpen={isModalOpen} onClose={closeModal} businessId={businessId}/>
+      <EventModal isOpen={isModalOpen} onClose={closeModal} />
     </>
   );
 };

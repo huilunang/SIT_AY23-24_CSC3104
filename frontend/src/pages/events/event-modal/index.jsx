@@ -12,9 +12,8 @@ import uniqid from "uniqid";
 import { scheduleNotification } from "../../../api/notification/NotificationApiService";
 import { createEvent } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
-import { getPOIDetails } from "../../../api/notification/EventApiService";
 
-export const EventModal = ({ isOpen, onClose, businessId }) => {
+export const EventModal = ({ isOpen, onClose }) => {
   const [inviteValue, setInviteValue] = useState("");
 
   const [title, setTitle] = useState("");
@@ -35,21 +34,6 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   function errorResponse(error) {
     // console.log(error);
   }
-
-  const autoFillDetails = async() => {
-    try {
-        if (businessId) {
-            const response = await getPOIDetails(businessId);
-            console.log(response.data);
-            setTitle(response.data[0]);
-        }
-        console.log("no data");
-    } catch (error) {
-        console.error(error);
-    }
-  }
-
-  autoFillDetails();
 
   async function getUser(email) {
     try {

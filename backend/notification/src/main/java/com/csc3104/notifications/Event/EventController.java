@@ -25,11 +25,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/{businessId}")
-    public List<String> getDetails(@PathVariable String businessId){
-        return eventService.sendDetailsToEvents(businessId);
-    }
-
     @PostMapping("/all")
     public List<Event> getCurrentEvents(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");

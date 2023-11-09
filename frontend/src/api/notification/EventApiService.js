@@ -163,14 +163,3 @@ export function deleteEvent(key, type) {
     }
   );
 }
-
-export function getPOIDetails(businessId) {
-  const jwtToken = localStorage.getItem("jwtToken");
-
-  return eventClient.get(`/events/${businessId}`, {
-    headers: {
-      Authorization: jwtToken,
-      "Content-Type": "application/json",
-    },
-  });
-}

@@ -10,6 +10,7 @@ import POIPage from "./pages/poi";
 import RandomizerPage from "./pages/randomizer";
 import EventPage from "./pages/events";
 import FriendsPage from "./pages/friends";
+import EventPOIPage from "./pages/eventsPoi";
 
 import AuthProvider from "./security/AuthContext.jsx";
 
@@ -88,10 +89,18 @@ export default function App() {
               }
             ></Route>
             <Route
-              path="/events/:businessId"
+              path="/events"
               element={
                 <AuthenticatedRoute>
                   <EventPage />
+                </AuthenticatedRoute>
+              }
+            ></Route>
+            <Route
+              path="/events/:businessId"
+              element={
+                <AuthenticatedRoute>
+                  <EventPOIPage />
                 </AuthenticatedRoute>
               }
             ></Route>
