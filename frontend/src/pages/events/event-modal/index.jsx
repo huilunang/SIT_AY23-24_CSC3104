@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -12,8 +12,10 @@ import uniqid from "uniqid";
 import { scheduleNotification } from "../../../api/notification/NotificationApiService";
 import { createEvent } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
+import { getDetails } from "../../../api/notification/EventApiService";
 
-export const EventModal = ({ isOpen, onClose }) => {
+export const EventModal = ({ isOpen, onClose, businessId }) => {
+  const [details, setDetails] = useState([]);
   const [inviteValue, setInviteValue] = useState("");
 
   const [title, setTitle] = useState("");
@@ -34,6 +36,21 @@ export const EventModal = ({ isOpen, onClose }) => {
   function errorResponse(error) {
     // console.log(error);
   }
+
+  useEffect(() => {
+    // Function to fetch details when the component mounts
+    const fetchDetails = async () => {
+      try {
+        const response = await getDetails(businessId);
+        setDetails(response.data);
+        console.log(details);
+      } catch (error) {
+        console.error('Error fetching details:', error);
+      }
+    };
+
+    fetchDetails();
+  }, []);
 
   async function getUser(email) {
     try {
