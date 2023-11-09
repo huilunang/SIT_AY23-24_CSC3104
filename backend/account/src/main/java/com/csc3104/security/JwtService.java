@@ -83,7 +83,7 @@ public class JwtService {
 
     private Key getSignInKey() {
         // @Value("${application.security.jwt.secret-key}")
-        String secretKey = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+        String secretKey = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }

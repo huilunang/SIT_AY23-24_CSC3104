@@ -21,6 +21,11 @@ public class FriendController {
     @Autowired
     private FriendService friendService;
 
+    @GetMapping
+    public String testingFriends() {
+        return "Friends service's working..";
+    }
+
     @GetMapping("/getFriends")
     public ResponseEntity<List<String>> getFriends(@RequestParam String email) {
         List<String> friends = friendService.getFriends(email);
