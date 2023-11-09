@@ -1,10 +1,14 @@
 package com.csc3104.friends;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import com.csc3104.user.UserServiceGrpc;
+import com.csc3104.user.Friends.UserRequest;
+import com.csc3104.user.UserServiceGrpc.UserServiceBlockingStub;
+import com.csc3104.user.Friends.UserResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +29,7 @@ public class FriendService {
     @Autowired
     private RestTemplate restTemplate;
 
+
     public List<String> getFriends(String email) {
         FriendList friends = FriendListRepo.findFriendListByEmail(email);
         if (friends != null) {
@@ -40,72 +45,63 @@ public class FriendService {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
         Map<String, Object> attributes = new HashMap<>();
 
-        // Prepare the headers with the token
+        // Establish gRPC channel
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+
+        // Create a stub using the channel
+        UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
+
+        // Prepare gRPC request
+        UserRequest request = UserRequest.newBuilder().setEmail(email).setToken(token).build();
+
+        // Make the gRPC call
+        UserResponse response = stub.getUserByEmail(request);
+
+        // Process the response
+        String email2 = response.getEmail();
+        String name = response.getFirstname() + " " + response.getLastname();
+
+        attributes.put("name", name);
+        attributes.put("email", email2);
+        mapping.put(email, attributes);
+
+        // Shut down the channel
+        channel.shutdown();
+
+        return mapping;
+    }
+
+
+    public Map<String, Map<String, Object>> listFriends(List<String> friends, String token) {
+        Map<String, Map<String, Object>> mapping = new HashMap<>();
+
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+        UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);
 
-        String url = "http://account:8081/api/v1/user/{email}";
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+        if (friends != null && !friends.isEmpty()) {
+            for (String email : friends) {
+                UserRequest request = UserRequest.newBuilder().setEmail(email).setToken(token).build();
 
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class, email);
-        if (response.getStatusCode().is2xxSuccessful()) {
-            String responseBody = response.getBody();
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(responseBody);
-            String email2 = jsonNode.get("email").asText();
-            String firstname = jsonNode.get("firstname").asText();
-            String lastname = jsonNode.get("lastname").asText();
-            attributes.put("name", firstname + " " + lastname);
-            attributes.put("email", email2);
-            mapping.put(email, attributes);
+                    UserResponse response = stub.getUserByEmail(request);
 
-            return mapping;
-        } else {
-            // Return null or throw an exception upon unsuccessful response
-            return null;
-        }
-    }
+                        String email2 = response.getEmail();
+                        String name = response.getFirstname() + " " + response.getLastname();
 
+                        Map<String, Object> attributes = new HashMap<>();
+                        attributes.put("name", name);
+                        attributes.put("email", email2);
+                        mapping.put(email, attributes);
 
-    public Map<String, Map<String, Object>> listFriends(List<String> friends, String token) throws JsonProcessingException {
-        Map<String, Map<String, Object>> mapping = new HashMap<>();
-        String url = "http://account:8081/api/v1/user/";
-
-        // Set up the headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", token); // Assuming a Bearer token
-
-        if (friends == null || friends.isEmpty()) {
-            return mapping;
+            }
         }
 
-        for (String email : friends) {
-            Map<String, Object> attributes = new HashMap<>();
-            // Make API call to accounts
-            Map<String, String> params = new HashMap<>();
-            params.put("email", email);
-
-            // Creating the HTTP entity with headers
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-
-            ResponseEntity<String> response = restTemplate.exchange(
-                    url + "{email}", HttpMethod.GET, entity, String.class, params);
-            String responseBody = response.getBody();
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(responseBody);
-            String email2 = jsonNode.get("email").asText();
-            String firstname = jsonNode.get("firstname").asText();
-            String lastname = jsonNode.get("lastname").asText();
-
-            attributes.put("name", firstname + " " + lastname);
-            attributes.put("email", email2);
-            mapping.put(email, attributes);
-        }
-
-        System.out.println(mapping);
+        channel.shutdown();
         return mapping;
     }
+
 
     public Boolean addFriend(String email, String sender) {
         // Step 1: Check if the user with 'id' exists
@@ -113,7 +109,6 @@ public class FriendService {
         FriendList sent = FriendListRepo.findFriendListByEmail(sender);
 
         if (user == null || sent == null) {
-            System.out.println("Oh no! Where are the users?");
             return false;
             // Handle the case where the user doesn't exist
         }
@@ -222,37 +217,33 @@ public class FriendService {
 
     }
 
-    public Map<String, Map<String, Object>> listFriendRequests(String email, String token) throws JsonProcessingException {
+    public Map<String, Map<String, Object>> listFriendRequests(String email, String token) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
-        List<Friend> friends = FriendRepo.findByRecipient(email);
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 9090).usePlaintext().build();
+        UserServiceGrpc.UserServiceBlockingStub stub = UserServiceGrpc.newBlockingStub(channel);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", token); // Assuming it's a Bearer token
+        headers.set("Authorization", token);
 
-        String url = "http://account:8081/api/v1/user/";
+        List<Friend> friends = FriendRepo.findByRecipient(email);
 
         for (Friend friend : friends) {
             Map<String, Object> attributes = new HashMap<>();
-            Map<String, String> params = new HashMap<>();
-            params.put("email", friend.getSender());
+            UserRequest request = UserRequest.newBuilder().setEmail(friend.getSender()).setToken(token).build();
 
-            HttpEntity<String> entity = new HttpEntity<>(headers); // Include headers in the request
+                UserResponse response = stub.getUserByEmail(request);
 
-            ResponseEntity<String> response = restTemplate.exchange(
-                    url + "{email}", HttpMethod.GET, entity, String.class, params);
-
-            String responseBody = response.getBody();
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(responseBody);
-
-            String firstname = jsonNode.get("firstname").asText();
-            String lastname = jsonNode.get("lastname").asText();
-
-            attributes.put("name", firstname + " " + lastname);
-            mapping.put(friend.getSender(), attributes);
+                    String name = response.getFirstname() + " " + response.getLastname();
+                    String email2 = response.getEmail();
+                    attributes.put("name", name);
+                    attributes.put("email", email2);
+                    mapping.put(friend.getSender(), attributes);
         }
+
+        channel.shutdown();
         return mapping;
     }
+
 
 
     public List<Friend> listSentFriendRequests(String email) {

@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package com.csc3104.user;
+
+service UserService {
+  rpc GetUserByEmail(UserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+  string email = 1;
+  string token = 2;
+}
+
+message UserResponse {
+  string firstname = 1;
+  string lastname = 2;
+  string email = 3;
+}
