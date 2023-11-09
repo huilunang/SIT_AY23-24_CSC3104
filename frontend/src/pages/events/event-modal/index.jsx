@@ -92,7 +92,6 @@ export const EventModal = ({ isOpen, onClose }) => {
 
   let uniqueid = uniqid();
   async function createEventApi(e) {
-        console.log(invites);
     e.preventDefault();
     try {
       // Wait for the pushEvent and scheduleInviteNotification to complete
