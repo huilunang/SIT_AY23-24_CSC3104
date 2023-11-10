@@ -91,16 +91,59 @@ public class NotificationService {
             String description, String invites) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
+        String htmlContent = "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Event Invitation</title>\n" +
+                "    <style>\n" +
+                "        body {\n" +
+                "            font-family: 'Arial', sans-serif;\n" +
+                "            margin: 0;\n" +
+                "            padding: 0;\n" +
+                "            background-color: #f4f4f4;\n" +
+                "        }\n" +
+                "\n" +
+                "        .container {\n" +
+                "            max-width: 600px;\n" +
+                "            margin: 20px auto;\n" +
+                "            background-color: #ffffff;\n" +
+                "            padding: 20px;\n" +
+                "            border-radius: 8px;\n" +
+                "            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" +
+                "        }\n" +
+                "\n" +
+                "        h1 {\n" +
+                "            color: #333;\n" +
+                "        }\n" +
+                "\n" +
+                "        p {\n" +
+                "            color: #555;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <div class=\"container\">\n" +
+                "        <h1>Event Invitation</h1>\n" +
+                "        <p><strong>Event Details:</strong></p>\n" +
+                "        <ul>\n" +
+                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
+                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>Title:</strong> " + title + "</li>\n" +
+                "            <li><strong>Date:</strong> " + date + "</li>\n" +
+                "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Description:</strong> " + description + "</li>\n" +
+                "        </ul>\n" +
+                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "    </div>\n" +
+                "</body>\n" +
+                "</html>";
+
         try {
+            helper.setFrom("TravelExp <noreply@example.com>");
             helper.setTo(member);
-            helper.setSubject(title);
-            helper.setText(
-                    "Description: " + description
-                            + "<br>" +
-                            "Date: " + date
-                            + "<br>" +
-                            "Time: " + time,
-                    true);
+            helper.setSubject(title + " is happening now!");
+            helper.setText(htmlContent, true);
 
             javaMailSender.send(message);
         } catch (MessagingException e) {
@@ -112,17 +155,59 @@ public class NotificationService {
             String description, String invites) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
+        String htmlContent = "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Event Invitation</title>\n" +
+                "    <style>\n" +
+                "        body {\n" +
+                "            font-family: 'Arial', sans-serif;\n" +
+                "            margin: 0;\n" +
+                "            padding: 0;\n" +
+                "            background-color: #f4f4f4;\n" +
+                "        }\n" +
+                "\n" +
+                "        .container {\n" +
+                "            max-width: 600px;\n" +
+                "            margin: 20px auto;\n" +
+                "            background-color: #ffffff;\n" +
+                "            padding: 20px;\n" +
+                "            border-radius: 8px;\n" +
+                "            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" +
+                "        }\n" +
+                "\n" +
+                "        h1 {\n" +
+                "            color: #333;\n" +
+                "        }\n" +
+                "\n" +
+                "        p {\n" +
+                "            color: #555;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <div class=\"container\">\n" +
+                "        <h1>Event Invitation</h1>\n" +
+                "        <p><strong>Event Details:</strong></p>\n" +
+                "        <ul>\n" +
+                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
+                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>Title:</strong> " + title + "</li>\n" +
+                "            <li><strong>Date:</strong> " + date + "</li>\n" +
+                "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Description:</strong> " + description + "</li>\n" +
+                "        </ul>\n" +
+                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "    </div>\n" +
+                "</body>\n" +
+                "</html>";
 
         try {
+            helper.setFrom("TravelExp <noreply@example.com>");
             helper.setTo(member);
-            helper.setSubject("You've been invited by " + owner + " to " + title);
-            helper.setText(
-                    "Description: " + description
-                            + "<br>" +
-                            "Date: " + date
-                            + "<br>" +
-                            "Time: " + time,
-                    true);
+            helper.setSubject("You've been invited" + " to " + title);
+            helper.setText(htmlContent, true);
 
             javaMailSender.send(message);
         } catch (MessagingException e) {
@@ -134,17 +219,59 @@ public class NotificationService {
             String description, String invites) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
+        String htmlContent = "<html lang=\"en\">\n" +
+                "<head>\n" +
+                "    <meta charset=\"UTF-8\">\n" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "    <title>Event Invitation</title>\n" +
+                "    <style>\n" +
+                "        body {\n" +
+                "            font-family: 'Arial', sans-serif;\n" +
+                "            margin: 0;\n" +
+                "            padding: 0;\n" +
+                "            background-color: #f4f4f4;\n" +
+                "        }\n" +
+                "\n" +
+                "        .container {\n" +
+                "            max-width: 600px;\n" +
+                "            margin: 20px auto;\n" +
+                "            background-color: #ffffff;\n" +
+                "            padding: 20px;\n" +
+                "            border-radius: 8px;\n" +
+                "            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);\n" +
+                "        }\n" +
+                "\n" +
+                "        h1 {\n" +
+                "            color: #333;\n" +
+                "        }\n" +
+                "\n" +
+                "        p {\n" +
+                "            color: #555;\n" +
+                "        }\n" +
+                "    </style>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "    <div class=\"container\">\n" +
+                "        <h1>Event Invitation</h1>\n" +
+                "        <p><strong>Event Details:</strong></p>\n" +
+                "        <ul>\n" +
+                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
+                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>Title:</strong> " + title + "</li>\n" +
+                "            <li><strong>Date:</strong> " + date + "</li>\n" +
+                "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Description:</strong> " + description + "</li>\n" +
+                "        </ul>\n" +
+                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "    </div>\n" +
+                "</body>\n" +
+                "</html>";
 
         try {
+            helper.setFrom("TravelExp <noreply@example.com>");
             helper.setTo(member);
-            helper.setSubject("You have an upcoming event by " + owner + " to " + title);
-            helper.setText(
-                    "Description: " + description
-                            + "<br>" +
-                            "Date: " + date
-                            + "<br>" +
-                            "Time: " + time,
-                    true);
+            helper.setSubject("You have an upcoming event" + " to " + title);
+            helper.setText(htmlContent, true);
 
             javaMailSender.send(message);
         } catch (MessagingException e) {

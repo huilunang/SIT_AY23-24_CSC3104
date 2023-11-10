@@ -52,7 +52,8 @@ export function createEvent(
   invites,
   notify,
   type,
-  status
+  url,
+  dest
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -83,7 +84,8 @@ export function createEvent(
       timestamp: unixTimestampMillis,
       type: type,
       notify: notify,
-      status: status,
+      url: url,
+      dest: dest
     }, // Pass the message in the request payload
     {
       headers: {
@@ -104,7 +106,6 @@ export function pushEvent(
   invites,
   notify,
   type,
-  status
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -134,8 +135,7 @@ export function pushEvent(
       invites: invite,
       timestamp: unixTimestampMillis,
       type: type,
-      notify: notify,
-      status: status,
+      notify: notify
     }, // Pass the message in the request payload
     {
       headers: {
@@ -162,4 +162,15 @@ export function deleteEvent(key, type) {
       },
     }
   );
+}
+
+export function getDetails(businessId) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  return apiClient.get(`/events/${businessId}`, {
+    headers: {
+      Authorization: jwtToken,
+      "Content-Type": "application/json",
+    },
+  });
 }
