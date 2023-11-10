@@ -82,6 +82,7 @@ function WishList() {
     }
   };
 
+  // Get Curated Categories from Database
   const getCuratedCategories = async (email) => {
     try {
   
@@ -173,14 +174,6 @@ function WishList() {
             </div>
           ))}
         </div>
-      </div>
-      <div>
-        <h2>Curated Categories:</h2>
-        <ul>
-          {curatedCategories.map((category, index) => (
-            <li key={index}>{category}</li>
-          ))}
-        </ul>
       </div>
     </div></>
   );
