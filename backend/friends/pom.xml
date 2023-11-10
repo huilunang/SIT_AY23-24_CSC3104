@@ -39,9 +39,9 @@
 			<version>2.15.0.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-netty-shaded</artifactId> <!-- or grpc-netty for non-shaded version -->
-			<version>1.41.0</version> <!-- Use the latest version -->
+    		<groupId>io.grpc</groupId>
+    		<artifactId>grpc-core</artifactId>
+    		<version>${grpc.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.grpc</groupId>

@@ -45,11 +45,6 @@
 			<version>2.15.0.RELEASE</version>
 		</dependency>
 		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-netty-shaded</artifactId> <!-- or grpc-netty for non-shaded version -->
-			<version>1.41.0</version> <!-- Use the latest version -->
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>

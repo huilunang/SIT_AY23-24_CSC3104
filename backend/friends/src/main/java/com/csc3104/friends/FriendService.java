@@ -3,8 +3,6 @@ package com.csc3104.friends;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import com.csc3104.user.UserServiceGrpc;
 import com.csc3104.user.Friends.UserRequest;
 import com.csc3104.user.Friends.UserResponse;
