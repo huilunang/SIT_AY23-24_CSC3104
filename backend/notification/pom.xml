@@ -14,7 +14,7 @@
 
   <name>notification</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://localhost:8084/</url>
+  <url>http://localhost:8083/</url>
 
   <properties>
     <java.version>21</java.version>
