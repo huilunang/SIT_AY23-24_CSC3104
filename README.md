@@ -3,6 +3,10 @@
 ## Configuration
 - env.example file is the configuration constants
 
+## Build
+- At root folder, Run
+> docker-compose build
+
 ## Deployment
 ### 1. Docker Compose
 - Rename env.example to .env
