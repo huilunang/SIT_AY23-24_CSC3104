@@ -77,8 +77,6 @@ public class NotificationController {
         String owner = payload.get("owner");
         String member = payload.get("member");
         String type = payload.get("type");
-        String url = payload.get("url");
-        String dest = payload.get("dest");
 
         List<PastNotification> pastNotifications = pastRepository.findAllByKeyAndOwnerAndMemberAndType(key, owner,
                 member, "event-request");
