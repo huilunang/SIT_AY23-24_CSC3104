@@ -135,7 +135,7 @@ public class NotificationService {
                 "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
@@ -200,7 +200,7 @@ public class NotificationService {
                 "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
@@ -265,7 +265,7 @@ public class NotificationService {
                 "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
