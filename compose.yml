@@ -90,18 +90,6 @@ services:
       MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - ./db:/docker-entrypoint-initdb.d
-  gateway:
-    build:
-      context: backend
-      dockerfile: ./gateway/Dockerfile
-    restart: always
-    ports:
-      - "9090:9090"
-    depends_on:
-      - account
-      - wishlist
-      - notification
-      - friends
   client:
     build:
       context: frontend
