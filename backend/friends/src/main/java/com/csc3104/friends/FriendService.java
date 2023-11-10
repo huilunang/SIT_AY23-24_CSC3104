@@ -52,7 +52,6 @@ public class FriendService {
 
         UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
-
         String email2 = response.getEmail();
         String name = response.getFirstname() + " " + response.getLastname();
 
@@ -210,10 +209,9 @@ public class FriendService {
                     attributes.put("email", email2);
                     mapping.put(friend.getSender(), attributes);
         }
+
         return mapping;
     }
-
-
 
     public List<Friend> listSentFriendRequests(String email) {
         return FriendRepo.findBySender(email);
