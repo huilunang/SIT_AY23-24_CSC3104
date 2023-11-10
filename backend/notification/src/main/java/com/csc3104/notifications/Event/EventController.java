@@ -25,6 +25,11 @@ public class EventController {
         this.eventService = eventService;
     }
 
+    @GetMapping("/{businessId}")
+    public Map<String, String> getDetails(@PathVariable String businessId){
+        return eventService.sendDetailsToEvents(businessId);
+    }
+
     @PostMapping("/all")
     public List<Event> getCurrentEvents(@RequestBody Map<String, String> requestBody) {
         String email = requestBody.get("email");
@@ -54,9 +59,9 @@ public class EventController {
         String timestamp = payload.get("timestamp");
         String type = payload.get("type");
         String notify = payload.get("notify");
-        String status = payload.get("status");
-        repository.save(new Event(key, owner, member, title, date, time, description, invites, timestamp, type, notify,
-                status));
+        String url = payload.get("url");
+        String dest = payload.get("dest");
+        repository.save(new Event(key, owner, member, title, date, time, description, invites, timestamp, type, notify, url, dest));
 
         return ResponseEntity.ok("Event created : " + key);
     }

@@ -43,7 +43,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
 
   useEffect(() => {
     const eventSource = new EventSource(
-      `http://localhost:8083/notification/stream?to=${email}`
+      `http://localhost:30001/notification/stream?to=${email}`
     );
 
     eventSource.onmessage = async (event) => {
