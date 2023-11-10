@@ -98,6 +98,8 @@ const EventPage = () => {
                     <br />
                     Time: {event.time}
                     <br />
+                    Venue: {event.dest}
+                    <br />
                     Description: {event.description}
                     <br />
                     Party:{" "}
@@ -132,7 +134,7 @@ const EventPage = () => {
               </Col>
               <Col sm="3">
                 <Card.Text>
-                  <Card.Img variant="top" src={event.url} />
+                  <Card.Img variant="top" src={event.url} style={{ width: '30vh', height: '30vh', objectFit: 'fill' }}/>
                 </Card.Text>
               </Col>
               <Col sm="1">

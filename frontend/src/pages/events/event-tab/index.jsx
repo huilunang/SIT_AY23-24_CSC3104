@@ -34,7 +34,7 @@ const EventComponent = ({
   }
 
   function errorResponse(error) {
-    console.log(error);
+    // console.log(error);
   }
 
   async function getUser(email) {
@@ -43,7 +43,7 @@ const EventComponent = ({
       successfulResponse(response);
       return response.data;
     } catch (error) {
-      errorResponse(error);
+      console.log("getUserError " + error);
       return;
     }
   }

@@ -25,6 +25,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   const [invites, setInvites] = useState([]);
   const [invitees, setInvitees] = useState([]);
   const [url, setUrl] = useState("");
+  const [dest, setDest] = useState("");
   const [notify, setNotify] = useState(false);
 
   const [lock, setLock] = useState(false);
@@ -52,10 +53,8 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   }, [businessId]);
 
   useEffect(() => {
-    setTitle(details.Name);
-    setDescription("Address: " + details.Address);
+    setDest(details.Name + " | " + details.Address);
     setUrl(details["Image URL"]);
-    console.log(url)
   }, [details]);
 
   async function getUser(email) {
@@ -129,7 +128,8 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
         invites,
         notify,
         "event",
-        url
+        url,
+        dest
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -143,7 +143,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
         description,
         invites,
         notify,
-        "event"
+        "event",
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -179,6 +179,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
                     style={{ border: "none", fontSize: 24 }}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    autoComplete="off"
                   />
                 </Col>
                 <Form.Label column xs="2">
@@ -216,6 +217,21 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
                 />
               </Col>
             </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formDest">
+              <Form.Label column sm="2">
+                Venue
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  as="textarea"
+                  aria-label="formDest"
+                  placeholder=""
+                  value={dest}
+                  onChange={(e) => setDest(e.target.value)}
+                  autoComplete="off"
+                />
+              </Col>
+            </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formDescription">
               <Form.Label column sm="2">
                 Description
@@ -227,6 +243,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
                   placeholder=""
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  autoComplete="off"
                 />
               </Col>
             </Form.Group>

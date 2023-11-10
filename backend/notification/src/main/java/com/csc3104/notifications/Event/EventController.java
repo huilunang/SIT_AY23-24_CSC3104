@@ -60,7 +60,8 @@ public class EventController {
         String type = payload.get("type");
         String notify = payload.get("notify");
         String url = payload.get("url");
-        repository.save(new Event(key, owner, member, title, date, time, description, invites, timestamp, type, notify, url));
+        String dest = payload.get("dest");
+        repository.save(new Event(key, owner, member, title, date, time, description, invites, timestamp, type, notify, url, dest));
 
         return ResponseEntity.ok("Event created : " + key);
     }

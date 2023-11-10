@@ -52,7 +52,8 @@ export function createEvent(
   invites,
   notify,
   type,
-  url
+  url,
+  dest
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -83,7 +84,8 @@ export function createEvent(
       timestamp: unixTimestampMillis,
       type: type,
       notify: notify,
-      url: url
+      url: url,
+      dest: dest
     }, // Pass the message in the request payload
     {
       headers: {
