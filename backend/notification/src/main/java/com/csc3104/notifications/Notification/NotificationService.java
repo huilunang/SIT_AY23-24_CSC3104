@@ -127,8 +127,8 @@ public class NotificationService {
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
                 "        <ul>\n" +
-                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
-                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>From:</strong> " + owner + "</li>\n" +
+                "            <li><strong>To:</strong> " + member + "</li>\n" +
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
@@ -192,8 +192,8 @@ public class NotificationService {
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
                 "        <ul>\n" +
-                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
-                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>From:</strong> " + owner + "</li>\n" +
+                "            <li><strong>To:</strong> " + member + "</li>\n" +
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
@@ -257,8 +257,8 @@ public class NotificationService {
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
                 "        <ul>\n" +
-                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
-                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>From:</strong> " + owner + "</li>\n" +
+                "            <li><strong>To:</strong> " + member + "</li>\n" +
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
