@@ -59,13 +59,17 @@ export default function CustomNavbar() {
                   <MDBIcon fas icon="user-friends" /> Friends
                 </MDBNavbarLink>
               </MDBNavbarItem>
-              <MDBNavbarItem>
+              <MDBNavbarItem className="nav-item-space">
                 <MDBNavbarLink href="/events">
-                  <MDBIcon far icon="calendar" /> Events
+                  <MDBIcon fas icon="calendar" /> Events
+                </MDBNavbarLink>
+              </MDBNavbarItem>
+              <MDBNavbarItem>
+                <MDBNavbarLink href="/randomizer">
+                  <MDBIcon far icon="compass" /> Randomizer
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
-
             <MDBNavbarNav className="justify-content-end">
               <MDBNavbarItem className="nav-item-space">
                 <MDBNavbarLink href="/notifications">

@@ -83,11 +83,27 @@ export function createWishListItem(payload) {
   }
 }
 
-export function deleteWishListItemByBusinessId(businessId) {
+export function createUserCategories(payload) {
   try {
-    return apiClient.delete(`/api/v1/wishlist/delete/${businessId}`);
+    return apiClient.post(`/api/v1/wishlist/userCategories/insert`, payload);
   } catch (error) {
     console.error(error);
+  }
+}
+
+export function updateUserCategories(payload) {
+  try {
+    return apiClient.put(`/api/v1/wishlist/userCategories/update`, payload);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function getUserCategories() {
+  try {
+    return apiClient.get(`/api/v1/wishlist/getCategories/${localStorage.getItem("email")}`);
+  } catch (error) {
+    console.log(error);
   }
 }
 

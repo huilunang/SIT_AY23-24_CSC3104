@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getAllWishListItem, getPOIDetailsByBusinessId, getListOfPOIDetailsByNearby, getListOfPOIDetailsByCategories } from "../../api/wishlist/WishListApiService";
+import { getAllWishListItem, getPOIDetailsByBusinessId, getListOfPOIDetailsByNearby, getListOfPOIDetailsByCategories, getUserCategories } from "../../api/wishlist/WishListApiService";
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CustomNavbar from "../../components/navbar";
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
@@ -18,10 +19,22 @@ function WishList() {
   const [curatedPOIListNearby, setCuratedPOIListNearby] = useState([]);
   const [curatedPOIListCategory, setCuratedPOIListCategory] = useState([]);
   const [userCoordinates, setUserCoordinates] = useState([]);
+
   const [businessIdList, setBusinessIdList] = useState([]);
   const [categories, setCategories] = useState([]);
   const [curatedCategories, setCuratedCategories] = useState([]);
+  const [email, setEmail] = useState('');
 
+  useEffect(() => {
+    // Retrieve the "email" item from local storage
+    const storedEmail = localStorage.getItem('email');
+
+    // Update the state with the retrieved email value
+    if (storedEmail) {
+      setEmail(storedEmail);
+      console.log("The current email is:", storedEmail);
+    }
+  }, []);
 
   // Find Current Location and set User Coordinates
   const findCurrentLocation = () => {
@@ -50,11 +63,18 @@ function WishList() {
       console.error(error);
     }
   };
-  
+  // Handle Refresh by POI Category
   const handleRefreshForCategory = async () => {
     try {
-      console.log(curatedCategories);
-      const response = await getListOfPOIDetailsByCategories(curatedCategories, userCoordinates);
+      console.log("The Curated Categories", curatedCategories);
+      let response = {};
+      if (curatedCategories.length){
+        console.log("IS NOT EMPTY");
+        response = await getListOfPOIDetailsByCategories(curatedCategories, userCoordinates);
+      }else{
+        console.log("IS EMPTY", curatedCategories);
+        response = await getListOfPOIDetailsByCategories([1], userCoordinates);
+      }
       const selectedPOIs = selectRandomItems(response.data, 3);
       setCuratedPOIListCategory(selectedPOIs);
     } catch (error) {
@@ -62,20 +82,39 @@ function WishList() {
     }
   };
 
-  // Fetch Wish List Items
-  const fetchWishListItems = async () => {
+  const getCuratedCategories = async (email) => {
+
     try {
-      const response = await getAllWishListItem();
-      const ids = response.data.map((item) => item.businessId.toString());
-      setBusinessIdList(ids);
-      fetchPOIDetailsAndCategories(ids); // Moved function call
+  
+      console.log("Attempting to pull categories for ", email);
+      const response = await getUserCategories(email);
+      // Handle bad response
+      if(!response || !response.data) {
+        throw new Error('Invalid response');
+      }
+      const { categories } = response.data;
+      // Validate categories
+      if(!categories || !Array.isArray(categories)) {
+        throw new Error('Invalid categories format');
+      }
+      // Log success
+      console.log("Successfully pulled categories: ", categories);
+      // Set state or return categories
+      setCuratedCategories(categories);
+      // handleRefreshForCategory();
+      // handleRefreshForNearby();
     } catch (error) {
-      console.error('Error fetching wish list items:', error);
+  
+      console.error(error);
+      // Handle error
+  
     }
+  
   };
   useEffect(() => {
-    fetchWishListItems();
-  }, []);
+    getCuratedCategories(email.toString());
+  }, [email]);
+
 
 
   // Randomizer to select 3
@@ -101,49 +140,12 @@ function WishList() {
     }
   }, [data]);
 
-
-  // Fetch POI Details and Create Categories
-  const fetchPOIDetailsAndCategories = async (businessIdList) => {
-    try {
-      const categories = [];
-      const poiDetailsList = [];
-      if (businessIdList.length > 0) {
-
-        for (let i = 0; i < businessIdList.length; i++) {
-          const response = await getPOIDetailsByBusinessId(businessIdList[i]);
-          if (response && response.data) {
-            const { category } = response.data;
-            const categoryArray = category.split(',').map((item) => item.trim().toLowerCase()); // Convert each category to lowercase
-            categories.push(...categoryArray);
-            poiDetailsList.push(response.data);
-          }
-        }
-      }
-      createCuratedCategories(categories);
-    } catch (error) {
-      console.error('Error fetching POI details:', error);
-    }
-  };
-
-
-  // Create Curated Categories
-  const createCuratedCategories = (categories) => {
-    let categoryCount = {};
-    categories.forEach(category => {
-      categoryCount[category] = (categoryCount[category] || 0) + 1;
-    });
-
-    let curatedCategories = Object.keys(categoryCount).sort((a, b) => categoryCount[b] - categoryCount[a]).slice(0, 4);
-
-    setCuratedCategories(curatedCategories);
-    // handleRefreshForCategory();
-    // handleRefreshForNearby();
-  };
-
   // User Interface
   return (
+    <>
+    <CustomNavbar />
     <div className="container">
-      <br /><br /><br />
+      <br />
       <h1>For you</h1>
       <div>
         <button onClick={handleRefreshForCategory} className="btn btn-info">Refresh</button>
@@ -182,7 +184,7 @@ function WishList() {
           ))}
         </ul>
       </div>
-    </div>
+    </div></>
   );
 }
 
