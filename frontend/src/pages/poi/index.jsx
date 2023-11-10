@@ -8,6 +8,7 @@ import {
 } from "../../api/wishlist/WishListApiService";
 import { FaCheck, FaEdit, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import CustomNavbar from "../../components/navbar";
+import { EventModal } from "../events/event-modal"
 
 const Details = () => {
   const { wishlistId, businessId } = useParams();
@@ -18,6 +19,7 @@ const Details = () => {
   const [remarks, setRemarks] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [hasWent, setHasWent] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSave = async () => {
     try {
@@ -82,9 +84,11 @@ const Details = () => {
   };
 
   const handleBtnClick = () => {
-    if (businessId) {
-      navigate(`/events/${businessId}`);
-    }
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -147,6 +151,7 @@ const Details = () => {
           </label>
         </div>
       </div>
+      <EventModal isOpen={isModalOpen} onClose={handleModalClose} businessId={businessId} />
     </>
   );
 };

@@ -14,7 +14,6 @@ import { deleteEvent } from "../../api/notification/EventApiService";
 import CustomNavbar from "../../components/navbar";
 
 const EventPage = () => {
-  const { businessId } = useParams({});
   const [events, setEvents] = useState([]);
   const [parties, setParties] = useState([]);
 
@@ -81,7 +80,6 @@ const EventPage = () => {
         updateParty={(party) => setParties(party)}
         onRemoveEvent={onRemoveEvent}
         pageRefresh={pageRefresh}
-        businessId={businessId}
       />
       {[...events].reverse().map((event, index) => (
         <Card as={Row} key={index} style={{ width: "100%" }}>

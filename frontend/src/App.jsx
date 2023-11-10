@@ -88,14 +88,6 @@ export default function App() {
               }
             ></Route>
             <Route
-              path="/events/:businessId"
-              element={
-                <AuthenticatedRoute>
-                  <EventPage />
-                </AuthenticatedRoute>
-              }
-            ></Route>
-            <Route
               path="/events"
               element={
                 <AuthenticatedRoute>
