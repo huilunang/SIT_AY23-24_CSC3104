@@ -8,13 +8,14 @@ services:
     restart: always
     ports:
       - "8081:8081"
+      - "8089:8089"
     depends_on:
       - account-mysqldb
   account-mysqldb:
     image: mysql
     restart: always
     ports:
-      - "3307:3306"
+      - "3307:3308"
     environment:
       MYSQL_DATABASE: ${MYSQL_ACCOUNT_DATABASE}
       MYSQL_USER: ${MYSQL_USER}

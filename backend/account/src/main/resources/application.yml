@@ -1,5 +1,8 @@
 server:
   port: 8081
+grpc:
+  server:
+    port: 8089
 spring:
   datasource:
     url: jdbc:mysql://account-mysqldb:3306/account
