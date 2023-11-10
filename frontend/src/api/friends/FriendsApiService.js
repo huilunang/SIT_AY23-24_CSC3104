@@ -1,9 +1,9 @@
-import { apiClient } from "./ApiClient";
-
+import { apiClient } from "../ApiClient";
 
 export function getAllFriendsById() {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email"); // Or retrieve the ID from wherever it's coming in your application
+
   return apiClient.get('/friends/getFriends', {
     params: {
       email: email,
@@ -18,6 +18,7 @@ export function getAllFriendsById() {
 
 export function searchUsersByName(email) {
   const jwtToken = localStorage.getItem("jwtToken");
+
   return apiClient.get('/friends/getUsersByName', {
     params: {
       email: email,
@@ -31,8 +32,8 @@ export function searchUsersByName(email) {
 }
 
 export function getFriendDetailsById(friends) {
-  console.log(friends);
   const jwtToken = localStorage.getItem("jwtToken");
+  
   return apiClient.post("/friends/listFriends", friends, {
     headers: {
       Authorization: jwtToken,

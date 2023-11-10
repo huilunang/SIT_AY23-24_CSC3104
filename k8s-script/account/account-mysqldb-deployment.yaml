@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: account-mysqldb
+  name: account-mysqldb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: account-mysqldb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: account-mysqldb
+    spec:
+      containers:
+      - image: mysql
+        name: mysql
+        envFrom:
+        - configMapRef:
+            name: travelexp-conf
+        resources: {}
+status: {}

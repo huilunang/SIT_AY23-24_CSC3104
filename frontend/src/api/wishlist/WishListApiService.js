@@ -1,10 +1,11 @@
-import { apiClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function getAllGallery() {
   const jwtToken = localStorage.getItem("jwtToken");
+  const email = localStorage.getItem("email");
 
   try {
-    return apiClient.get(`/api/v1/gallery/${localStorage.getItem("email")}`, {
+    return apiClient.get(`/api/v1/gallery/${email}`, {
       headers: {
         Authorization: jwtToken,
         "Content-Type": "application/json",
@@ -32,6 +33,7 @@ export function getOneGallery(id) {
 
 export function createGallery(title, imageFile) {
   const jwtToken = localStorage.getItem("jwtToken");
+  const email = localStorage.getItem("email");
 
   try {
     const config = {
@@ -42,7 +44,7 @@ export function createGallery(title, imageFile) {
     };
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("email", localStorage.getItem("email"));
+    formData.append("email", email);
     formData.append("imageFile", imageFile);
 
     return apiClient.post("/api/v1/gallery/album/create", formData, config);

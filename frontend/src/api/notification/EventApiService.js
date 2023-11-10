@@ -1,9 +1,9 @@
-import { eventClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function getUserName(email) {
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return eventClient.get(`/events/user?email=${email}`, {
+  return apiClient.get(`/events/user?email=${email}`, {
     headers: {
       Authorization: jwtToken,
       "Content-Type": "application/json",
@@ -15,7 +15,7 @@ export function getAllEvents() {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return eventClient.post(
+  return apiClient.post(
     "/events/all",
     { email },
     {
@@ -31,7 +31,7 @@ export function getAllParty(key) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return eventClient.post(
+  return apiClient.post(
     "/events/party",
     { key },
     {
@@ -69,7 +69,7 @@ export function createEvent(
     invite = invites.toString();
   }
 
-  return eventClient.post(
+  return apiClient.post(
     `/events/push?to=${email}`,
     {
       key: key,
@@ -121,7 +121,7 @@ export function pushEvent(
     invite = invites.toString();
   }
 
-  return eventClient.post(
+  return apiClient.post(
     `/events/push?to=${email}`,
     {
       key: key,
@@ -149,7 +149,7 @@ export function pushEvent(
 export function deleteEvent(key, type) {
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return eventClient.post(
+  return apiClient.post(
     `/events/delete`,
     {
       key: key,
