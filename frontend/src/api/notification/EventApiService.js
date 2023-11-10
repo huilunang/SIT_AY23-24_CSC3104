@@ -106,6 +106,8 @@ export function pushEvent(
   invites,
   notify,
   type,
+  url,
+  dest
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -135,7 +137,9 @@ export function pushEvent(
       invites: invite,
       timestamp: unixTimestampMillis,
       type: type,
-      notify: notify
+      notify: notify,
+      url: url,
+      dest: dest,
     }, // Pass the message in the request payload
     {
       headers: {
