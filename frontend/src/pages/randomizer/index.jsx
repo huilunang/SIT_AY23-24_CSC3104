@@ -87,6 +87,8 @@ function WishList() {
   
       console.log("Attempting to pull categories for ", email);
       const response = await getUserCategories(email);
+      handleRefreshForCategory();
+      handleRefreshForNearby();
       // Handle bad response
       if(!response || !response.data) {
         throw new Error('Invalid response');
@@ -106,8 +108,6 @@ function WishList() {
       // Handle error
   
     }
-    handleRefreshForCategory();
-    handleRefreshForNearby();
   };
   useEffect(() => {
     getCuratedCategories(email.toString());
