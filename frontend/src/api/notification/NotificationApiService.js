@@ -1,10 +1,10 @@
-import { notificationClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function getAllNotifications() {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return notificationClient.post(
+  return apiClient.post(
     "/notification/past",
     { email },
     {
@@ -20,7 +20,7 @@ export function readAllNotifications() {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return notificationClient.post(
+  return apiClient.post(
     "/notification/read",
     { email },
     {
@@ -57,7 +57,7 @@ export function scheduleNotification(
     invite = invites.toString();
     console.log(invite);
     for (let i = 0; i < invites.length; i++) {
-      notificationClient.post(
+      apiClient.post(
         `/notification/schedule?to=${invites[i]}`,
         {
           key: key,
@@ -83,7 +83,7 @@ export function scheduleNotification(
     }
   }
 
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/schedule?to=${email}`,
     {
       key: key,
@@ -135,7 +135,7 @@ export function scheduleInviteNotification(
   // Obtain the Unix timestamp (milliseconds since Jan 1, 1970)
   const unixTimestampMillis = localTime.getTime();
 
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/schedule?to=${email}`,
     {
       key: key,
@@ -164,7 +164,7 @@ export function friendRequest(member, notify, type, status) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
   if (type == "friend-request") {
-    return notificationClient.post(
+    return apiClient.post(
       `/notification/friend-request`,
       {
         owner: email,
@@ -181,7 +181,7 @@ export function friendRequest(member, notify, type, status) {
       }
     );
   } else {
-    return notificationClient.post(
+    return apiClient.post(
       `/notification/friend-request`,
       {
         owner: member,
@@ -202,7 +202,7 @@ export function friendRequest(member, notify, type, status) {
 
 export function deleteNotification(key) {
   const jwtToken = localStorage.getItem("jwtToken");
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/delete`,
     {
       key: key,
@@ -232,7 +232,7 @@ export function eventInviteNotification(
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/event-request`,
     {
       key: key,
