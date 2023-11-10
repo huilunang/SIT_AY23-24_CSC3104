@@ -35,12 +35,16 @@ public class PastNotification {
   public String notify;
   @Field("status")
   public String status;
+  @Field("url")
+  public String url;
+  @Field("dest")
+  public String dest;
 
   PastNotification() {
   }
 
   public PastNotification(String key, String owner, String member, String title, String date, String time,
-      String description, String invites, LocalDateTime timestamp, String type, String notify, String status) {
+      String description, String invites, LocalDateTime timestamp, String type, String notify, String status, String url, String dest) {
     this.key = key;
     this.owner = owner;
     this.member = member;
@@ -53,6 +57,8 @@ public class PastNotification {
     this.type = type;
     this.notify = notify;
     this.status = status;
+    this.url = url;
+    this.dest = dest;
   }
 
   // Get
@@ -108,6 +114,14 @@ public class PastNotification {
     return this.status;
   }
 
+  public String getUrl() {
+    return this.url;
+  }
+
+  public String getDest() {
+    return this.dest;
+  }
+
   // Set
   public void setId(String id) {
     this.id = id;
@@ -161,6 +175,14 @@ public class PastNotification {
     this.status = status;
   }
 
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setDest(String dest) {
+    this.dest = dest;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -180,7 +202,7 @@ public class PastNotification {
   @Override
   public String toString() {
     return String.format(
-        "PastNotification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s']",
-        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status);
+        "PastNotification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s', url='%s', dest='%s']",
+        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status, url, dest);
   }
 }

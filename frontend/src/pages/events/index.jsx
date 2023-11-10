@@ -44,9 +44,11 @@ const EventPage = () => {
     const matchingParty = parties.find(
       (party) => key === party.key && party.member === invitee.email
     );
-    return matchingParty
-      ? ", " + matchingParty.name
-      : ", " + invitee.email;
+    return (matchingParty
+      ? ", " + matchingParty.membername
+      : invitee.name
+      ? ", " + invitee.name
+      : ", " + invitee.email);
   }
 
   async function removeEvent(event) {

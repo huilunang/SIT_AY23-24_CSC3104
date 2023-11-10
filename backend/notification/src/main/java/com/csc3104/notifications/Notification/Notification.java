@@ -36,12 +36,15 @@ class Notification {
   public String notify;
   @Field("status")
   public String status;
-
+  @Field("url")
+  public String url;
+  @Field("dest")
+  public String dest;
   Notification() {
   }
 
   Notification(String key, String owner, String member, String title, String date, String time, String description,
-      String invites, LocalDateTime timestamp, String type, String notify, String status) {
+      String invites, LocalDateTime timestamp, String type, String notify, String status, String url, String dest) {
     this.key = key;
     this.owner = owner;
     this.member = member;
@@ -54,6 +57,8 @@ class Notification {
     this.type = type;
     this.notify = notify;
     this.status = status;
+    this.url = url;
+    this.dest = dest;
   }
 
   // Get
@@ -109,6 +114,14 @@ class Notification {
     return this.status;
   }
 
+  public String getUrl() {
+    return this.url;
+  }
+
+  public String getDest() {
+    return this.dest;
+  }
+
   // Set
   public void setId(String id) {
     this.id = id;
@@ -162,6 +175,14 @@ class Notification {
     this.status = status;
   }
 
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setDest(String dest) {
+    this.dest = dest;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o)
@@ -181,7 +202,7 @@ class Notification {
   @Override
   public String toString() {
     return String.format(
-        "Notification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s']",
-        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status);
+        "Notification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s', notify='%s', status='%s', url='%s', dest='%s']",
+        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status, url, dest);
   }
 }
