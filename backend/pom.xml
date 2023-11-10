@@ -13,6 +13,7 @@
   <modules>
     <module>account</module>
     <module>notification</module>
+    <module>friends</module>
     <module>wishlist</module>
     <module>gateway</module>
   </modules>
