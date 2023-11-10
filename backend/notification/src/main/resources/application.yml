@@ -1,5 +1,10 @@
 server:
   port: 8083
+grpc:
+  client:
+    poi-service:
+      address: wishlist:8088
+      negotiation-type: plaintext
 spring:
   application:
     name: notification
