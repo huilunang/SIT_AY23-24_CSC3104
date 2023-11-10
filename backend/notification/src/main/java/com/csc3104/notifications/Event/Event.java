@@ -33,14 +33,16 @@ class Event {
   public String type;
   @Field("notify")
   public String notify;
-  @Field("status")
-  public String status;
+  @Field("url")
+  public String url;
+  @Field("dest")
+  public String dest;
 
   Event() {
   }
 
   Event(String key, String owner, String member, String title, String date, String time, String description,
-      String invites, String timestamp, String type, String notify, String status) {
+      String invites, String timestamp, String type, String notify, String url, String dest) {
     this.key = key;
     this.owner = owner;
     this.member = member;
@@ -52,7 +54,8 @@ class Event {
     this.timestamp = timestamp;
     this.type = type;
     this.notify = notify;
-    this.status = status;
+    this.url = url;
+    this.dest = dest;
   }
 
   // Get
@@ -104,8 +107,12 @@ class Event {
     return this.notify;
   }
 
-  public String getStatus() {
-    return this.status;
+  public String getUrl() {
+    return this.url;
+  }
+
+  public String getDest() {
+    return this.dest;
   }
 
   // Set
@@ -157,8 +164,12 @@ class Event {
     this.notify = notify;
   }
 
-  public void setStatus(String status) {
-    this.status = status;
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
+  public void setDest(String dest) {
+    this.dest = dest;
   }
 
   @Override
@@ -180,7 +191,7 @@ class Event {
   @Override
   public String toString() {
     return String.format(
-        "Event[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s']",
-        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status);
+        "Event[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', url='%s', dest='%s']",
+        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, url, dest);
   }
 }

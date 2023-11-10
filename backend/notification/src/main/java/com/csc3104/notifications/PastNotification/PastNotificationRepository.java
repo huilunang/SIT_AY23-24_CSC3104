@@ -14,6 +14,8 @@ public interface PastNotificationRepository extends MongoRepository<PastNotifica
 
     List<PastNotification> findAllByKeyAndMemberAndType(String key, String member, String type);
 
+    List<PastNotification> findAllByKey(String key);
+
     List<PastNotification> findAllByKeyAndMember(String key, String member);
 
     List<PastNotification> findAllByOwnerAndMemberAndType(String owner, String member, String type);

@@ -17,6 +17,7 @@ import {
 } from "mdb-react-ui-kit";
 
 import { useAuth } from "../../security/AuthContext";
+import NotificationComponent from "../../pages/events/notification-nav"
 
 export default function CustomNavbar() {
   const [showBasic, setShowBasic] = useState(false);
@@ -72,9 +73,7 @@ export default function CustomNavbar() {
             </MDBNavbarNav>
             <MDBNavbarNav className="justify-content-end">
               <MDBNavbarItem className="nav-item-space">
-                <MDBNavbarLink href="/notifications">
-                  <MDBIcon fas icon="bell" /> Notifications
-                </MDBNavbarLink>
+                <NotificationComponent/>
               </MDBNavbarItem>
               <MDBNavbarItem>
                 <MDBDropdown>

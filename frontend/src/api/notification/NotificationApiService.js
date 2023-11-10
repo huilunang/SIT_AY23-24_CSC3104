@@ -1,10 +1,10 @@
-import { notificationClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function getAllNotifications() {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return notificationClient.post(
+  return apiClient.post(
     "/notification/past",
     { email },
     {
@@ -20,7 +20,7 @@ export function readAllNotifications() {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return notificationClient.post(
+  return apiClient.post(
     "/notification/read",
     { email },
     {
@@ -32,38 +32,73 @@ export function readAllNotifications() {
   );
 }
 
-export function scheduleNotification(key, title, date, time, description, invites, notify, type) {
+export function scheduleNotification(
+  key,
+  title,
+  date,
+  time,
+  description,
+  invites,
+  notify,
+  type
+) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
   // Create a Date object with your date and time
-  let localTimeStr  = date + ' ' + time;
-  let localTime  = new Date(localTimeStr);
+  let localTimeStr = date + " " + time;
+  let localTime = new Date(localTimeStr);
 
   // Obtain the Unix timestamp (milliseconds since Jan 1, 1970)
   const unixTimestampMillis = localTime.getTime();
 
-  let invite = '';
+  let invite = "";
   if (invites.length > 0) {
     invite = invites.toString();
-    console.log(invite)
+    console.log(invite);
     for (let i = 0; i < invites.length; i++) {
-      notificationClient.post(
+      apiClient.post(
         `/notification/schedule?to=${invites[i]}`,
-        { key:key, owner:email, member:invites[i], title:title, date:date, time:time, description:description, invites:invite, timestamp:unixTimestampMillis, type:type+'-'+'request', notify:notify, status:'requested'}, // Pass the message in the request payload
+        {
+          key: key,
+          owner: email,
+          member: invites[i],
+          title: title,
+          date: date,
+          time: time,
+          description: description,
+          invites: invite,
+          timestamp: unixTimestampMillis,
+          type: type + "-" + "request",
+          notify: notify,
+          status: "requested",
+        }, // Pass the message in the request payload
         {
           headers: {
             Authorization: jwtToken,
             "Content-Type": "application/json",
           },
         }
-      );      
+      );
     }
   }
 
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/schedule?to=${email}`,
-    { key:key, owner:email, member:email, title:title, date:date, time:time, description:description, invites:invite, timestamp:unixTimestampMillis, type:type, notify:notify, status:'accepted'}, // Pass the message in the request payload
+    {
+      key: key,
+      owner: email,
+      member: email,
+      title: title,
+      date: date,
+      time: time,
+      description: description,
+      invites: invite,
+      timestamp: unixTimestampMillis,
+      type: type,
+      notify: notify,
+      status: "accepted",
+    }, // Pass the message in the request payload
     {
       headers: {
         Authorization: jwtToken,
@@ -73,25 +108,49 @@ export function scheduleNotification(key, title, date, time, description, invite
   );
 }
 
-export function scheduleInviteNotification(key, owner, title, date, time, description, invites, notify, type, status) {
+export function scheduleInviteNotification(
+  key,
+  owner,
+  title,
+  date,
+  time,
+  description,
+  invites,
+  notify,
+  type,
+  status
+) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
   // Create a Date object with your date and time
-  let localTimeStr  = date + ' ' + time;
-  let localTime  = new Date(localTimeStr);
+  let localTimeStr = date + " " + time;
+  let localTime = new Date(localTimeStr);
 
-  let invite = '';
+  let invite = "";
   if (invites.length > 0) {
     invite = invites.toString();
   }
-  
+
   // Obtain the Unix timestamp (milliseconds since Jan 1, 1970)
   const unixTimestampMillis = localTime.getTime();
 
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/schedule?to=${email}`,
-    { key:key, owner:owner, member:email, title:title, date:date, time:time, description:description, invites:invite, timestamp:unixTimestampMillis, type:type, notify:notify, status:status}, // Pass the message in the request payload
+    {
+      key: key,
+      owner: owner,
+      member: email,
+      title: title,
+      date: date,
+      time: time,
+      description: description,
+      invites: invite,
+      timestamp: unixTimestampMillis,
+      type: type,
+      notify: notify,
+      status: status,
+    }, // Pass the message in the request payload
     {
       headers: {
         Authorization: jwtToken,
@@ -101,53 +160,53 @@ export function scheduleInviteNotification(key, owner, title, date, time, descri
   );
 }
 
-export function friendRequest(owner, member, notify, type, status) {
+export function friendRequest(member, notify, type, status) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
-  if (type == "friend-request"){
-    return notificationClient.post(
+  if (type == "friend-request") {
+    return apiClient.post(
       `/notification/friend-request`,
-      { owner:email, member:member, type:type, notify:notify, status:status}, // Pass the message in the request payload
+      {
+        owner: email,
+        member: member,
+        type: type,
+        notify: notify,
+        status: status,
+      }, // Pass the message in the request payload
       {
         headers: {
           Authorization: jwtToken,
           "Content-Type": "application/json",
         },
       }
-    );  
+    );
   } else {
-    return notificationClient.post(
+    return apiClient.post(
       `/notification/friend-request`,
-      { owner:owner, member:member, type:type, notify:notify, status:status}, // Pass the message in the request payload
+      {
+        owner: member,
+        member: email,
+        type: type,
+        notify: notify,
+        status: status,
+      }, // Pass the message in the request payload
       {
         headers: {
           Authorization: jwtToken,
           "Content-Type": "application/json",
         },
       }
-    );  
+    );
   }
 }
 
-export function deleteInviteNotification(key, owner, title, date, time, description, invites, notify, type, status) {
-  const email = localStorage.getItem("email");
+export function deleteNotification(key) {
   const jwtToken = localStorage.getItem("jwtToken");
-
-  // Create a Date object with your date and time
-  let localTimeStr  = date + ' ' + time;
-  let localTime  = new Date(localTimeStr);
-
-  let invite = '';
-  if (invites.length > 0) {
-    invite = invites.toString();
-  }
-  
-  // Obtain the Unix timestamp (milliseconds since Jan 1, 1970)
-  const unixTimestampMillis = localTime.getTime();
-
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/delete`,
-    { key:key, owner:owner, member:email, title:title, date:date, time:time, description:description, invites:invite, timestamp:unixTimestampMillis, type:type, notify:notify, status:status}, // Pass the message in the request payload
+    {
+      key: key,
+    }, // Pass the message in the request payload
     {
       headers: {
         Authorization: jwtToken,
@@ -157,14 +216,38 @@ export function deleteInviteNotification(key, owner, title, date, time, descript
   );
 }
 
-export function eventInviteNotification(key, owner, member, title, date, time, description, invites, notify, type, status) {
+export function eventInviteNotification(
+  key,
+  owner,
+  member,
+  title,
+  date,
+  time,
+  description,
+  invites,
+  notify,
+  type,
+  status
+) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
 
-  
-  return notificationClient.post(
+  return apiClient.post(
     `/notification/event-request`,
-    { key:key, owner:owner, member:member, title:title, date:date, time:time, description:description, invites:invites, timestamp:'', type:type, notify:notify, status:status}, // Pass the message in the request payload
+    {
+      key: key,
+      owner: owner,
+      member: member,
+      title: title,
+      date: date,
+      time: time,
+      description: description,
+      invites: invites,
+      timestamp: "",
+      type: type,
+      notify: notify,
+      status: status,
+    }, // Pass the message in the request payload
     {
       headers: {
         Authorization: jwtToken,

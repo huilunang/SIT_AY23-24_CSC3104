@@ -1,25 +1,42 @@
-import { apiClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function getAllGallery() {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/gallery/${localStorage.getItem("email")}`);
+    return apiClient.get(`/api/v1/gallery/${localStorage.getItem("email")}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.log(error);
   }
 }
 
 export function getOneGallery(id) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/gallery/album/${id}`);
+    return apiClient.get(`/api/v1/gallery/album/${id}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.log(error);
   }
 }
 
 export function createGallery(title, imageFile) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
     const config = {
       headers: {
+        Authorization: jwtToken,
         "Content-Type": "multipart/form-data",
       },
     };
@@ -35,9 +52,12 @@ export function createGallery(title, imageFile) {
 }
 
 export function updateGallery(id, title, imageFile) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
     const config = {
       headers: {
+        Authorization: jwtToken,
         "Content-Type": "multipart/form-data",
       },
     };
@@ -52,32 +72,61 @@ export function updateGallery(id, title, imageFile) {
 }
 
 export function deleteGallery(id) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.delete(`/api/v1/gallery/album/${id}`);
+    return apiClient.delete(`/api/v1/gallery/album/${id}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.log(error);
   }
 }
 
 export function getAllWishListItem() {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get("/api/v1/wishlist/all");
+    return apiClient.get("/api/v1/wishlist", {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
+    // return apiClient.get("/api/v1/wishlist/all");
   } catch (error) {
     console.log(error);
   }
 }
 
 export function getAllWishListItemByAlbumId(albumId) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/wishlist/${albumId}`);
+    return apiClient.get(`/api/v1/wishlist/${albumId}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }
 }
 
 export function createWishListItem(payload) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.post(`/api/v1/wishlist/insert`, payload);
+    return apiClient.post(`/api/v1/wishlist/insert`, payload, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }
@@ -109,9 +158,17 @@ export function getUserCategories() {
 
 // autocomplete suggestions to add to wishlist
 export function getSuggestions(location, input) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
     return apiClient.get(
-      `/api/v1/poi/suggestions?location=${location}&userInput=${input}`
+      `/api/v1/poi/suggestions?location=${location}&userInput=${input}`,
+      {
+        headers: {
+          Authorization: jwtToken,
+          "Content-Type": "application/json",
+        },
+      }
     );
   } catch (error) {
     console.error(error);
@@ -120,8 +177,15 @@ export function getSuggestions(location, input) {
 
 // retrieve business details
 export function getPOIDetails(wishlistId, businessId) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/poi/${wishlistId}/${businessId}`);
+    return apiClient.get(`/api/v1/poi/${wishlistId}/${businessId}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.log(error);
   }
@@ -129,10 +193,21 @@ export function getPOIDetails(wishlistId, businessId) {
 
 // update poi remarks
 export function updatePOIRemarks(wishlistId, businessId, remarks) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.put(`/api/v1/poi/${wishlistId}/${businessId}/remarks`, {
-      remarks,
-    });
+    return apiClient.put(
+      `/api/v1/poi/${wishlistId}/${businessId}/remarks`,
+      {
+        remarks,
+      },
+      {
+        headers: {
+          Authorization: jwtToken,
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
     console.error(error);
   }
@@ -140,9 +215,12 @@ export function updatePOIRemarks(wishlistId, businessId, remarks) {
 
 // update poi visited
 export function updatePOIVisited(wishlistId, businessId, visited) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
     const config = {
       headers: {
+        Authorization: jwtToken,
         "Content-Type": "application/json",
       },
     };
