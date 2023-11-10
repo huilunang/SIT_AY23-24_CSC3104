@@ -7,10 +7,14 @@ metadata:
   name: wishlist
 spec:
   ports:
-  - name: 8082-8082
+  - name: web
     port: 8082
     protocol: TCP
     targetPort: 8082
+  - name: grpc
+    port: 8088
+    protocol: TCP
+    targetPort: 8088
   selector:
     app: wishlist
   type: ClusterIP
