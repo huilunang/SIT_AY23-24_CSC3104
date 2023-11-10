@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import "./styles.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   getPOIDetails,
   updatePOIRemarks,
@@ -8,15 +8,18 @@ import {
 } from "../../api/wishlist/WishListApiService";
 import { FaCheck, FaEdit, FaStar, FaStarHalfAlt } from "react-icons/fa";
 import CustomNavbar from "../../components/navbar";
+import { EventModal } from "../events/event-modal"
 
 const Details = () => {
   const { wishlistId, businessId } = useParams();
+  const navigate = useNavigate();
 
   const [details, setDetails] = useState({});
 
   const [remarks, setRemarks] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [hasWent, setHasWent] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSave = async () => {
     try {
@@ -80,6 +83,14 @@ const Details = () => {
     return starElements;
   };
 
+  const handleBtnClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
       <CustomNavbar />
@@ -123,6 +134,9 @@ const Details = () => {
             </div>
           </div>
         </div>
+        <div className="createEvent">
+          <button onClick={handleBtnClick} className="btnEvt" >Create Event</button>
+        </div>
         <div className="wentOrNot">
           <input
             type="checkbox"
@@ -137,6 +151,7 @@ const Details = () => {
           </label>
         </div>
       </div>
+      <EventModal isOpen={isModalOpen} onClose={handleModalClose} businessId={businessId} />
     </>
   );
 };

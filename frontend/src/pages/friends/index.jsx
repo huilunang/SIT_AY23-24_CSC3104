@@ -11,7 +11,7 @@ import {
   removeFriend,
 } from "../../api/friends/FriendsApiService";
 import CustomNavbar from "../../components/navbar";
-// import { friendRequest } from "../../../api/notification/NotificationApiService"; (For notifications)
+import { friendRequest } from "../../api/notification/NotificationApiService"; 
 
 function FriendsPage() {
   // Init variables
@@ -61,10 +61,10 @@ function FriendsPage() {
   }
 
   // Send notification from friend request
-  /*
-  async function friendRequestApi() { 
+
+  async function friendRequestApi(receipent) { 
     try { 
-        await friendRequest("<receipent>", "false", "friend-request", "requested") 
+        await friendRequest(receipent, "false", "friend-request", "requested") 
             .then((response) => successfulResponse(response)) 
             .catch((error) => errorResponse(error)) 
             .finally(() => console.log("cleanup")); 
@@ -73,6 +73,7 @@ function FriendsPage() {
     } 
   } 
 
+  /*
   async function handleAcceptFriendRequest(senderEmail) {  
     try {
       const response = await addFriend(senderEmail);    
@@ -155,6 +156,7 @@ function FriendsPage() {
         successfulResponse(response);
         if (response.data === true) {
           setSearchMessage("Friend request sent successfully");
+          friendRequestApi(userEmail);
         } else {
           setSearchMessage("Failed to send friend request");
         }

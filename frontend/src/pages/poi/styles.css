@@ -135,3 +135,23 @@
     background-color: white;
     padding: 10px;
   }
+
+  .createEvent {
+    padding: 10px;
+  }
+
+  .btnEvt {
+    background-color:white;
+    color: rgba(0, 0, 0, 0.50);
+    border-radius: 10%;
+    border: 1px solid rgba(217,217,217);
+    font-family: cursive;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 27.5px */
+  }
+
+  .btnEvt:hover {
+    background-color: rgba(217, 217, 217, 0.25);
+  }
