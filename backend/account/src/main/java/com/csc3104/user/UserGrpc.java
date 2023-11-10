@@ -18,7 +18,7 @@ public class UserGrpc extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void getUserByEmail(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         var email = request.getEmail();
-        var userResponse = userService.getUserByEmail(email); // Update this to get the ResponseEntity
+        var userResponse = userService.getUserByEmail(email); 
 
         if (userResponse.getStatusCode() == HttpStatus.OK) {
             UserDTO user = userResponse.getBody(); // Make sure the response contains the UserDTO

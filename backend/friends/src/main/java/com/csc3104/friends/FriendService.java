@@ -38,7 +38,7 @@ public class FriendService {
                 return friends1;
             }
         }
-        return null; // Return an empty list if user or friends are null/empty
+        return null; 
     }
 
     public Map<String, Map<String, Object>> getUsersFromName(String email, String token) throws JsonProcessingException {
@@ -57,7 +57,6 @@ public class FriendService {
         // Make the gRPC call
         UserResponse response = stub.getUserByEmail(request);
 
-        // Process the response
         String email2 = response.getEmail();
         String name = response.getFirstname() + " " + response.getLastname();
 
@@ -65,7 +64,6 @@ public class FriendService {
         attributes.put("email", email2);
         mapping.put(email, attributes);
 
-        // Shut down the channel
         channel.shutdown();
 
         return mapping;
@@ -104,27 +102,22 @@ public class FriendService {
 
 
     public Boolean addFriend(String email, String sender) {
-        // Step 1: Check if the user with 'id' exists
         FriendList user = FriendListRepo.findFriendListByEmail(email);
         FriendList sent = FriendListRepo.findFriendListByEmail(sender);
 
         if (user == null || sent == null) {
             return false;
-            // Handle the case where the user doesn't exist
         }
 
-        // Step 2: Check if 'sender' is already in the user's friends list
         List<String> friends = user.getFriends();
         List<String> senderFriends = sent.getFriends();
 
         if (!friends.contains(sender) && !senderFriends.contains(user.getEmail())) {
-            // Step 3: Add 'sender' to the user's friends list
             friends.add(sender);
             senderFriends.add(user.getEmail());
             user.setFriends(friends);
             sent.setFriends(senderFriends);
 
-            // Step 4: Save the updated user data in MongoDB
             FriendListRepo.save(user);
             FriendListRepo.save(sent);
 
@@ -132,42 +125,34 @@ public class FriendService {
 
             return true;
         } else {
-            // Handle the case where 'sender' is already in the user's friends list
             return false;
         }
     }
 
 
     public Boolean removeFriend(String email, String friend) {
-        // Step 1: Check if the user with 'id' exists
         FriendList user = FriendListRepo.findFriendListByEmail(email);
         FriendList efriend = FriendListRepo.findFriendListByEmail(friend);
         if (user == null || efriend == null) {
-            // Handle the case where the user doesn't exist
             return false;
         }
 
-        // Step 2: Check if friend is already in the user's friends list
         List<String> friends = user.getFriends();
         List<String> efriends = efriend.getFriends();
         if (friends.contains(friend)) {
-            // Step 3: Remove from friends list
             friends.remove(friend);
             user.setFriends(friends);
             efriends.remove(email);
             efriend.setFriends(efriends);
-            // Step 4: Save the updated user data in MongoDB
             FriendListRepo.save(user);
             FriendListRepo.save(efriend);
             return true;
         } else {
-            // Handle the case where 'sender' is already in the user's friends list
             return false;
         }
     }
 
     public Boolean makeFriendRequest(String email, String recipient) {
-        // Step 1: Check if the user with 'id' exists
         if (email == recipient) {
             return false;
         }
@@ -180,7 +165,6 @@ public class FriendService {
             FriendList nUser = new FriendList();
             nUser.setEmail(email);
             FriendListRepo.save(nUser);
-            // Handle the case where the user doesn't exist
         }
 
         if (efriend == null) {
@@ -190,7 +174,6 @@ public class FriendService {
         }
 
         if (Friend != null || Friend2 != null) {
-            // Handle the case where the user doesn't exist
             return false;
         }
         else {
@@ -204,10 +187,8 @@ public class FriendService {
     }
 
     public Boolean removeFriendRequest(String email, String sender) {
-        // Step 1: Check if the user with 'id' exists
         Friend Friend = FriendRepo.findBySenderAndRecipient(sender, email);
         if (Friend == null) {
-            // Handle the case where the user doesn't exist
             return false;
         }
         else {
