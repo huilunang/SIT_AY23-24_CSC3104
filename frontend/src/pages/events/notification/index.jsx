@@ -187,7 +187,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     invites,
     notify,
     type,
-    status
+    status,
+    url,
+    dest
   ) => {
     if (eventLock) {
       return;
@@ -204,8 +206,10 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         description,
         invites,
         notify,
-        type
-      ) // Pass the parameters to the API function
+        type,
+        url,
+        dest
+        ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
         .finally(() => console.log("cleanup"));
@@ -220,7 +224,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         invites,
         notify,
         type,
-        status
+        status,
+        url,
+        dest
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -237,7 +243,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         invites,
         notify,
         type + "-" + "accepted",
-        status
+        status,
+        url,
+        dest
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -262,7 +270,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
     invites,
     notify,
     type,
-    status
+    status,
+    url,
+    dest
   ) => {
     if (eventLock) {
       return;
@@ -280,7 +290,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
         invites,
         notify,
         type + "-" + "rejected",
-        status
+        status,
+        url,
+        dest
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -402,7 +414,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <br />
                       Time: {notification.time}
                       <br />
-                      Notify: {notification.notify}
+                      Venue: {notification.dest}
                     </Toast.Body>
                   </>
                 ) : notification.type === "friend-request" ? (
@@ -440,7 +452,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       <br />
                       Time: {notification.time}
                       <br />
-                      Notify: {notification.notify}
+                      Venue: {notification.dest}
                     </Toast.Body>
                   </>
                 )}
@@ -500,7 +512,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                           <br />
                           Time: {notification.time}
                           <br />
-                          Notify: {notification.notify}
+                          Venue: {notification.dest}
                         </div>
                       </Col>
                       <Col sm="2">
@@ -517,7 +529,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               notification.invites,
                               notification.notify,
                               "event",
-                              "rejected"
+                              "rejected",
+                              notification.url,
+                              notification.dest
                             )
                           }
                         >
@@ -540,7 +554,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               notification.invites,
                               notification.notify,
                               "event",
-                              "accepted"
+                              "accepted",
+                              notification.url,
+                              notification.dest
                             )
                           }
                         >
@@ -563,7 +579,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                           <br />
                           Time: {notification.time}
                           <br />
-                          Notify: {notification.notify}
+                          Venue: {notification.dest}
                         </div>
                       </Col>
                     </>
@@ -580,7 +596,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                           <br />
                           Time: {notification.time}
                           <br />
-                          Notify: {notification.notify}
+                          Venue: {notification.dest}
                         </div>
                       </Col>
                     </>
@@ -608,7 +624,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               notification.invites,
                               notification.notify,
                               "friend",
-                              "rejected"
+                              "rejected",
+                              "",
+                              ""
                             )
                           }
                         >
@@ -631,7 +649,9 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               notification.invites,
                               notification.notify,
                               "friend",
-                              "accepted"
+                              "accepted",
+                              "",
+                              ""
                             )
                           }
                         >
@@ -660,14 +680,15 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     <Col sm="9">
                       <div className="notification-text">
                         <b>
-                          {notification.title} by {notification.ownername}
+                          {notification.title} by {notification.ownername} is
+                          starting now!{" "}
                         </b>
                         <br />
                         Date: {notification.date}
                         <br />
                         Time: {notification.time}
                         <br />
-                        Notify: {notification.notify}
+                        Venue: {notification.dest}
                       </div>
                     </Col>
                   )}

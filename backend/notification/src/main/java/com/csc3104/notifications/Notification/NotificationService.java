@@ -37,9 +37,9 @@ public class NotificationService {
     public final List<Notification> notificationQueue = new ArrayList<>();
 
     public void pushNotificationToQueue(String key, String owner, String member, String title, String date, String time,
-            String description, String invites, LocalDateTime timestamp, String type, String notify, String status) {
+            String description, String invites, LocalDateTime timestamp, String type, String notify, String status, String url, String dest) {
         Notification notification = new Notification(key, owner, member, title, date, time, description, invites,
-                timestamp, type, notify, status);
+                timestamp, type, notify, status, url, dest);
         notificationQueue.add(notification);
         System.out.println("added to queue");
     }
@@ -68,13 +68,13 @@ public class NotificationService {
                     overduedNotification.getMember(), overduedNotification.getTitle(), overduedNotification.getDate(),
                     overduedNotification.getTime(), overduedNotification.getDescription(),
                     overduedNotification.getInvites(), overduedNotification.getTimestamp(),
-                    overduedNotification.getType(), overduedNotification.getNotify(), overduedNotification.getStatus());
+                    overduedNotification.getType(), overduedNotification.getNotify(), overduedNotification.getStatus(), overduedNotification.getUrl(), overduedNotification.getDest());
 
             if (overduedNotification.getNotify().equals("true")
                     && overduedNotification.getStatus().equals("accepted")) {
                 sendEmailNotification(overduedNotification.getOwner(), overduedNotification.getMember(),
                         overduedNotification.getTitle(), overduedNotification.getDate(), overduedNotification.getTime(),
-                        overduedNotification.getDescription(), overduedNotification.getInvites());
+                        overduedNotification.getDescription(), overduedNotification.getInvites(), overduedNotification.getDest());
             }
 
             // Delete the notification after it's sent
@@ -82,13 +82,13 @@ public class NotificationService {
                     overduedNotification.getMember(), overduedNotification.getTitle(), overduedNotification.getDate(),
                     overduedNotification.getTime(), overduedNotification.getDescription(),
                     overduedNotification.getInvites(), overduedNotification.getTimestamp(),
-                    overduedNotification.getType(), overduedNotification.getNotify(), "unread"));
+                    overduedNotification.getType(), overduedNotification.getNotify(), "unread", overduedNotification.getUrl(), overduedNotification.getDest()));
             repository.delete(overduedNotification);
         }
     }
 
     public void sendEmailNotification(String owner, String member, String title, String date, String time,
-            String description, String invites) {
+            String description, String invites, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -132,6 +132,7 @@ public class NotificationService {
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
                 "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
@@ -152,7 +153,7 @@ public class NotificationService {
     }
 
     public void sendEmailRequest(String owner, String member, String title, String date, String time,
-            String description, String invites) {
+            String description, String invites, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -196,6 +197,7 @@ public class NotificationService {
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
                 "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
@@ -216,7 +218,7 @@ public class NotificationService {
     }
 
     public void sendEmailUpcoming(String owner, String member, String title, String date, String time,
-            String description, String invites) {
+            String description, String invites, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -260,6 +262,7 @@ public class NotificationService {
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
                 "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
