@@ -3,7 +3,7 @@ server:
 grpc:
   client:
     poi-service:
-      address: static://localhost:8082
+      address: wishlist:8088
       negotiation-type: plaintext
 spring:
   application:

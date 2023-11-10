@@ -170,8 +170,10 @@ public class NotificationController {
         String key = payload.get("key");
 
         List<Notification> notifications = repository.findAllByKey(key);
-
+        List<PastNotification> pastNotifications = pastRepository.findAllByKey(key);
+        
         // Delete documents from the collection
         repository.deleteAll(notifications);
+        pastRepository.deleteAll(pastNotifications);
     }
 }

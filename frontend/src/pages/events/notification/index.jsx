@@ -35,6 +35,13 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
   const email = localStorage.getItem("email");
 
   useEffect(() => {
+    if (isOpen) {
+      // Call the refreshNotification function when the modal is open
+      refreshNotification();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     const eventSource = new EventSource(
       `http://localhost:8083/notification/stream?to=${email}`
     );
@@ -132,6 +139,8 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
           })
         );
         setNotifications(updatedContent);
+      } else {
+        setNotifications([]);
       }
     }
 
@@ -392,8 +401,6 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       Date: {notification.date}
                       <br />
                       Time: {notification.time}
-                      <br />
-                      Notify: {notification.notify}
                     </Toast.Body>
                   </>
                 ) : notification.type === "friend-request" ? (
@@ -430,8 +437,6 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                       Date: {notification.date}
                       <br />
                       Time: {notification.time}
-                      <br />
-                      Notify: {notification.notify}
                     </Toast.Body>
                   </>
                 )}
@@ -490,8 +495,6 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                           Date: {notification.date}
                           <br />
                           Time: {notification.time}
-                          <br />
-                          Notify: {notification.notify}
                         </div>
                       </Col>
                       <Col sm="2">
@@ -553,8 +556,6 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                           Date: {notification.date}
                           <br />
                           Time: {notification.time}
-                          <br />
-                          Notify: {notification.notify}
                         </div>
                       </Col>
                     </>
@@ -570,8 +571,6 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                           Date: {notification.date}
                           <br />
                           Time: {notification.time}
-                          <br />
-                          Notify: {notification.notify}
                         </div>
                       </Col>
                     </>
@@ -651,14 +650,13 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                     <Col sm="9">
                       <div className="notification-text">
                         <b>
-                          {notification.title} by {notification.ownername}
+                          {notification.title} by {notification.ownername} is
+                          starting now!
                         </b>
                         <br />
                         Date: {notification.date}
                         <br />
                         Time: {notification.time}
-                        <br />
-                        Notify: {notification.notify}
                       </div>
                     </Col>
                   )}

@@ -24,6 +24,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   const [description, setDescription] = useState("");
   const [invites, setInvites] = useState([]);
   const [invitees, setInvitees] = useState([]);
+  const [url, setUrl] = useState("");
   const [notify, setNotify] = useState(false);
 
   const [lock, setLock] = useState(false);
@@ -38,19 +39,24 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   }
 
   useEffect(() => {
-    // Function to fetch details when the component mounts
     const fetchDetails = async () => {
       try {
         const response = await getDetails(businessId);
         setDetails(response.data);
-        console.log(details);
       } catch (error) {
-        console.error('Error fetching details:', error);
+        console.error("Error fetching details:", error);
       }
     };
 
     fetchDetails();
-  }, []);
+  }, [businessId]);
+
+  useEffect(() => {
+    setTitle(details.Name);
+    setDescription("Address: " + details.Address);
+    setUrl(details["Image URL"]);
+    console.log(url)
+  }, [details]);
 
   async function getUser(email) {
     try {
@@ -122,7 +128,8 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
         description,
         invites,
         notify,
-        "event"
+        "event",
+        url
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))

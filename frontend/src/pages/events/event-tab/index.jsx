@@ -45,6 +45,7 @@ const EventComponent = ({
       return response.data;
     } catch (error) {
       errorResponse(error);
+      return;
     }
   }
 
@@ -67,7 +68,7 @@ const EventComponent = ({
                 const inviteUser = await getUser(invite);
                 return {
                   email: invite,
-                  name: inviteUser.firstname + " " + inviteUser.lastname,
+                  name: inviteUser ? `${inviteUser.firstname} ${inviteUser.lastname}` : "",
                 };
               } else {
                 return "";

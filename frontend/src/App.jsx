@@ -95,6 +95,14 @@ export default function App() {
                 </AuthenticatedRoute>
               }
             ></Route>
+            <Route
+              path="/events"
+              element={
+                <AuthenticatedRoute>
+                  <EventPage />
+                </AuthenticatedRoute>
+              }
+            ></Route>
 
             <Route path="*" element={<ErrorPage />}></Route>
           </Routes>

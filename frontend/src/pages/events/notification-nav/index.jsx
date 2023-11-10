@@ -20,7 +20,7 @@ const NotificationComponent = () => {
     console.log(error);
   }
 
-  const openNotification = () => {
+  const openNotification = async () => {
     setNotificationOpen(true);
     setNotificationCount(0);
     readAllNotifications()
