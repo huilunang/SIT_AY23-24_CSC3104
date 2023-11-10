@@ -7,7 +7,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 
-import { EventModal } from "../event-modal";
+// import { EventModal } from "../event-modal";
 
 import { getAllEvents } from "../../../api/notification/EventApiService";
 import { getAllParty } from "../../../api/notification/EventApiService";
@@ -19,14 +19,22 @@ const EventComponent = ({
   onRemoveEvent,
   pageRefresh,
 }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  // const [isModalOpen, setModalOpen] = useState(false);
+
+  // useEffect(() => {
+  //   if (businessId) {
+  //     setModalOpen(true);
+  //   } else {
+  //     setModalOpen(false);
+  //   }
+  // }, [businessId]);
 
   function successfulResponse(response) {
     // console.log("successful. here's data " + JSON.stringify(response.data));
   }
 
   function errorResponse(error) {
-    console.log(error);
+    // console.log(error);
   }
 
   async function getUser(email) {
@@ -35,7 +43,8 @@ const EventComponent = ({
       successfulResponse(response);
       return response.data;
     } catch (error) {
-      errorResponse(error);
+      console.log("getUserError " + error);
+      return;
     }
   }
 
@@ -58,7 +67,7 @@ const EventComponent = ({
                 const inviteUser = await getUser(invite);
                 return {
                   email: invite,
-                  name: inviteUser.firstname + " " + inviteUser.lastname,
+                  name: inviteUser ? `${inviteUser.firstname} ${inviteUser.lastname}` : "",
                 };
               } else {
                 return "";
@@ -115,15 +124,15 @@ const EventComponent = ({
     }
   }
 
-  const openModal = () => {
-    setModalOpen(true);
-    fetchEvent();
-  };
+  // const openModal = () => {
+  //   setModalOpen(true);
+  //   fetchEvent();
+  // };
 
-  const closeModal = () => {
-    setModalOpen(false);
-    fetchEvent();
-  };
+  // const closeModal = () => {
+  //   setModalOpen(false);
+  //   fetchEvent();
+  // };
 
   const refreshEvents = async () => {
     await fetchEvent();
@@ -161,14 +170,14 @@ const EventComponent = ({
             <Link className="nav-link me-4" onClick={refreshEvents}>
               <MDBIcon fas icon="redo" style={{ fontSize: "24px" }} />{" "}
             </Link>
-            <Link className="nav-link me-4" onClick={openModal}>
+            {/* <Link className="nav-link me-4" onClick={openModal}>
               <MDBIcon fas icon="plus-circle" style={{ fontSize: "24px" }} />{" "}
-            </Link>
+            </Link> */}
           </Nav>
         </Container>
       </Navbar>
       <Outlet />
-      <EventModal isOpen={isModalOpen} onClose={closeModal} />
+      {/* <EventModal isOpen={isModalOpen} onClose={closeModal} /> */}
     </>
   );
 };

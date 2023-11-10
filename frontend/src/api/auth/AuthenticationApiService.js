@@ -1,4 +1,4 @@
-import { apiClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function executeJwtAuthenticationService(email, password) {
   return apiClient.post("/api/v1/auth/authenticate", { email, password });

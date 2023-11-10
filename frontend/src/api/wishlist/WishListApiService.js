@@ -1,4 +1,4 @@
-import { apiClient } from "./ApiClient";
+import { apiClient } from "../ApiClient";
 
 export function getAllGallery() {
   const jwtToken = localStorage.getItem("jwtToken");

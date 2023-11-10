@@ -95,7 +95,7 @@ services:
       dockerfile: ./gateway/Dockerfile
     restart: always
     ports:
-      - "9090:9090"
+      - "30001:9090"
     depends_on:
       - account
       - wishlist
@@ -106,7 +106,7 @@ services:
       context: frontend
       dockerfile: ./Dockerfile
     ports:
-      - "5173:5173"
+      - "30002:5173"
     volumes:
       - ./frontend/src:/app/src
     depends_on:
