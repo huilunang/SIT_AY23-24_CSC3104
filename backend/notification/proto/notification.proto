@@ -1,4 +1,0 @@
-syntax = "proto3";
-package com.csc3104.account;
-
-// Rest of the defined schema

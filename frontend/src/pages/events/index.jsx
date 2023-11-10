@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import EventComponent from "./event-tab";
 
@@ -45,8 +45,8 @@ const EventPage = () => {
       (party) => key === party.key && party.member === invitee.email
     );
     return matchingParty
-      ? ", " + matchingParty.membername
-      : ", " + invitee.name;
+      ? ", " + matchingParty.name
+      : ", " + invitee.email;
   }
 
   async function removeEvent(event) {
@@ -86,7 +86,7 @@ const EventPage = () => {
           <Card.Body className="ps-5 pe-5">
             <Row>
               <Col sm="1"></Col>
-              <Col sm="8">
+              <Col sm="7">
                 <Card.Title style={{ fontSize: "36px" }}>
                   {event.title}
                 </Card.Title>
@@ -97,6 +97,8 @@ const EventPage = () => {
                     Date: {event.date}
                     <br />
                     Time: {event.time}
+                    <br />
+                    Venue: {event.dest}
                     <br />
                     Description: {event.description}
                     <br />
@@ -126,13 +128,13 @@ const EventPage = () => {
                       ) : null
                     )}
                     <br />
-                    Notify: {event.notify}
+                    Email Notification: {!event.notify ? "Off" : "On"}
                   </>
                 </Card.Text>
               </Col>
-              <Col sm="2">
+              <Col sm="3">
                 <Card.Text>
-                  <Card.Img variant="top" src="holder.js/100px180" />
+                  <Card.Img variant="top" src={event.url} style={{ width: '30vh', height: '30vh', objectFit: 'fill' }}/>
                 </Card.Text>
               </Col>
               <Col sm="1">
@@ -140,6 +142,7 @@ const EventPage = () => {
                   <Link
                     className="nav-link me-4"
                     onClick={() => removeEvent(event)}
+                    style={{ float: "right" }}
                   >
                     <MDBIcon fas icon="trash" style={{ fontSize: "13px" }} />{" "}
                   </Link>

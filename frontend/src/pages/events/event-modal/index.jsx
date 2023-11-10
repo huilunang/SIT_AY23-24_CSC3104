@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -12,8 +12,10 @@ import uniqid from "uniqid";
 import { scheduleNotification } from "../../../api/notification/NotificationApiService";
 import { createEvent } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
+import { getDetails } from "../../../api/notification/EventApiService";
 
-export const EventModal = ({ isOpen, onClose }) => {
+export const EventModal = ({ isOpen, onClose, businessId }) => {
+  const [details, setDetails] = useState([]);
   const [inviteValue, setInviteValue] = useState("");
 
   const [title, setTitle] = useState("");
@@ -22,6 +24,8 @@ export const EventModal = ({ isOpen, onClose }) => {
   const [description, setDescription] = useState("");
   const [invites, setInvites] = useState([]);
   const [invitees, setInvitees] = useState([]);
+  const [url, setUrl] = useState("");
+  const [dest, setDest] = useState("");
   const [notify, setNotify] = useState(false);
 
   const [lock, setLock] = useState(false);
@@ -34,6 +38,24 @@ export const EventModal = ({ isOpen, onClose }) => {
   function errorResponse(error) {
     // console.log(error);
   }
+
+  useEffect(() => {
+    const fetchDetails = async () => {
+      try {
+        const response = await getDetails(businessId);
+        setDetails(response.data);
+      } catch (error) {
+        console.error("Error fetching details:", error);
+      }
+    };
+
+    fetchDetails();
+  }, [businessId]);
+
+  useEffect(() => {
+    setDest(details.Name + " | " + details.Address);
+    setUrl(details["Image URL"]);
+  }, [details]);
 
   async function getUser(email) {
     try {
@@ -105,7 +127,9 @@ export const EventModal = ({ isOpen, onClose }) => {
         description,
         invites,
         notify,
-        "event"
+        "event",
+        url,
+        dest
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -119,7 +143,7 @@ export const EventModal = ({ isOpen, onClose }) => {
         description,
         invites,
         notify,
-        "event"
+        "event",
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
@@ -155,6 +179,7 @@ export const EventModal = ({ isOpen, onClose }) => {
                     style={{ border: "none", fontSize: 24 }}
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
+                    autoComplete="off"
                   />
                 </Col>
                 <Form.Label column xs="2">
@@ -192,6 +217,21 @@ export const EventModal = ({ isOpen, onClose }) => {
                 />
               </Col>
             </Form.Group>
+            <Form.Group as={Row} className="mb-3" controlId="formDest">
+              <Form.Label column sm="2">
+                Venue
+              </Form.Label>
+              <Col sm="10">
+                <Form.Control
+                  as="textarea"
+                  aria-label="formDest"
+                  placeholder=""
+                  value={dest}
+                  onChange={(e) => setDest(e.target.value)}
+                  autoComplete="off"
+                />
+              </Col>
+            </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formDescription">
               <Form.Label column sm="2">
                 Description
@@ -203,6 +243,7 @@ export const EventModal = ({ isOpen, onClose }) => {
                   placeholder=""
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
+                  autoComplete="off"
                 />
               </Col>
             </Form.Group>
