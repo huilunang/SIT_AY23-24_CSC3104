@@ -101,8 +101,8 @@ function WishList() {
       console.log("Successfully pulled categories: ", categories);
       // Set state or return categories
       setCuratedCategories(categories);
-      // handleRefreshForCategory();
-      // handleRefreshForNearby();
+      handleRefreshForCategory();
+      handleRefreshForNearby();
     } catch (error) {
   
       console.error(error);
