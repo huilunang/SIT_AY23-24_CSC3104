@@ -83,7 +83,6 @@ function WishList() {
   };
 
   const getCuratedCategories = async (email) => {
-
     try {
   
       console.log("Attempting to pull categories for ", email);
@@ -101,15 +100,14 @@ function WishList() {
       console.log("Successfully pulled categories: ", categories);
       // Set state or return categories
       setCuratedCategories(categories);
-      handleRefreshForCategory();
-      handleRefreshForNearby();
     } catch (error) {
   
       console.error(error);
       // Handle error
   
     }
-  
+    handleRefreshForCategory();
+    handleRefreshForNearby();
   };
   useEffect(() => {
     getCuratedCategories(email.toString());
