@@ -46,7 +46,7 @@ public class FriendService {
         Map<String, Object> attributes = new HashMap<>();
 
         // Establish gRPC channel
-        UserRequest req = UserRequest.newBuilder().setEmail(email).setToken(token).build();
+        UserRequest req = UserRequest.newBuilder().setEmail(email).build();
 
         UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
@@ -71,7 +71,7 @@ public class FriendService {
         if (friends != null && !friends.isEmpty()) {
             for (String email : friends) {
                 // Establish gRPC channel
-                UserRequest req = UserRequest.newBuilder().setEmail(email).setToken(token).build();
+                UserRequest req = UserRequest.newBuilder().setEmail(email).build();
 
                 UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
@@ -197,7 +197,7 @@ public class FriendService {
         for (Friend friend : friends) {
             Map<String, Object> attributes = new HashMap<>();
             // Establish gRPC channel
-            UserRequest req = UserRequest.newBuilder().setEmail(friend.getSender()).setToken(token).build();
+            UserRequest req = UserRequest.newBuilder().setEmail(friend.getSender()).build();
 
             UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 

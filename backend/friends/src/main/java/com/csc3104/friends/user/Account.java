@@ -29,18 +29,6 @@ public final class Account {
      */
     com.google.protobuf.ByteString
         getEmailBytes();
-
-    /**
-     * <code>string token = 2;</code>
-     * @return The token.
-     */
-    java.lang.String getToken();
-    /**
-     * <code>string token = 2;</code>
-     * @return The bytes for token.
-     */
-    com.google.protobuf.ByteString
-        getTokenBytes();
   }
   /**
    * Protobuf type {@code com.csc3104.user.UserRequest}
@@ -56,7 +44,6 @@ public final class Account {
     }
     private UserRequest() {
       email_ = "";
-      token_ = "";
     }
 
     @java.lang.Override
@@ -93,12 +80,6 @@ public final class Account {
               java.lang.String s = input.readStringRequireUtf8();
 
               email_ = s;
-              break;
-            }
-            case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
-
-              token_ = s;
               break;
             }
             default: {
@@ -171,44 +152,6 @@ public final class Account {
       }
     }
 
-    public static final int TOKEN_FIELD_NUMBER = 2;
-    private volatile java.lang.Object token_;
-    /**
-     * <code>string token = 2;</code>
-     * @return The token.
-     */
-    @java.lang.Override
-    public java.lang.String getToken() {
-      java.lang.Object ref = token_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        token_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string token = 2;</code>
-     * @return The bytes for token.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getTokenBytes() {
-      java.lang.Object ref = token_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        token_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -226,9 +169,6 @@ public final class Account {
       if (!getEmailBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 1, email_);
       }
-      if (!getTokenBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, token_);
-      }
       unknownFields.writeTo(output);
     }
 
@@ -240,9 +180,6 @@ public final class Account {
       size = 0;
       if (!getEmailBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, email_);
-      }
-      if (!getTokenBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, token_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -261,8 +198,6 @@ public final class Account {
 
       if (!getEmail()
           .equals(other.getEmail())) return false;
-      if (!getToken()
-          .equals(other.getToken())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
       return true;
     }
@@ -276,8 +211,6 @@ public final class Account {
       hash = (19 * hash) + getDescriptor().hashCode();
       hash = (37 * hash) + EMAIL_FIELD_NUMBER;
       hash = (53 * hash) + getEmail().hashCode();
-      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
-      hash = (53 * hash) + getToken().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -413,8 +346,6 @@ public final class Account {
         super.clear();
         email_ = "";
 
-        token_ = "";
-
         return this;
       }
 
@@ -442,7 +373,6 @@ public final class Account {
       public com.csc3104.user.Account.UserRequest buildPartial() {
         com.csc3104.user.Account.UserRequest result = new com.csc3104.user.Account.UserRequest(this);
         result.email_ = email_;
-        result.token_ = token_;
         onBuilt();
         return result;
       }
@@ -493,10 +423,6 @@ public final class Account {
         if (other == com.csc3104.user.Account.UserRequest.getDefaultInstance()) return this;
         if (!other.getEmail().isEmpty()) {
           email_ = other.email_;
-          onChanged();
-        }
-        if (!other.getToken().isEmpty()) {
-          token_ = other.token_;
           onChanged();
         }
         this.mergeUnknownFields(other.unknownFields);
@@ -603,82 +529,6 @@ public final class Account {
         onChanged();
         return this;
       }
-
-      private java.lang.Object token_ = "";
-      /**
-       * <code>string token = 2;</code>
-       * @return The token.
-       */
-      public java.lang.String getToken() {
-        java.lang.Object ref = token_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          token_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string token = 2;</code>
-       * @return The bytes for token.
-       */
-      public com.google.protobuf.ByteString
-          getTokenBytes() {
-        java.lang.Object ref = token_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          token_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string token = 2;</code>
-       * @param value The token to set.
-       * @return This builder for chaining.
-       */
-      public Builder setToken(
-          java.lang.String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  
-        token_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string token = 2;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearToken() {
-        
-        token_ = getDefaultInstance().getToken();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string token = 2;</code>
-       * @param value The bytes for token to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTokenBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        token_ = value;
-        onChanged();
-        return this;
-      }
       @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -761,19 +611,11 @@ public final class Account {
         getLastnameBytes();
 
     /**
-     * <pre>
-     * You can add other user attributes here
-     * </pre>
-     *
      * <code>string email = 3;</code>
      * @return The email.
      */
     java.lang.String getEmail();
     /**
-     * <pre>
-     * You can add other user attributes here
-     * </pre>
-     *
      * <code>string email = 3;</code>
      * @return The bytes for email.
      */
@@ -957,10 +799,6 @@ public final class Account {
     public static final int EMAIL_FIELD_NUMBER = 3;
     private volatile java.lang.Object email_;
     /**
-     * <pre>
-     * You can add other user attributes here
-     * </pre>
-     *
      * <code>string email = 3;</code>
      * @return The email.
      */
@@ -978,10 +816,6 @@ public final class Account {
       }
     }
     /**
-     * <pre>
-     * You can add other user attributes here
-     * </pre>
-     *
      * <code>string email = 3;</code>
      * @return The bytes for email.
      */
@@ -1490,10 +1324,6 @@ public final class Account {
 
       private java.lang.Object email_ = "";
       /**
-       * <pre>
-       * You can add other user attributes here
-       * </pre>
-       *
        * <code>string email = 3;</code>
        * @return The email.
        */
@@ -1510,10 +1340,6 @@ public final class Account {
         }
       }
       /**
-       * <pre>
-       * You can add other user attributes here
-       * </pre>
-       *
        * <code>string email = 3;</code>
        * @return The bytes for email.
        */
@@ -1531,10 +1357,6 @@ public final class Account {
         }
       }
       /**
-       * <pre>
-       * You can add other user attributes here
-       * </pre>
-       *
        * <code>string email = 3;</code>
        * @param value The email to set.
        * @return This builder for chaining.
@@ -1550,10 +1372,6 @@ public final class Account {
         return this;
       }
       /**
-       * <pre>
-       * You can add other user attributes here
-       * </pre>
-       *
        * <code>string email = 3;</code>
        * @return This builder for chaining.
        */
@@ -1564,10 +1382,6 @@ public final class Account {
         return this;
       }
       /**
-       * <pre>
-       * You can add other user attributes here
-       * </pre>
-       *
        * <code>string email = 3;</code>
        * @param value The bytes for email to set.
        * @return This builder for chaining.
@@ -1655,13 +1469,12 @@ public final class Account {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\raccount.proto\022\020com.csc3104.user\"+\n\013Use" +
-      "rRequest\022\r\n\005email\030\001 \001(\t\022\r\n\005token\030\002 \001(\t\"B" +
-      "\n\014UserResponse\022\021\n\tfirstname\030\001 \001(\t\022\020\n\010las" +
-      "tname\030\002 \001(\t\022\r\n\005email\030\003 \001(\t2^\n\013UserServic" +
-      "e\022O\n\016GetUserByEmail\022\035.com.csc3104.user.U" +
-      "serRequest\032\036.com.csc3104.user.UserRespon" +
-      "seb\006proto3"
+      "\n\raccount.proto\022\020com.csc3104.user\"\034\n\013Use" +
+      "rRequest\022\r\n\005email\030\001 \001(\t\"B\n\014UserResponse\022" +
+      "\021\n\tfirstname\030\001 \001(\t\022\020\n\010lastname\030\002 \001(\t\022\r\n\005" +
+      "email\030\003 \001(\t2^\n\013UserService\022O\n\016GetUserByE" +
+      "mail\022\035.com.csc3104.user.UserRequest\032\036.co" +
+      "m.csc3104.user.UserResponseb\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1672,7 +1485,7 @@ public final class Account {
     internal_static_com_csc3104_user_UserRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_csc3104_user_UserRequest_descriptor,
-        new java.lang.String[] { "Email", "Token", });
+        new java.lang.String[] { "Email", });
     internal_static_com_csc3104_user_UserResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_com_csc3104_user_UserResponse_fieldAccessorTable = new
