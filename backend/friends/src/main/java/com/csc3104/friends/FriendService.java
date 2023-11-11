@@ -38,7 +38,7 @@ public class FriendService {
                 return friends1;
             }
         }
-        return null; 
+        return null;
     }
 
     public Map<String, Map<String, Object>> getUsersFromName(String email) {
@@ -60,7 +60,6 @@ public class FriendService {
         return mapping;
     }
 
-
     public Map<String, Map<String, Object>> listFriends(List<String> friends, String token) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
 
@@ -74,19 +73,18 @@ public class FriendService {
 
                 UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
-                        String email2 = response.getEmail();
-                        String name = response.getFirstname() + " " + response.getLastname();
+                String email2 = response.getEmail();
+                String name = response.getFirstname() + " " + response.getLastname();
 
-                        Map<String, Object> attributes = new HashMap<>();
-                        attributes.put("name", name);
-                        attributes.put("email", email2);
-                        mapping.put(email, attributes);
+                Map<String, Object> attributes = new HashMap<>();
+                attributes.put("name", name);
+                attributes.put("email", email2);
+                mapping.put(email, attributes);
 
             }
         }
         return mapping;
     }
-
 
     public Boolean addFriend(String email, String sender) {
         FriendList user = FriendListRepo.findFriendListByEmail(email);
@@ -115,7 +113,6 @@ public class FriendService {
             return false;
         }
     }
-
 
     public Boolean removeFriend(String email, String friend) {
         FriendList user = FriendListRepo.findFriendListByEmail(email);
@@ -162,23 +159,20 @@ public class FriendService {
 
         if (Friend != null || Friend2 != null) {
             return false;
-        }
-        else {
+        } else {
             Friend friendRequest = new Friend();
             friendRequest.setSender(email);
             friendRequest.setRecipient(recipient);
             FriendRepo.save(friendRequest);
             return true;
         }
-
     }
 
     public Boolean removeFriendRequest(String email, String sender) {
         Friend Friend = FriendRepo.findBySenderAndRecipient(sender, email);
         if (Friend == null) {
             return false;
-        }
-        else {
+        } else {
             FriendRepo.deleteBySenderAndRecipient(sender, email);
             return true;
         }
@@ -200,11 +194,11 @@ public class FriendService {
 
             UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
-                    String name = response.getFirstname() + " " + response.getLastname();
-                    String email2 = response.getEmail();
-                    attributes.put("name", name);
-                    attributes.put("email", email2);
-                    mapping.put(friend.getSender(), attributes);
+            String name = response.getFirstname() + " " + response.getLastname();
+            String email2 = response.getEmail();
+            attributes.put("name", name);
+            attributes.put("email", email2);
+            mapping.put(friend.getSender(), attributes);
         }
 
         return mapping;
@@ -214,5 +208,3 @@ public class FriendService {
         return FriendRepo.findBySender(email);
     }
 }
-
-

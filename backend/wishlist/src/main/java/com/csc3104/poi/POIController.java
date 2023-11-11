@@ -39,7 +39,8 @@ public class POIController {
     }
 
     @GetMapping("/category/{categories}/{location}")
-    public ArrayList<POI> getListOfPOIDetailsByCategories(@PathVariable String[] categories, @PathVariable String[] location) {
+    public ArrayList<POI> getListOfPOIDetailsByCategories(@PathVariable String[] categories,
+            @PathVariable String[] location) {
         return poiService.getPOIByCategories(categories, location);
     }
 

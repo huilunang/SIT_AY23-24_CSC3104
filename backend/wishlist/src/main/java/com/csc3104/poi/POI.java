@@ -6,9 +6,9 @@ import lombok.Data;
 public class POI {
     private String name;
     private String category;
-    private String address; 
+    private String address;
     private String imageUrl;
     private String rating;
     private String remarks;
-    private boolean visited; 
+    private boolean visited;
 }

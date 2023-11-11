@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class UserService {
-
     private final UserRepository userRepository;
 
     public ResponseEntity<UserDTO> getUserByEmail(String email) {

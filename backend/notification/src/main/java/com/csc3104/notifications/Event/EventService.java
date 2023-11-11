@@ -31,7 +31,7 @@ public class EventService {
 
         if (details != null) {
             Map<String, String> detailsMap = new HashMap<>();
-            
+
             // Adding details to the map
             detailsMap.put("Name", details.getName());
             detailsMap.put("Image URL", details.getImageUrl());
@@ -58,7 +58,7 @@ public class EventService {
 
         if (res != null) {
             Map<String, String> accountMap = new HashMap<>();
-            
+
             // Adding details to the map
             accountMap.put("firstname", res.getFirstname());
             accountMap.put("lastname", res.getLastname());

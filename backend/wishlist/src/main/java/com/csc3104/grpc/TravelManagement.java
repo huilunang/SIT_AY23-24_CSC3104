@@ -4,7 +4,9 @@
 package com.csc3104.grpc;
 
 public final class TravelManagement {
-  private TravelManagement() {}
+  private TravelManagement() {
+  }
+
   public static void registerAllExtensions(
       com.google.protobuf.ExtensionRegistryLite registry) {
   }
@@ -14,47 +16,37 @@ public final class TravelManagement {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_csc3104_grpc_POIRequest_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_csc3104_grpc_POIRequest_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_com_csc3104_grpc_POIDetails_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_com_csc3104_grpc_POIDetails_fieldAccessorTable;
 
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
+  static final com.google.protobuf.Descriptors.Descriptor internal_static_com_csc3104_grpc_POIRequest_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_com_csc3104_grpc_POIRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor internal_static_com_csc3104_grpc_POIDetails_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internal_static_com_csc3104_grpc_POIDetails_fieldAccessorTable;
+
+  public static com.google.protobuf.Descriptors.FileDescriptor getDescriptor() {
     return descriptor;
   }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
+
+  private static com.google.protobuf.Descriptors.FileDescriptor descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\027travel-management.proto\022\020com.csc3104.g" +
-      "rpc\" \n\nPOIRequest\022\022\n\nbusinessId\030\001 \001(\t\"O\n" +
-      "\nPOIDetails\022\014\n\004name\030\001 \001(\t\022\020\n\010category\030\002 " +
-      "\001(\t\022\017\n\007address\030\003 \001(\t\022\020\n\010imageUrl\030\004 \001(\t2Y" +
-      "\n\nPOIService\022K\n\rGetPOIDetails\022\034.com.csc3" +
-      "104.grpc.POIRequest\032\034.com.csc3104.grpc.P" +
-      "OIDetailsB\002P\001b\006proto3"
+        "\n\027travel-management.proto\022\020com.csc3104.g" +
+            "rpc\" \n\nPOIRequest\022\022\n\nbusinessId\030\001 \001(\t\"O\n" +
+            "\nPOIDetails\022\014\n\004name\030\001 \001(\t\022\020\n\010category\030\002 " +
+            "\001(\t\022\017\n\007address\030\003 \001(\t\022\020\n\010imageUrl\030\004 \001(\t2Y" +
+            "\n\nPOIService\022K\n\rGetPOIDetails\022\034.com.csc3" +
+            "104.grpc.POIRequest\032\034.com.csc3104.grpc.P" +
+            "OIDetailsB\002P\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_com_csc3104_grpc_POIRequest_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_com_csc3104_grpc_POIRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        .internalBuildGeneratedFileFrom(descriptorData,
+            new com.google.protobuf.Descriptors.FileDescriptor[] {
+            });
+    internal_static_com_csc3104_grpc_POIRequest_descriptor = getDescriptor().getMessageTypes().get(0);
+    internal_static_com_csc3104_grpc_POIRequest_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_csc3104_grpc_POIRequest_descriptor,
         new java.lang.String[] { "BusinessId", });
-    internal_static_com_csc3104_grpc_POIDetails_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_com_csc3104_grpc_POIDetails_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+    internal_static_com_csc3104_grpc_POIDetails_descriptor = getDescriptor().getMessageTypes().get(1);
+    internal_static_com_csc3104_grpc_POIDetails_fieldAccessorTable = new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_csc3104_grpc_POIDetails_descriptor,
         new java.lang.String[] { "Name", "Category", "Address", "ImageUrl", });
   }

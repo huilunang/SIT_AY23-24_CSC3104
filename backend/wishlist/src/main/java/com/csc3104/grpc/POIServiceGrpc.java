@@ -4,33 +4,26 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
  */
-@jakarta.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.42.1)",
-    comments = "Source: travel-management.proto")
+@jakarta.annotation.Generated(value = "by gRPC proto compiler (version 1.42.1)", comments = "Source: travel-management.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class POIServiceGrpc {
 
-  private POIServiceGrpc() {}
+  private POIServiceGrpc() {
+  }
 
   public static final String SERVICE_NAME = "com.csc3104.grpc.POIService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.csc3104.grpc.POIRequest,
-      com.csc3104.grpc.POIDetails> getGetPOIDetailsMethod;
+  private static volatile io.grpc.MethodDescriptor<com.csc3104.grpc.POIRequest, com.csc3104.grpc.POIDetails> getGetPOIDetailsMethod;
 
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "GetPOIDetails",
-      requestType = com.csc3104.grpc.POIRequest.class,
-      responseType = com.csc3104.grpc.POIDetails.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.csc3104.grpc.POIRequest,
-      com.csc3104.grpc.POIDetails> getGetPOIDetailsMethod() {
+  @io.grpc.stub.annotations.RpcMethod(fullMethodName = SERVICE_NAME + '/'
+      + "GetPOIDetails", requestType = com.csc3104.grpc.POIRequest.class, responseType = com.csc3104.grpc.POIDetails.class, methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.csc3104.grpc.POIRequest, com.csc3104.grpc.POIDetails> getGetPOIDetailsMethod() {
     io.grpc.MethodDescriptor<com.csc3104.grpc.POIRequest, com.csc3104.grpc.POIDetails> getGetPOIDetailsMethod;
     if ((getGetPOIDetailsMethod = POIServiceGrpc.getGetPOIDetailsMethod) == null) {
       synchronized (POIServiceGrpc.class) {
         if ((getGetPOIDetailsMethod = POIServiceGrpc.getGetPOIDetailsMethod) == null) {
-          POIServiceGrpc.getGetPOIDetailsMethod = getGetPOIDetailsMethod =
-              io.grpc.MethodDescriptor.<com.csc3104.grpc.POIRequest, com.csc3104.grpc.POIDetails>newBuilder()
+          POIServiceGrpc.getGetPOIDetailsMethod = getGetPOIDetailsMethod = io.grpc.MethodDescriptor.<com.csc3104.grpc.POIRequest, com.csc3104.grpc.POIDetails>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetPOIDetails"))
               .setSampledToLocalTracing(true)
@@ -50,43 +43,42 @@ public final class POIServiceGrpc {
    * Creates a new async stub that supports all call types for the service
    */
   public static POIServiceStub newStub(io.grpc.Channel channel) {
-    io.grpc.stub.AbstractStub.StubFactory<POIServiceStub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<POIServiceStub>() {
-        @java.lang.Override
-        public POIServiceStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new POIServiceStub(channel, callOptions);
-        }
-      };
+    io.grpc.stub.AbstractStub.StubFactory<POIServiceStub> factory = new io.grpc.stub.AbstractStub.StubFactory<POIServiceStub>() {
+      @java.lang.Override
+      public POIServiceStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+        return new POIServiceStub(channel, callOptions);
+      }
+    };
     return POIServiceStub.newStub(factory, channel);
   }
 
   /**
-   * Creates a new blocking-style stub that supports unary and streaming output calls on the service
+   * Creates a new blocking-style stub that supports unary and streaming output
+   * calls on the service
    */
   public static POIServiceBlockingStub newBlockingStub(
       io.grpc.Channel channel) {
-    io.grpc.stub.AbstractStub.StubFactory<POIServiceBlockingStub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<POIServiceBlockingStub>() {
-        @java.lang.Override
-        public POIServiceBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new POIServiceBlockingStub(channel, callOptions);
-        }
-      };
+    io.grpc.stub.AbstractStub.StubFactory<POIServiceBlockingStub> factory = new io.grpc.stub.AbstractStub.StubFactory<POIServiceBlockingStub>() {
+      @java.lang.Override
+      public POIServiceBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+        return new POIServiceBlockingStub(channel, callOptions);
+      }
+    };
     return POIServiceBlockingStub.newStub(factory, channel);
   }
 
   /**
-   * Creates a new ListenableFuture-style stub that supports unary calls on the service
+   * Creates a new ListenableFuture-style stub that supports unary calls on the
+   * service
    */
   public static POIServiceFutureStub newFutureStub(
       io.grpc.Channel channel) {
-    io.grpc.stub.AbstractStub.StubFactory<POIServiceFutureStub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<POIServiceFutureStub>() {
-        @java.lang.Override
-        public POIServiceFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new POIServiceFutureStub(channel, callOptions);
-        }
-      };
+    io.grpc.stub.AbstractStub.StubFactory<POIServiceFutureStub> factory = new io.grpc.stub.AbstractStub.StubFactory<POIServiceFutureStub>() {
+      @java.lang.Override
+      public POIServiceFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+        return new POIServiceFutureStub(channel, callOptions);
+      }
+    };
     return POIServiceFutureStub.newStub(factory, channel);
   }
 
@@ -101,15 +93,14 @@ public final class POIServiceGrpc {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetPOIDetailsMethod(), responseObserver);
     }
 
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+    @java.lang.Override
+    public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getGetPOIDetailsMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.csc3104.grpc.POIRequest,
-                com.csc3104.grpc.POIDetails>(
-                  this, METHODID_GET_POIDETAILS)))
+              getGetPOIDetailsMethod(),
+              io.grpc.stub.ServerCalls.asyncUnaryCall(
+                  new MethodHandlers<com.csc3104.grpc.POIRequest, com.csc3104.grpc.POIDetails>(
+                      this, METHODID_GET_POIDETAILS)))
           .build();
     }
   }
@@ -223,7 +214,8 @@ public final class POIServiceGrpc {
 
   private static abstract class POIServiceBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
-    POIServiceBaseDescriptorSupplier() {}
+    POIServiceBaseDescriptorSupplier() {
+    }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
@@ -238,7 +230,8 @@ public final class POIServiceGrpc {
 
   private static final class POIServiceFileDescriptorSupplier
       extends POIServiceBaseDescriptorSupplier {
-    POIServiceFileDescriptorSupplier() {}
+    POIServiceFileDescriptorSupplier() {
+    }
   }
 
   private static final class POIServiceMethodDescriptorSupplier
