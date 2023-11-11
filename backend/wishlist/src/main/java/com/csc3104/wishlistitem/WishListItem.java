@@ -23,5 +23,4 @@ public class WishListItem {
         this.remarks = remarks;
         this.visited = visited;
     }
-
 }

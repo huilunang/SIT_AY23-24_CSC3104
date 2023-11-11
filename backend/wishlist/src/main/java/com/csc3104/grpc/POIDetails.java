@@ -10,11 +10,13 @@ public final class POIDetails extends
     com.google.protobuf.GeneratedMessageV3 implements
     // @@protoc_insertion_point(message_implements:com.csc3104.grpc.POIDetails)
     POIDetailsOrBuilder {
-private static final long serialVersionUID = 0L;
+  private static final long serialVersionUID = 0L;
+
   // Use POIDetails.newBuilder() to construct.
   private POIDetails(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
+
   private POIDetails() {
     name_ = "";
     category_ = "";
@@ -23,17 +25,17 @@ private static final long serialVersionUID = 0L;
   }
 
   @java.lang.Override
-  @SuppressWarnings({"unused"})
+  @SuppressWarnings({ "unused" })
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
     return new POIDetails();
   }
 
   @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
     return this.unknownFields;
   }
+
   private POIDetails(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -42,8 +44,7 @@ private static final long serialVersionUID = 0L;
     if (extensionRegistry == null) {
       throw new java.lang.NullPointerException();
     }
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
+    com.google.protobuf.UnknownFieldSet.Builder unknownFields = com.google.protobuf.UnknownFieldSet.newBuilder();
     try {
       boolean done = false;
       while (!done) {
@@ -95,14 +96,13 @@ private static final long serialVersionUID = 0L;
       makeExtensionsImmutable();
     }
   }
-  public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
+
+  public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.csc3104.grpc.TravelManagement.internal_static_com_csc3104_grpc_POIDetails_descriptor;
   }
 
   @java.lang.Override
-  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internalGetFieldAccessorTable() {
+  protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
     return com.csc3104.grpc.TravelManagement.internal_static_com_csc3104_grpc_POIDetails_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             com.csc3104.grpc.POIDetails.class, com.csc3104.grpc.POIDetails.Builder.class);
@@ -110,8 +110,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int NAME_FIELD_NUMBER = 1;
   private volatile java.lang.Object name_;
+
   /**
    * <code>string name = 1;</code>
+   * 
    * @return The name.
    */
   @java.lang.Override
@@ -120,25 +122,24 @@ private static final long serialVersionUID = 0L;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
       name_ = s;
       return s;
     }
   }
+
   /**
    * <code>string name = 1;</code>
+   * 
    * @return The bytes for name.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getNameBytes() {
+  public com.google.protobuf.ByteString getNameBytes() {
     java.lang.Object ref = name_;
     if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+      com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+          (java.lang.String) ref);
       name_ = b;
       return b;
     } else {
@@ -148,8 +149,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int CATEGORY_FIELD_NUMBER = 2;
   private volatile java.lang.Object category_;
+
   /**
    * <code>string category = 2;</code>
+   * 
    * @return The category.
    */
   @java.lang.Override
@@ -158,25 +161,24 @@ private static final long serialVersionUID = 0L;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
       category_ = s;
       return s;
     }
   }
+
   /**
    * <code>string category = 2;</code>
+   * 
    * @return The bytes for category.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getCategoryBytes() {
+  public com.google.protobuf.ByteString getCategoryBytes() {
     java.lang.Object ref = category_;
     if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+      com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+          (java.lang.String) ref);
       category_ = b;
       return b;
     } else {
@@ -186,8 +188,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int ADDRESS_FIELD_NUMBER = 3;
   private volatile java.lang.Object address_;
+
   /**
    * <code>string address = 3;</code>
+   * 
    * @return The address.
    */
   @java.lang.Override
@@ -196,25 +200,24 @@ private static final long serialVersionUID = 0L;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
       address_ = s;
       return s;
     }
   }
+
   /**
    * <code>string address = 3;</code>
+   * 
    * @return The bytes for address.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getAddressBytes() {
+  public com.google.protobuf.ByteString getAddressBytes() {
     java.lang.Object ref = address_;
     if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+      com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+          (java.lang.String) ref);
       address_ = b;
       return b;
     } else {
@@ -224,8 +227,10 @@ private static final long serialVersionUID = 0L;
 
   public static final int IMAGEURL_FIELD_NUMBER = 4;
   private volatile java.lang.Object imageUrl_;
+
   /**
    * <code>string imageUrl = 4;</code>
+   * 
    * @return The imageUrl.
    */
   @java.lang.Override
@@ -234,25 +239,24 @@ private static final long serialVersionUID = 0L;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
       imageUrl_ = s;
       return s;
     }
   }
+
   /**
    * <code>string imageUrl = 4;</code>
+   * 
    * @return The bytes for imageUrl.
    */
   @java.lang.Override
-  public com.google.protobuf.ByteString
-      getImageUrlBytes() {
+  public com.google.protobuf.ByteString getImageUrlBytes() {
     java.lang.Object ref = imageUrl_;
     if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
+      com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+          (java.lang.String) ref);
       imageUrl_ = b;
       return b;
     } else {
@@ -261,11 +265,14 @@ private static final long serialVersionUID = 0L;
   }
 
   private byte memoizedIsInitialized = -1;
+
   @java.lang.Override
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
+    if (isInitialized == 1)
+      return true;
+    if (isInitialized == 0)
+      return false;
 
     memoizedIsInitialized = 1;
     return true;
@@ -273,7 +280,7 @@ private static final long serialVersionUID = 0L;
 
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
-                      throws java.io.IOException {
+      throws java.io.IOException {
     if (!getNameBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, name_);
     }
@@ -292,7 +299,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public int getSerializedSize() {
     int size = memoizedSize;
-    if (size != -1) return size;
+    if (size != -1)
+      return size;
 
     size = 0;
     if (!getNameBytes().isEmpty()) {
@@ -315,7 +323,7 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public boolean equals(final java.lang.Object obj) {
     if (obj == this) {
-     return true;
+      return true;
     }
     if (!(obj instanceof com.csc3104.grpc.POIDetails)) {
       return super.equals(obj);
@@ -323,14 +331,19 @@ private static final long serialVersionUID = 0L;
     com.csc3104.grpc.POIDetails other = (com.csc3104.grpc.POIDetails) obj;
 
     if (!getName()
-        .equals(other.getName())) return false;
+        .equals(other.getName()))
+      return false;
     if (!getCategory()
-        .equals(other.getCategory())) return false;
+        .equals(other.getCategory()))
+      return false;
     if (!getAddress()
-        .equals(other.getAddress())) return false;
+        .equals(other.getAddress()))
+      return false;
     if (!getImageUrl()
-        .equals(other.getImageUrl())) return false;
-    if (!unknownFields.equals(other.unknownFields)) return false;
+        .equals(other.getImageUrl()))
+      return false;
+    if (!unknownFields.equals(other.unknownFields))
+      return false;
     return true;
   }
 
@@ -359,38 +372,45 @@ private static final long serialVersionUID = 0L;
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -398,11 +418,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.csc3104.grpc.POIDetails parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.csc3104.grpc.POIDetails parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -410,12 +432,14 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
+
   public static com.csc3104.grpc.POIDetails parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -425,17 +449,23 @@ private static final long serialVersionUID = 0L;
   }
 
   @java.lang.Override
-  public Builder newBuilderForType() { return newBuilder(); }
+  public Builder newBuilderForType() {
+    return newBuilder();
+  }
+
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
+
   public static Builder newBuilder(com.csc3104.grpc.POIDetails prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
+
   @java.lang.Override
   public Builder toBuilder() {
     return this == DEFAULT_INSTANCE
-        ? new Builder() : new Builder().mergeFrom(this);
+        ? new Builder()
+        : new Builder().mergeFrom(this);
   }
 
   @java.lang.Override
@@ -444,6 +474,7 @@ private static final long serialVersionUID = 0L;
     Builder builder = new Builder(parent);
     return builder;
   }
+
   /**
    * Protobuf type {@code com.csc3104.grpc.POIDetails}
    */
@@ -451,14 +482,12 @@ private static final long serialVersionUID = 0L;
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:com.csc3104.grpc.POIDetails)
       com.csc3104.grpc.POIDetailsOrBuilder {
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
+    public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.csc3104.grpc.TravelManagement.internal_static_com_csc3104_grpc_POIDetails_descriptor;
     }
 
     @java.lang.Override
-    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-        internalGetFieldAccessorTable() {
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable internalGetFieldAccessorTable() {
       return com.csc3104.grpc.TravelManagement.internal_static_com_csc3104_grpc_POIDetails_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               com.csc3104.grpc.POIDetails.class, com.csc3104.grpc.POIDetails.Builder.class);
@@ -474,11 +503,12 @@ private static final long serialVersionUID = 0L;
       super(parent);
       maybeForceBuilderInitialization();
     }
+
     private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
+      if (com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders) {
       }
     }
+
     @java.lang.Override
     public Builder clear() {
       super.clear();
@@ -494,8 +524,7 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Descriptors.Descriptor
-        getDescriptorForType() {
+    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
       return com.csc3104.grpc.TravelManagement.internal_static_com_csc3104_grpc_POIDetails_descriptor;
     }
 
@@ -528,38 +557,44 @@ private static final long serialVersionUID = 0L;
     public Builder clone() {
       return super.clone();
     }
+
     @java.lang.Override
     public Builder setField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return super.setField(field, value);
     }
+
     @java.lang.Override
     public Builder clearField(
         com.google.protobuf.Descriptors.FieldDescriptor field) {
       return super.clearField(field);
     }
+
     @java.lang.Override
     public Builder clearOneof(
         com.google.protobuf.Descriptors.OneofDescriptor oneof) {
       return super.clearOneof(oneof);
     }
+
     @java.lang.Override
     public Builder setRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         int index, java.lang.Object value) {
       return super.setRepeatedField(field, index, value);
     }
+
     @java.lang.Override
     public Builder addRepeatedField(
         com.google.protobuf.Descriptors.FieldDescriptor field,
         java.lang.Object value) {
       return super.addRepeatedField(field, value);
     }
+
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.csc3104.grpc.POIDetails) {
-        return mergeFrom((com.csc3104.grpc.POIDetails)other);
+        return mergeFrom((com.csc3104.grpc.POIDetails) other);
       } else {
         super.mergeFrom(other);
         return this;
@@ -567,7 +602,8 @@ private static final long serialVersionUID = 0L;
     }
 
     public Builder mergeFrom(com.csc3104.grpc.POIDetails other) {
-      if (other == com.csc3104.grpc.POIDetails.getDefaultInstance()) return this;
+      if (other == com.csc3104.grpc.POIDetails.getDefaultInstance())
+        return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
         onChanged();
@@ -614,15 +650,16 @@ private static final long serialVersionUID = 0L;
     }
 
     private java.lang.Object name_ = "";
+
     /**
      * <code>string name = 1;</code>
+     * 
      * @return The name.
      */
     public java.lang.String getName() {
       java.lang.Object ref = name_;
       if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         name_ = s;
         return s;
@@ -630,75 +667,82 @@ private static final long serialVersionUID = 0L;
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>string name = 1;</code>
+     * 
      * @return The bytes for name.
      */
-    public com.google.protobuf.ByteString
-        getNameBytes() {
+    public com.google.protobuf.ByteString getNameBytes() {
       java.lang.Object ref = name_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+            (java.lang.String) ref);
         name_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>string name = 1;</code>
+     * 
      * @param value The name to set.
      * @return This builder for chaining.
      */
     public Builder setName(
         java.lang.String value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  
+        throw new NullPointerException();
+      }
+
       name_ = value;
       onChanged();
       return this;
     }
+
     /**
      * <code>string name = 1;</code>
+     * 
      * @return This builder for chaining.
      */
     public Builder clearName() {
-      
+
       name_ = getDefaultInstance().getName();
       onChanged();
       return this;
     }
+
     /**
      * <code>string name = 1;</code>
+     * 
      * @param value The bytes for name to set.
      * @return This builder for chaining.
      */
     public Builder setNameBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
       name_ = value;
       onChanged();
       return this;
     }
 
     private java.lang.Object category_ = "";
+
     /**
      * <code>string category = 2;</code>
+     * 
      * @return The category.
      */
     public java.lang.String getCategory() {
       java.lang.Object ref = category_;
       if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         category_ = s;
         return s;
@@ -706,75 +750,82 @@ private static final long serialVersionUID = 0L;
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>string category = 2;</code>
+     * 
      * @return The bytes for category.
      */
-    public com.google.protobuf.ByteString
-        getCategoryBytes() {
+    public com.google.protobuf.ByteString getCategoryBytes() {
       java.lang.Object ref = category_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+            (java.lang.String) ref);
         category_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>string category = 2;</code>
+     * 
      * @param value The category to set.
      * @return This builder for chaining.
      */
     public Builder setCategory(
         java.lang.String value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  
+        throw new NullPointerException();
+      }
+
       category_ = value;
       onChanged();
       return this;
     }
+
     /**
      * <code>string category = 2;</code>
+     * 
      * @return This builder for chaining.
      */
     public Builder clearCategory() {
-      
+
       category_ = getDefaultInstance().getCategory();
       onChanged();
       return this;
     }
+
     /**
      * <code>string category = 2;</code>
+     * 
      * @param value The bytes for category to set.
      * @return This builder for chaining.
      */
     public Builder setCategoryBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
       category_ = value;
       onChanged();
       return this;
     }
 
     private java.lang.Object address_ = "";
+
     /**
      * <code>string address = 3;</code>
+     * 
      * @return The address.
      */
     public java.lang.String getAddress() {
       java.lang.Object ref = address_;
       if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         address_ = s;
         return s;
@@ -782,75 +833,82 @@ private static final long serialVersionUID = 0L;
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>string address = 3;</code>
+     * 
      * @return The bytes for address.
      */
-    public com.google.protobuf.ByteString
-        getAddressBytes() {
+    public com.google.protobuf.ByteString getAddressBytes() {
       java.lang.Object ref = address_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+            (java.lang.String) ref);
         address_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>string address = 3;</code>
+     * 
      * @param value The address to set.
      * @return This builder for chaining.
      */
     public Builder setAddress(
         java.lang.String value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  
+        throw new NullPointerException();
+      }
+
       address_ = value;
       onChanged();
       return this;
     }
+
     /**
      * <code>string address = 3;</code>
+     * 
      * @return This builder for chaining.
      */
     public Builder clearAddress() {
-      
+
       address_ = getDefaultInstance().getAddress();
       onChanged();
       return this;
     }
+
     /**
      * <code>string address = 3;</code>
+     * 
      * @param value The bytes for address to set.
      * @return This builder for chaining.
      */
     public Builder setAddressBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
       address_ = value;
       onChanged();
       return this;
     }
 
     private java.lang.Object imageUrl_ = "";
+
     /**
      * <code>string imageUrl = 4;</code>
+     * 
      * @return The imageUrl.
      */
     public java.lang.String getImageUrl() {
       java.lang.Object ref = imageUrl_;
       if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
         imageUrl_ = s;
         return s;
@@ -858,64 +916,71 @@ private static final long serialVersionUID = 0L;
         return (java.lang.String) ref;
       }
     }
+
     /**
      * <code>string imageUrl = 4;</code>
+     * 
      * @return The bytes for imageUrl.
      */
-    public com.google.protobuf.ByteString
-        getImageUrlBytes() {
+    public com.google.protobuf.ByteString getImageUrlBytes() {
       java.lang.Object ref = imageUrl_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
+        com.google.protobuf.ByteString b = com.google.protobuf.ByteString.copyFromUtf8(
+            (java.lang.String) ref);
         imageUrl_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
+
     /**
      * <code>string imageUrl = 4;</code>
+     * 
      * @param value The imageUrl to set.
      * @return This builder for chaining.
      */
     public Builder setImageUrl(
         java.lang.String value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  
+        throw new NullPointerException();
+      }
+
       imageUrl_ = value;
       onChanged();
       return this;
     }
+
     /**
      * <code>string imageUrl = 4;</code>
+     * 
      * @return This builder for chaining.
      */
     public Builder clearImageUrl() {
-      
+
       imageUrl_ = getDefaultInstance().getImageUrl();
       onChanged();
       return this;
     }
+
     /**
      * <code>string imageUrl = 4;</code>
+     * 
      * @param value The bytes for imageUrl to set.
      * @return This builder for chaining.
      */
     public Builder setImageUrlBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+
       imageUrl_ = value;
       onChanged();
       return this;
     }
+
     @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -927,7 +992,6 @@ private static final long serialVersionUID = 0L;
         final com.google.protobuf.UnknownFieldSet unknownFields) {
       return super.mergeUnknownFields(unknownFields);
     }
-
 
     // @@protoc_insertion_point(builder_scope:com.csc3104.grpc.POIDetails)
   }
@@ -942,8 +1006,7 @@ private static final long serialVersionUID = 0L;
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<POIDetails>
-      PARSER = new com.google.protobuf.AbstractParser<POIDetails>() {
+  private static final com.google.protobuf.Parser<POIDetails> PARSER = new com.google.protobuf.AbstractParser<POIDetails>() {
     @java.lang.Override
     public POIDetails parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
@@ -968,4 +1031,3 @@ private static final long serialVersionUID = 0L;
   }
 
 }
-

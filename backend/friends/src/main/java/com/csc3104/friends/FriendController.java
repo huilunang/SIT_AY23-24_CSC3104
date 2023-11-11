@@ -32,9 +32,10 @@ public class FriendController {
     }
 
     @GetMapping("/getUsersByName")
-    public ResponseEntity<Map<String, Map<String, Object>>> getUsersByName(@RequestParam String email) throws JsonProcessingException {
+    public ResponseEntity<Map<String, Map<String, Object>>> getUsersByName(@RequestParam String email)
+            throws JsonProcessingException {
         String token = retrieveTokenFromRequest();
-        Map<String, Map<String, Object>> users  = friendService.getUsersFromName(email);
+        Map<String, Map<String, Object>> users = friendService.getUsersFromName(email);
         if (users != null) {
             return ResponseEntity.ok(users);
         } else {
@@ -43,14 +44,16 @@ public class FriendController {
     }
 
     @PostMapping("/listFriends")
-    public ResponseEntity<Map<String, Map<String, Object>>> listFriends(@RequestBody List<String> friends) throws JsonProcessingException {
+    public ResponseEntity<Map<String, Map<String, Object>>> listFriends(@RequestBody List<String> friends)
+            throws JsonProcessingException {
         String token = retrieveTokenFromRequest();
         Map<String, Map<String, Object>> result = friendService.listFriends(friends, token);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/addFriend")
-    public ResponseEntity<Boolean> addFriend(@RequestBody Map<String, String> requestData) throws JsonProcessingException {
+    public ResponseEntity<Boolean> addFriend(@RequestBody Map<String, String> requestData)
+            throws JsonProcessingException {
         String email = requestData.get("email");
         String sender = requestData.get("sender");
         Boolean added = friendService.addFriend(email, sender);
@@ -74,7 +77,8 @@ public class FriendController {
     }
 
     @PostMapping("/removeFriend")
-    public ResponseEntity<Boolean> removeFriend(@RequestBody Map<String, String> requestData) throws JsonProcessingException {
+    public ResponseEntity<Boolean> removeFriend(@RequestBody Map<String, String> requestData)
+            throws JsonProcessingException {
         String email = requestData.get("email");
         String friend = requestData.get("friend");
         Boolean removed = friendService.removeFriend(email, friend);
@@ -96,6 +100,7 @@ public class FriendController {
             return ResponseEntity.badRequest().body(false);
         }
     }
+
     @PostMapping("/makeFriendRequest")
     public ResponseEntity<Boolean> makeFriendRequest(@RequestBody Map<String, String> requestData) {
         String email = requestData.get("email");
@@ -109,7 +114,8 @@ public class FriendController {
     }
 
     @GetMapping("/listFriendRequests")
-    public ResponseEntity<Map<String, Map<String, Object>>> listFriendRequests(@RequestParam String email) throws JsonProcessingException {
+    public ResponseEntity<Map<String, Map<String, Object>>> listFriendRequests(@RequestParam String email)
+            throws JsonProcessingException {
         String token = retrieveTokenFromRequest();
         Map<String, Map<String, Object>> result = friendService.listFriendRequests(email, token);
         return ResponseEntity.ok(result);

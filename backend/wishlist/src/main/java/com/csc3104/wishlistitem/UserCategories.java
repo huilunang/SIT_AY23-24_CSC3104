@@ -1,6 +1,5 @@
 package com.csc3104.wishlistitem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.Id;

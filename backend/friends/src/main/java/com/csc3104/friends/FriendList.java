@@ -22,6 +22,7 @@ public class FriendList {
     public FriendList() {
         this.friends = new ArrayList<>(); // Initialize the blank list as an empty ArrayList
     }
+
     public List<String> getFriends() {
         return friends;
     }

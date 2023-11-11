@@ -3,12 +3,6 @@ package com.csc3104.notifications.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.util.Map;
@@ -26,7 +20,7 @@ public class EventController {
     }
 
     @GetMapping("/{businessId}")
-    public Map<String, String> getDetails(@PathVariable String businessId){
+    public Map<String, String> getDetails(@PathVariable String businessId) {
         return eventService.sendDetailsToEvents(businessId);
     }
 
@@ -61,13 +55,15 @@ public class EventController {
         String notify = payload.get("notify");
         String url = payload.get("url");
         String dest = payload.get("dest");
-        repository.save(new Event(key, owner, member, title, date, time, description, invites, timestamp, type, notify, url, dest));
+        repository.save(new Event(key, owner, member, title, date, time, description, invites, timestamp, type, notify,
+                url, dest));
 
         return ResponseEntity.ok("Event created : " + key);
     }
 
     @GetMapping("/user")
-        public Map<String, String> getUser(@RequestHeader("Authorization") String token, @RequestParam("email") String email){
+    public Map<String, String> getUser(@RequestHeader("Authorization") String token,
+            @RequestParam("email") String email) {
         return eventService.sendAccountToEvents(email);
     }
 

@@ -9,13 +9,15 @@ public interface POIRequestOrBuilder extends
 
   /**
    * <code>string businessId = 1;</code>
+   * 
    * @return The businessId.
    */
   java.lang.String getBusinessId();
+
   /**
    * <code>string businessId = 1;</code>
+   * 
    * @return The bytes for businessId.
    */
-  com.google.protobuf.ByteString
-      getBusinessIdBytes();
+  com.google.protobuf.ByteString getBusinessIdBytes();
 }
