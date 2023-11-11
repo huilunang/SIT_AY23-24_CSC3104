@@ -112,13 +112,12 @@ export function makeFriendRequest(email) {
   });
 }
 
-export function checkIfFriend(email) {
+export function checkIfFriend(email, email2) {
   const jwtToken = localStorage.getItem("jwtToken");
-  const currUser = localStorage.getItem("email");
 
   const requestData = {
-    email: currUser,
-    user: email,
+    email: email,
+    user: email2,
   };
 
   return apiClient.post("/friends/checkFriend", requestData, {

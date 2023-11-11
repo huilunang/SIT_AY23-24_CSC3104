@@ -70,9 +70,9 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
     }
   }
 
-  async function handleCheckFriend(email) {
+  async function handleCheckFriend(email, email2) {
     try {
-      const response = await checkIfFriend(email);
+      const response = await checkIfFriend(email, email2);
       successfulResponse(response);
       return response.data;
     } catch (error) {
@@ -88,7 +88,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const newUser = inviteValue.trim();
-      const isFriend = await handleCheckFriend(newUser);
+      const isFriend = await handleCheckFriend(email, newUser);
       if (newUser && !invites.includes(newUser) && newUser != email  && isFriend) {
         setInvites([...invites, newUser]);
 

@@ -45,18 +45,20 @@ public class FriendService {
         FriendList friends = FriendListRepo.findFriendListByEmail(email);
         if (friends != null) {
             List<String> friends1 = friends.getFriends();
-            if (friends1.contains(user)) {
-                return true;
+            if (friends1!=null) {
+                for(String obj : friends1) {
+                    System.out.println(obj);
+                    if(obj.toString().equals(user)){
+                        return true;
+                    }
+                }
             }
-            else {
-                return false;
-            }
+            return false;
         }
         else {
             return false;
         }
     }
-
     public Map<String, Map<String, Object>> getUsersFromName(String email) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
         Map<String, Object> attributes = new HashMap<>();
