@@ -18,11 +18,17 @@ spec:
         app: friends
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-friends
+      - image: huilun2000/csc3104:sit_ay23-24_csc3104-friends
         name: sit-ay23-24-csc3104-friends
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: travelexp-conf
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
 status: {}

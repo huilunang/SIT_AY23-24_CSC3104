@@ -18,11 +18,17 @@ spec:
         app: gateway
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-gateway
-        name: sit-ay23-24-csc3104-gateway-8b6ll
-        imagePullPolicy: Never
+      - image: huilun2000/csc3104:sit_ay23-24_csc3104-gateway
+        name: sit-ay23-24-csc3104-gateway
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: travelexp-conf
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
 status: {}
