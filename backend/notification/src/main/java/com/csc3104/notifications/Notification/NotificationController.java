@@ -114,14 +114,14 @@ public class NotificationController {
 
         if (member.equals(to)) { // Check if the recipient matches the intended recipient
             if (status.equals("requested")) {
-                notificationService.sendEmailRequest(owner, member, title, date, time, description, invites, dest);
+                notificationService.sendEmailRequest(owner, member, title, date, time, description, invites, url, dest);
                 notificationService.pushNotificationToQueue(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, status, url, dest);
                 pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, "unread", url, dest));
             } else if (status.equals("accepted")) {
                 if (notify.equals("true")){
-                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites, dest);
+                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites, url, dest);
                 }
                 repository.save(new Notification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, status, url, dest));

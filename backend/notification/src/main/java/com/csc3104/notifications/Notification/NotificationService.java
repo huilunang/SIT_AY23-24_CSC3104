@@ -74,7 +74,7 @@ public class NotificationService {
                     && overduedNotification.getStatus().equals("accepted")) {
                 sendEmailNotification(overduedNotification.getOwner(), overduedNotification.getMember(),
                         overduedNotification.getTitle(), overduedNotification.getDate(), overduedNotification.getTime(),
-                        overduedNotification.getDescription(), overduedNotification.getInvites(), overduedNotification.getDest());
+                        overduedNotification.getDescription(), overduedNotification.getInvites(), overduedNotification.getUrl(), overduedNotification.getDest());
             }
 
             // Delete the notification after it's sent
@@ -88,7 +88,7 @@ public class NotificationService {
     }
 
     public void sendEmailNotification(String owner, String member, String title, String date, String time,
-            String description, String invites, String dest) {
+            String description, String invites, String url, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -126,6 +126,7 @@ public class NotificationService {
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
+                "        <img src=" + url + "alt=\"Event Image\">\n" +
                 "        <ul>\n" +
                 "            <li><strong>From:</strong> " + owner + "</li>\n" +
                 "            <li><strong>To:</strong> " + member + "</li>\n" +
@@ -153,7 +154,7 @@ public class NotificationService {
     }
 
     public void sendEmailRequest(String owner, String member, String title, String date, String time,
-            String description, String invites, String dest) {
+            String description, String invites, String url, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -191,6 +192,7 @@ public class NotificationService {
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
+                "        <img src=" + url + "alt=\"Event Image\">\n" +
                 "        <ul>\n" +
                 "            <li><strong>From:</strong> " + owner + "</li>\n" +
                 "            <li><strong>To:</strong> " + member + "</li>\n" +
@@ -218,7 +220,7 @@ public class NotificationService {
     }
 
     public void sendEmailUpcoming(String owner, String member, String title, String date, String time,
-            String description, String invites, String dest) {
+            String description, String invites, String url, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -256,6 +258,7 @@ public class NotificationService {
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
+                "        <img src=" + url + "alt=\"Event Image\">\n" +
                 "        <ul>\n" +
                 "            <li><strong>From:</strong> " + owner + "</li>\n" +
                 "            <li><strong>To:</strong> " + member + "</li>\n" +
