@@ -34,7 +34,7 @@ public class FriendController {
     @GetMapping("/getUsersByName")
     public ResponseEntity<Map<String, Map<String, Object>>> getUsersByName(@RequestParam String email) throws JsonProcessingException {
         String token = retrieveTokenFromRequest();
-        Map<String, Map<String, Object>> users  = friendService.getUsersFromName(email, token);
+        Map<String, Map<String, Object>> users  = friendService.getUsersFromName(email);
         if (users != null) {
             return ResponseEntity.ok(users);
         } else {

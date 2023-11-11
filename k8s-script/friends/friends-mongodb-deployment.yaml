@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: friends-mongodb
+  name: friends-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: friends-mongodb
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: friends-mongodb
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        envFrom:
+        - configMapRef:
+            name: travelexp-conf
+        resources: {}
+        volumeMounts:
+        - mountPath: /docker-entrypoint-initdb.d
+          name: mongo-init
+      volumes:
+      - name: mongo-init
+        persistentVolumeClaim:
+          claimName: mongo-pvc
+status: {}

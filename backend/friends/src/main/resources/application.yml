@@ -1,5 +1,10 @@
 server:
   port: 8084
+grpc:
+  client:
+    account:
+      address: account:8099
+      negotiation-type: plaintext
 spring:
   data:
     mongodb:

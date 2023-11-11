@@ -15,7 +15,7 @@ services:
     image: mysql
     restart: always
     ports:
-      - "3307:3308"
+      - "3307:3306"
     environment:
       MYSQL_DATABASE: ${MYSQL_ACCOUNT_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
@@ -40,9 +40,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
-      MONGO_DB_USER: ${MONGO_USER}
-      MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   notification:
@@ -63,9 +63,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
-      MONGO_DB_USER: ${MONGO_USER}
-      MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   friends:
@@ -86,9 +86,9 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
-      MONGO_DB_USER: ${MONGO_USER}
-      MONGO_DB_PASSWORD: ${MONGO_PASSWORD}
+      MONGO_DATABASE: ${MONGO_DATABASE}
+      MONGO_USER: ${MONGO_USER}
+      MONGO_PASSWORD: ${MONGO_PASSWORD}
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   gateway:

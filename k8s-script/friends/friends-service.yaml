@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: friends
+  name: friends
+spec:
+  ports:
+  - name: web
+    port: 8084
+    protocol: TCP
+    targetPort: 8084
+  selector:
+    app: friends
+  type: ClusterIP
+status:
+  loadBalancer: {}
