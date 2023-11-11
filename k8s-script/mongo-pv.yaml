@@ -9,4 +9,4 @@ spec:
     storage: 1Gi
   storageClassName: standard
   hostPath:
-    path: <absolute-path-to-db-folder-in-root>
+    path: /Users/huilunang/Desktop/Projects/SIT-UOG/2023_2024_TRI1/SIT_AY23-24_CSC3104/db

@@ -7,7 +7,7 @@ metadata:
   name: account-mysqldb
 spec:
   ports:
-  - name: 3306-3306
+  - name: mysql
     port: 3306
     protocol: TCP
     targetPort: 3306

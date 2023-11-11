@@ -3,11 +3,9 @@ package com.csc3104.friends;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import com.csc3104.user.UserServiceGrpc;
-import com.csc3104.user.Friends.UserRequest;
-import com.csc3104.user.Friends.UserResponse;
+import com.csc3104.user.Account.UserRequest;
+import com.csc3104.user.Account.UserResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +27,7 @@ public class FriendService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GrpcClient("account-service")
+    @GrpcClient("account")
     private com.csc3104.user.UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub;
 
     public List<String> getFriends(String email) {
@@ -43,12 +41,11 @@ public class FriendService {
         return null; 
     }
 
-    public Map<String, Map<String, Object>> getUsersFromName(String email, String token) throws JsonProcessingException {
+    public Map<String, Map<String, Object>> getUsersFromName(String email) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
         Map<String, Object> attributes = new HashMap<>();
-
         // Establish gRPC channel
-        UserRequest req = UserRequest.newBuilder().setEmail(email).setToken(token).build();
+        UserRequest req = UserRequest.newBuilder().setEmail(email).build();
 
         UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
@@ -59,7 +56,7 @@ public class FriendService {
         attributes.put("email", email2);
         mapping.put(email, attributes);
 
-
+        System.out.println(mapping);
         return mapping;
     }
 
@@ -73,7 +70,7 @@ public class FriendService {
         if (friends != null && !friends.isEmpty()) {
             for (String email : friends) {
                 // Establish gRPC channel
-                UserRequest req = UserRequest.newBuilder().setEmail(email).setToken(token).build();
+                UserRequest req = UserRequest.newBuilder().setEmail(email).build();
 
                 UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
@@ -199,7 +196,7 @@ public class FriendService {
         for (Friend friend : friends) {
             Map<String, Object> attributes = new HashMap<>();
             // Establish gRPC channel
-            UserRequest req = UserRequest.newBuilder().setEmail(friend.getSender()).setToken(token).build();
+            UserRequest req = UserRequest.newBuilder().setEmail(friend.getSender()).build();
 
             UserResponse response = userServiceBlockingStub.getUserByEmail(req);
 
@@ -217,4 +214,5 @@ public class FriendService {
         return FriendRepo.findBySender(email);
     }
 }
+
 

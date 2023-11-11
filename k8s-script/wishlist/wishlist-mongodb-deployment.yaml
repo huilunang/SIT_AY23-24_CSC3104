@@ -6,7 +6,7 @@ metadata:
     app: wishlist-mongodb
   name: wishlist-mongodb
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: wishlist-mongodb

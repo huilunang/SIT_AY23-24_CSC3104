@@ -2,8 +2,8 @@ server:
   port: 8084
 grpc:
   client:
-    account-service:
-      address: account:8089
+    account:
+      address: account:8099
       negotiation-type: plaintext
 spring:
   data:

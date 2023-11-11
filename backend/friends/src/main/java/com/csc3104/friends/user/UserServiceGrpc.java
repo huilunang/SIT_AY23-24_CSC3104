@@ -6,7 +6,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.42.1)",
-    comments = "Source: friends.proto")
+    comments = "Source: account.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class UserServiceGrpc {
 
@@ -15,29 +15,29 @@ public final class UserServiceGrpc {
   public static final String SERVICE_NAME = "com.csc3104.user.UserService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.csc3104.user.Friends.UserRequest,
-      com.csc3104.user.Friends.UserResponse> getGetUserByEmailMethod;
+  private static volatile io.grpc.MethodDescriptor<com.csc3104.user.Account.UserRequest,
+      com.csc3104.user.Account.UserResponse> getGetUserByEmailMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetUserByEmail",
-      requestType = com.csc3104.user.Friends.UserRequest.class,
-      responseType = com.csc3104.user.Friends.UserResponse.class,
+      requestType = com.csc3104.user.Account.UserRequest.class,
+      responseType = com.csc3104.user.Account.UserResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.csc3104.user.Friends.UserRequest,
-      com.csc3104.user.Friends.UserResponse> getGetUserByEmailMethod() {
-    io.grpc.MethodDescriptor<com.csc3104.user.Friends.UserRequest, com.csc3104.user.Friends.UserResponse> getGetUserByEmailMethod;
+  public static io.grpc.MethodDescriptor<com.csc3104.user.Account.UserRequest,
+      com.csc3104.user.Account.UserResponse> getGetUserByEmailMethod() {
+    io.grpc.MethodDescriptor<com.csc3104.user.Account.UserRequest, com.csc3104.user.Account.UserResponse> getGetUserByEmailMethod;
     if ((getGetUserByEmailMethod = UserServiceGrpc.getGetUserByEmailMethod) == null) {
       synchronized (UserServiceGrpc.class) {
         if ((getGetUserByEmailMethod = UserServiceGrpc.getGetUserByEmailMethod) == null) {
           UserServiceGrpc.getGetUserByEmailMethod = getGetUserByEmailMethod =
-              io.grpc.MethodDescriptor.<com.csc3104.user.Friends.UserRequest, com.csc3104.user.Friends.UserResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.csc3104.user.Account.UserRequest, com.csc3104.user.Account.UserResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetUserByEmail"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.csc3104.user.Friends.UserRequest.getDefaultInstance()))
+                  com.csc3104.user.Account.UserRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.csc3104.user.Friends.UserResponse.getDefaultInstance()))
+                  com.csc3104.user.Account.UserResponse.getDefaultInstance()))
               .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("GetUserByEmail"))
               .build();
         }
@@ -96,8 +96,8 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public void getUserByEmail(com.csc3104.user.Friends.UserRequest request,
-        io.grpc.stub.StreamObserver<com.csc3104.user.Friends.UserResponse> responseObserver) {
+    public void getUserByEmail(com.csc3104.user.Account.UserRequest request,
+        io.grpc.stub.StreamObserver<com.csc3104.user.Account.UserResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetUserByEmailMethod(), responseObserver);
     }
 
@@ -107,8 +107,8 @@ public final class UserServiceGrpc {
             getGetUserByEmailMethod(),
             io.grpc.stub.ServerCalls.asyncUnaryCall(
               new MethodHandlers<
-                com.csc3104.user.Friends.UserRequest,
-                com.csc3104.user.Friends.UserResponse>(
+                com.csc3104.user.Account.UserRequest,
+                com.csc3104.user.Account.UserResponse>(
                   this, METHODID_GET_USER_BY_EMAIL)))
           .build();
     }
@@ -130,8 +130,8 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public void getUserByEmail(com.csc3104.user.Friends.UserRequest request,
-        io.grpc.stub.StreamObserver<com.csc3104.user.Friends.UserResponse> responseObserver) {
+    public void getUserByEmail(com.csc3104.user.Account.UserRequest request,
+        io.grpc.stub.StreamObserver<com.csc3104.user.Account.UserResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetUserByEmailMethod(), getCallOptions()), request, responseObserver);
     }
@@ -153,7 +153,7 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public com.csc3104.user.Friends.UserResponse getUserByEmail(com.csc3104.user.Friends.UserRequest request) {
+    public com.csc3104.user.Account.UserResponse getUserByEmail(com.csc3104.user.Account.UserRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetUserByEmailMethod(), getCallOptions(), request);
     }
@@ -175,8 +175,8 @@ public final class UserServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.csc3104.user.Friends.UserResponse> getUserByEmail(
-        com.csc3104.user.Friends.UserRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.csc3104.user.Account.UserResponse> getUserByEmail(
+        com.csc3104.user.Account.UserRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetUserByEmailMethod(), getCallOptions()), request);
     }
@@ -202,8 +202,8 @@ public final class UserServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_USER_BY_EMAIL:
-          serviceImpl.getUserByEmail((com.csc3104.user.Friends.UserRequest) request,
-              (io.grpc.stub.StreamObserver<com.csc3104.user.Friends.UserResponse>) responseObserver);
+          serviceImpl.getUserByEmail((com.csc3104.user.Account.UserRequest) request,
+              (io.grpc.stub.StreamObserver<com.csc3104.user.Account.UserResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -227,7 +227,7 @@ public final class UserServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.csc3104.user.Friends.getDescriptor();
+      return com.csc3104.user.Account.getDescriptor();
     }
 
     @java.lang.Override

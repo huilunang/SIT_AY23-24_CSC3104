@@ -65,5 +65,5 @@ spring:
           uri: http://friends:8084
           predicates:
             - Path=/friends/**
-          # filters:
-          #   - AuthenticationFilter
+          filters:
+            - AuthenticationFilter
