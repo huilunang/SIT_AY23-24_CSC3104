@@ -118,7 +118,7 @@ export function checkIfFriend(email) {
 
   const requestData = {
     email: currUser,
-    recipient: email,
+    user: email,
   };
 
   return apiClient.post("/friends/checkFriend", requestData, {
