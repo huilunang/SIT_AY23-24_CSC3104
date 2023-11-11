@@ -42,17 +42,6 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
     // console.log(error);
   }
 
-  // check if the (emailToCheck) is part of the user's friends
-  const handleCheckFriend = async (email) => {
-    try {
-      const response = await checkIfFriend(email);
-      return response.data; // Assuming the API returns relevant data
-    } catch (error) {
-      console.error('Error checking friend:', error);
-      return null;
-    }
-  };
-
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -74,6 +63,16 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   async function getUser(email) {
     try {
       const response = await getUserName(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
+  }
+
+  async function handleCheckFriend(email) {
+    try {
+      const response = await checkIfFriend(email);
       successfulResponse(response);
       return response.data;
     } catch (error) {
