@@ -14,6 +14,7 @@ import { scheduleNotification } from "../../../api/notification/NotificationApiS
 import { createEvent } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
 import { getDetails } from "../../../api/notification/EventApiService";
+import { checkIfFriend } from "../../../api/friends/FriendsApiService";
 
 export const EventModal = ({ isOpen, onClose, businessId }) => {
   const [details, setDetails] = useState([]);
@@ -31,6 +32,8 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
 
   const [validated, setValidated] = useState(false);
   const [lock, setLock] = useState(false);
+  const [emailToCheck, setEmailToCheck] = useState('');
+  const [checkresult, setcheckResult] = useState(null);
   const email = localStorage.getItem("email");
 
   function successfulResponse(response) {
@@ -40,6 +43,17 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   function errorResponse(error) {
     // console.log(error);
   }
+
+  // check if the (emailToCheck) is part of the user's friends
+  const handleCheckFriend = async () => {
+    try {
+      const response = await checkIfFriend(emailToCheck);
+      setcheckResult(response.data); // Assuming the API returns relevant data
+    } catch (error) {
+      console.error('Error checking friend:', error);
+      setcheckResult(null);
+    }
+  };
 
   useEffect(() => {
     const fetchDetails = async () => {

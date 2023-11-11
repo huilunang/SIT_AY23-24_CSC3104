@@ -41,6 +41,22 @@ public class FriendService {
         return null; 
     }
 
+    public boolean checkIfFriend(String email, String user) {
+        FriendList friends = FriendListRepo.findFriendListByEmail(email);
+        if (friends != null) {
+            List<String> friends1 = friends.getFriends();
+            if (friends1.contains(user)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+
     public Map<String, Map<String, Object>> getUsersFromName(String email) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
         Map<String, Object> attributes = new HashMap<>();
