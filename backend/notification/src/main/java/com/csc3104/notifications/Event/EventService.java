@@ -14,8 +14,6 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 @Service
 public class EventService {
     // override gRPC generated code
-    // @Autowired
-    // private EventRepository repository;
 
     @GrpcClient("poi-service")
     private com.csc3104.grpc.POIServiceGrpc.POIServiceBlockingStub poiServiceBlockingStub;

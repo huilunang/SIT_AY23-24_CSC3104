@@ -182,27 +182,4 @@ class Notification {
   public void setDest(String dest) {
     this.dest = dest;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (!(o instanceof Notification))
-      return false;
-    Notification notification = (Notification) o;
-    return Objects.equals(this.id, notification.id) && Objects.equals(this.owner, notification.owner)
-        && Objects.equals(this.title, notification.title);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.owner, this.title);
-  }
-
-  @Override
-  public String toString() {
-    return String.format(
-        "Notification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s', notify='%s', status='%s', url='%s', dest='%s']",
-        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status, url, dest);
-  }
 }
