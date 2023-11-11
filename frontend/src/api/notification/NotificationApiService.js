@@ -40,7 +40,9 @@ export function scheduleNotification(
   description,
   invites,
   notify,
-  type
+  type,
+  url,
+  dest
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -72,6 +74,8 @@ export function scheduleNotification(
           type: type + "-" + "request",
           notify: notify,
           status: "requested",
+          url,
+          dest
         }, // Pass the message in the request payload
         {
           headers: {
@@ -98,6 +102,8 @@ export function scheduleNotification(
       type: type,
       notify: notify,
       status: "accepted",
+      url: url,
+      dest: dest
     }, // Pass the message in the request payload
     {
       headers: {
@@ -118,7 +124,9 @@ export function scheduleInviteNotification(
   invites,
   notify,
   type,
-  status
+  status,
+  url,
+  dest
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -150,6 +158,8 @@ export function scheduleInviteNotification(
       type: type,
       notify: notify,
       status: status,
+      url: url,
+      dest: dest
     }, // Pass the message in the request payload
     {
       headers: {
@@ -227,7 +237,9 @@ export function eventInviteNotification(
   invites,
   notify,
   type,
-  status
+  status,
+  url,
+  dest
 ) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
@@ -247,6 +259,8 @@ export function eventInviteNotification(
       type: type,
       notify: notify,
       status: status,
+      url: url,
+      dest: dest
     }, // Pass the message in the request payload
     {
       headers: {

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: friends-mongodb
+  name: friends-mongodb
+spec:
+  ports:
+  - name: mongodb
+    port: 27017
+    protocol: TCP
+    targetPort: 27017
+  selector:
+    app: friends-mongodb
+  type: ClusterIP
+status:
+  loadBalancer: {}

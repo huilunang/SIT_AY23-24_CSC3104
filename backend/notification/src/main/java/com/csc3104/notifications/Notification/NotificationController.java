@@ -46,9 +46,9 @@ public class NotificationController {
 
         if (status.equals("requested")) {
             notificationService.pushNotificationToQueue("key", owner, member, "title", "date", "time", "description",
-                    "invites", utcTimestamp, type, notify, status);
+                    "invites", utcTimestamp, type, notify, status, "", "");
             pastRepository.save(new PastNotification("key", owner, member, "title", "date", "time", "description",
-                    "invites", utcTimestamp, type, notify, "unread"));
+                    "invites", utcTimestamp, type, notify, "unread", "", ""));
         } else if (status.equals("accepted")) {
             List<PastNotification> pastNotifications = pastRepository.findAllByOwnerAndMemberAndType(owner, member,
                     "friend-request");
@@ -57,9 +57,9 @@ public class NotificationController {
             }
             pastRepository.saveAll(pastNotifications);
             notificationService.pushNotificationToQueue("key", member, owner, "title", "date", "time", "description",
-                    "invites", utcTimestamp, type, notify, status);
+                    "invites", utcTimestamp, type, notify, status, "", "");
             pastRepository.save(new PastNotification("key", member, owner, "title", "date", "time", "description",
-                    "invites", utcTimestamp, type, notify, "unread"));
+                    "invites", utcTimestamp, type, notify, "unread", "", ""));
         } else if (status.equals("rejected")) {
             List<PastNotification> pastNotifications = pastRepository.findAllByOwnerAndMemberAndType(owner, member,
                     "friend-request");
@@ -84,12 +84,12 @@ public class NotificationController {
             notification.setType(type);
         }
         pastRepository.saveAll(pastNotifications);
-        return ResponseEntity.ok("Notification updated: user: " + member + ", msg: " + "friend request");
+        return ResponseEntity.ok("Notification updated: user: " + member + ", msg: " + "event request");
     }
 
     @PostMapping("/schedule")
     public ResponseEntity<String> scheduleNotification(@RequestBody Map<String, String> payload,
-            @RequestParam("to") String to) {
+        @RequestParam("to") String to) {
         String key = payload.get("key");
         String owner = payload.get("owner");
         String member = payload.get("member");
@@ -102,6 +102,8 @@ public class NotificationController {
         String type = payload.get("type");
         String notify = payload.get("notify");
         String status = payload.get("status");
+        String url = payload.get("url");
+        String dest = payload.get("dest");
 
         // Convert the Unix timestamp to a long
         long unixTimestamp = Long.parseLong(timestamp);
@@ -112,17 +114,17 @@ public class NotificationController {
 
         if (member.equals(to)) { // Check if the recipient matches the intended recipient
             if (status.equals("requested")) {
-                notificationService.sendEmailRequest(owner, member, title, date, time, description, invites);
+                notificationService.sendEmailRequest(owner, member, title, date, time, description, invites, url, dest);
                 notificationService.pushNotificationToQueue(key, owner, member, title, date, time, description, invites,
-                        utcTimestamp, type, notify, status);
+                        utcTimestamp, type, notify, status, url, dest);
                 pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites,
-                        utcTimestamp, type, notify, "unread"));
+                        utcTimestamp, type, notify, "unread", url, dest));
             } else if (status.equals("accepted")) {
                 if (notify.equals("true")){
-                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites);
+                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites, url, dest);
                 }
                 repository.save(new Notification(key, owner, member, title, date, time, description, invites,
-                        utcTimestamp, type, notify, status));
+                        utcTimestamp, type, notify, status, url, dest));
             }
             // notificationService.pushNotificationToQueue(name, role, message,recipient,
             // sender, timestamp, type);

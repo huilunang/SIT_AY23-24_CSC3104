@@ -37,9 +37,9 @@ public class NotificationService {
     public final List<Notification> notificationQueue = new ArrayList<>();
 
     public void pushNotificationToQueue(String key, String owner, String member, String title, String date, String time,
-            String description, String invites, LocalDateTime timestamp, String type, String notify, String status) {
+            String description, String invites, LocalDateTime timestamp, String type, String notify, String status, String url, String dest) {
         Notification notification = new Notification(key, owner, member, title, date, time, description, invites,
-                timestamp, type, notify, status);
+                timestamp, type, notify, status, url, dest);
         notificationQueue.add(notification);
         System.out.println("added to queue");
     }
@@ -68,13 +68,13 @@ public class NotificationService {
                     overduedNotification.getMember(), overduedNotification.getTitle(), overduedNotification.getDate(),
                     overduedNotification.getTime(), overduedNotification.getDescription(),
                     overduedNotification.getInvites(), overduedNotification.getTimestamp(),
-                    overduedNotification.getType(), overduedNotification.getNotify(), overduedNotification.getStatus());
+                    overduedNotification.getType(), overduedNotification.getNotify(), overduedNotification.getStatus(), overduedNotification.getUrl(), overduedNotification.getDest());
 
             if (overduedNotification.getNotify().equals("true")
                     && overduedNotification.getStatus().equals("accepted")) {
                 sendEmailNotification(overduedNotification.getOwner(), overduedNotification.getMember(),
                         overduedNotification.getTitle(), overduedNotification.getDate(), overduedNotification.getTime(),
-                        overduedNotification.getDescription(), overduedNotification.getInvites());
+                        overduedNotification.getDescription(), overduedNotification.getInvites(), overduedNotification.getUrl(), overduedNotification.getDest());
             }
 
             // Delete the notification after it's sent
@@ -82,13 +82,13 @@ public class NotificationService {
                     overduedNotification.getMember(), overduedNotification.getTitle(), overduedNotification.getDate(),
                     overduedNotification.getTime(), overduedNotification.getDescription(),
                     overduedNotification.getInvites(), overduedNotification.getTimestamp(),
-                    overduedNotification.getType(), overduedNotification.getNotify(), "unread"));
+                    overduedNotification.getType(), overduedNotification.getNotify(), "unread", overduedNotification.getUrl(), overduedNotification.getDest()));
             repository.delete(overduedNotification);
         }
     }
 
     public void sendEmailNotification(String owner, String member, String title, String date, String time,
-            String description, String invites) {
+            String description, String invites, String url, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -120,21 +120,29 @@ public class NotificationService {
                 "        p {\n" +
                 "            color: #555;\n" +
                 "        }\n" +
+                "\n" +
+                "        img {\n" +
+                "            max-width: 100%;\n" +
+                "            max-height: 100%;\n" +
+                "        }\n" +
+                "\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
+                "        <img src=\"" + url + "\" alt=\"Event Image\">\n" +
                 "        <ul>\n" +
-                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
-                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>From:</strong> " + owner + "</li>\n" +
+                "            <li><strong>To:</strong> " + member + "</li>\n" +
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
@@ -152,7 +160,7 @@ public class NotificationService {
     }
 
     public void sendEmailRequest(String owner, String member, String title, String date, String time,
-            String description, String invites) {
+            String description, String invites, String url, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -184,21 +192,29 @@ public class NotificationService {
                 "        p {\n" +
                 "            color: #555;\n" +
                 "        }\n" +
+                "\n" +
+                "        img {\n" +
+                "            max-width: 100%;\n" +
+                "            max-height: 100%;\n" +
+                "        }\n" +
+                "\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
+                "        <img src=\"" + url + "\" alt=\"Event Image\">\n" +
                 "        <ul>\n" +
-                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
-                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>From:</strong> " + owner + "</li>\n" +
+                "            <li><strong>To:</strong> " + member + "</li>\n" +
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
@@ -216,7 +232,7 @@ public class NotificationService {
     }
 
     public void sendEmailUpcoming(String owner, String member, String title, String date, String time,
-            String description, String invites) {
+            String description, String invites, String url, String dest) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
         String htmlContent = "<html lang=\"en\">\n" +
@@ -248,21 +264,29 @@ public class NotificationService {
                 "        p {\n" +
                 "            color: #555;\n" +
                 "        }\n" +
+                "\n" +
+                "        img {\n" +
+                "            max-width: 100%;\n" +
+                "            max-height: 100%;\n" +
+                "        }\n" +
+                "\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
+                "        <img src=\"" + url + "\" alt=\"Event Image\">\n" +
                 "        <ul>\n" +
-                "            <li><strong>Owner:</strong> " + owner + "</li>\n" +
-                "            <li><strong>Member:</strong> " + member + "</li>\n" +
+                "            <li><strong>From:</strong> " + owner + "</li>\n" +
+                "            <li><strong>To:</strong> " + member + "</li>\n" +
                 "            <li><strong>Title:</strong> " + title + "</li>\n" +
                 "            <li><strong>Date:</strong> " + date + "</li>\n" +
                 "            <li><strong>Time:</strong> " + time + "</li>\n" +
+                "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:5173/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";

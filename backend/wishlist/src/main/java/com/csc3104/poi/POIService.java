@@ -3,6 +3,7 @@ package com.csc3104.poi;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,8 +23,9 @@ public class POIService {
     private String yelpBaseUrl = "https://api.yelp.com/v3";
 
     // @Value("${api.key}")
-    private String apiKey = "T-x0gy1cReiguaj6wrR7t3Bbh1VLvXOdQtqWD5S_utPY-MSF55xx5HSe916Ffh3l3HufmaMviu-ty2XUKTLeyta6v2MkWOX0I3H7sOWUOOWQM_OVdCrPMIGS3SI6ZXYx";
-
+    // private String apiKey = "T-x0gy1cReiguaj6wrR7t3Bbh1VLvXOdQtqWD5S_utPY-MSF55xx5HSe916Ffh3l3HufmaMviu-ty2XUKTLeyta6v2MkWOX0I3H7sOWUOOWQM_OVdCrPMIGS3SI6ZXYx";
+    // private String apiKey = "bKZb6ad2PaRTvv2minej6_7cdsidzUsPwa4XuhROqF1RWn77M1gipqEzh8quh9yixPF8KMLR2y_51fiOCHAmzyJPUo1Z3y4GS_RG1irOC-cet0H7GGJGlX66jRtJZXYx";
+    private String apiKey = "lFi7n2tg44VwsQ7e4BPhXBWHBzLQOR416CZKIRRbBJogKhgbyxdp4FA9Tpu-ujdPVwwESp_iDZ8ZvUaT-MVRuQF3p6c7k1B6N-gcyoeHqZIHjEkFkVxCvbov_mZHZXYx";
     private final RestTemplate restTemplate;
 
     @Autowired
@@ -172,5 +174,64 @@ public class POIService {
         poi.setRating(rating);
 
         return poi;
+    }
+
+    // ----- Phil's Code -----
+    
+
+    // Set Radius
+    public static final int radius=3000;
+
+    public ArrayList<POI> getListOfPOIDetails (String url){
+        // Set Header
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + apiKey);
+        
+        ArrayList<POI> POIs = new ArrayList<>();
+
+        ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), String.class);
+
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            try{
+                String response = responseEntity.getBody();
+                JSONObject jsonResponse = new JSONObject(response);
+                JSONArray businesses = jsonResponse.getJSONArray("businesses");
+
+                for (int i = 0; i < businesses.length(); i++) {
+                    JSONObject business = businesses.getJSONObject(i);
+                    POI poi = new POI();
+                    poi.setName(business.getString("name"));
+                    poi.setCategory(business.getJSONArray("categories").getJSONObject(0).getString("title"));
+                    poi.setAddress(business.getJSONObject("location").getString("address1"));
+                    poi.setImageUrl(business.getString("image_url"));
+                    poi.setRating(business.getString("rating"));
+                    POIs.add(poi);
+                }
+            }catch(JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return POIs;
+    }
+
+    public ArrayList<POI> getPOIByArea(String[] location){
+        String url = yelpBaseUrl;
+        String latlongQuery = "&latitude="+ location[0] +"&longitude=" + location[1];
+        url = url+"/businesses/search?radius=2000&limit=40&term=food" + latlongQuery;
+        return getListOfPOIDetails(url);
+    }
+
+
+    public ArrayList<POI> getPOIByCategories(String[] categories, String[] location){
+        String url = yelpBaseUrl;
+        String categoryQuery="";
+        String latlongQuery = "&latitude="+ location[0] +"&longitude=" + location[1];
+        if (categories.length>0){
+            for (int i=0; i<categories.length; i++){
+                categoryQuery += "&categories="+ categories[i];
+            }
+        }
+        url = url+"/businesses/search?radius=0000&limit=40&term=food"+categoryQuery+latlongQuery;
+        return getListOfPOIDetails(url);
     }
 }

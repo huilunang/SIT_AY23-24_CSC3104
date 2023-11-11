@@ -2,9 +2,10 @@ import { apiClient } from "../ApiClient";
 
 export function getAllGallery() {
   const jwtToken = localStorage.getItem("jwtToken");
+  const email = localStorage.getItem("email");
 
   try {
-    return apiClient.get(`/api/v1/gallery/${localStorage.getItem("email")}`, {
+    return apiClient.get(`/api/v1/gallery/${email}`, {
       headers: {
         Authorization: jwtToken,
         "Content-Type": "application/json",
@@ -32,6 +33,7 @@ export function getOneGallery(id) {
 
 export function createGallery(title, imageFile) {
   const jwtToken = localStorage.getItem("jwtToken");
+  const email = localStorage.getItem("email");
 
   try {
     const config = {
@@ -42,7 +44,7 @@ export function createGallery(title, imageFile) {
     };
     const formData = new FormData();
     formData.append("title", title);
-    formData.append("email", localStorage.getItem("email"));
+    formData.append("email", email);
     formData.append("imageFile", imageFile);
 
     return apiClient.post("/api/v1/gallery/album/create", formData, config);
@@ -96,6 +98,7 @@ export function getAllWishListItem() {
         "Content-Type": "application/json",
       },
     });
+    // return apiClient.get("/api/v1/wishlist/all");
   } catch (error) {
     console.log(error);
   }
@@ -131,11 +134,11 @@ export function createWishListItem(payload) {
   }
 }
 
-export function deleteWishListItemByBusinessId(businessId) {
+export function createUserCategories(payload) {
   const jwtToken = localStorage.getItem("jwtToken");
 
   try {
-    return apiClient.delete(`/api/v1/wishlist/delete/${businessId}`, {
+    return apiClient.post(`/api/v1/wishlist/userCategories/insert`, payload, {
       headers: {
         Authorization: jwtToken,
         "Content-Type": "application/json",
@@ -143,6 +146,36 @@ export function deleteWishListItemByBusinessId(businessId) {
     });
   } catch (error) {
     console.error(error);
+  }
+}
+
+export function updateUserCategories(payload) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  try {
+    return apiClient.put(`/api/v1/wishlist/userCategories/update`, payload, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function getUserCategories() {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  try {
+    return apiClient.get(`/api/v1/wishlist/getCategories/${localStorage.getItem("email")}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -220,6 +253,66 @@ export function updatePOIVisited(wishlistId, businessId, visited) {
       visited,
       config
     );
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+export function deleteWishListItemByObjectId(objectId) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  try {
+    return apiClient.delete(`/api/v1/wishlist/delete/${objectId}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export function getPOIDetailsByBusinessId(businessId) {
+  const jwtToken = localStorage.getItem("jwtToken");
+  try {
+    return apiClient.get(`/api/v1/poi/${businessId}`, {
+      headers: {  
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function getListOfPOIDetailsByNearby(location) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  try {
+    return apiClient.get(`/api/v1/poi/nearby/${location}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export function getListOfPOIDetailsByCategories(categories, location) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
+  try {
+    return apiClient.get(`/api/v1/poi/category/${categories}/${location}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }

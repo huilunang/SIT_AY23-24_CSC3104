@@ -1,9 +1,9 @@
 import { apiClient } from "../ApiClient";
 
-
 export function getAllFriendsById() {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email"); // Or retrieve the ID from wherever it's coming in your application
+
   return apiClient.get('/friends/getFriends', {
     params: {
       email: email,
@@ -18,6 +18,7 @@ export function getAllFriendsById() {
 
 export function searchUsersByName(email) {
   const jwtToken = localStorage.getItem("jwtToken");
+
   return apiClient.get('/friends/getUsersByName', {
     params: {
       email: email,
@@ -33,6 +34,7 @@ export function searchUsersByName(email) {
 export function getFriendDetailsById(friends) {
   console.log(friends);
   const jwtToken = localStorage.getItem("jwtToken");
+
   return apiClient.post("/friends/listFriends", friends, {
     headers: {
       Authorization: jwtToken,
@@ -45,6 +47,7 @@ export function getFriendDetailsById(friends) {
 export function addFriend(sender) {
   const email = localStorage.getItem("email");
   const jwtToken = localStorage.getItem("jwtToken");
+
   const requestData = {
     email: email,
     sender: sender,
@@ -61,6 +64,7 @@ export function addFriend(sender) {
 export function removeFriend(friend) {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email");
+
   const requestData = {
     email: email,
     friend: friend,
@@ -94,6 +98,7 @@ export function removeFriendRequest(sender) {
 export function makeFriendRequest(email) {
   const jwtToken = localStorage.getItem("jwtToken");
   const sender = localStorage.getItem("email");
+
   const requestData = {
     email: sender,
     recipient: email,
@@ -110,6 +115,7 @@ export function makeFriendRequest(email) {
 export function listFriendRequests() {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email");
+  
   return apiClient.get('/friends/listFriendRequests', {
     params: {
       email: email,
@@ -121,4 +127,3 @@ export function listFriendRequests() {
   });
   
 }
-

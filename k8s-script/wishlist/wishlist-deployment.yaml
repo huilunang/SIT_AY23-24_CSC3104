@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: wishlist
+  name: wishlist
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wishlist
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: wishlist
+    spec:
+      containers:
+      - image: sit_ay23-24_csc3104-wishlist
+        name: sit-ay23-24-csc3104-wishlist
+        imagePullPolicy: Never
+        envFrom:
+        - configMapRef:
+            name: travelexp-conf
+        resources: {}
+status: {}

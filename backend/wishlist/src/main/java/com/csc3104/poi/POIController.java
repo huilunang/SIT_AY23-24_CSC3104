@@ -3,6 +3,7 @@ package com.csc3104.poi;
 import com.csc3104.wishlistitem.*;
 
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,27 @@ public class POIController {
     @Autowired
     private POIService poiService;
 
+    @GetMapping("/{businessId}")
+    public POI getPOIDetails(@PathVariable String businessId) {
+        return poiService.getPOIRecord(businessId);
+    }
+
     @Autowired
     private WishListItemService wishListItemService;
+
+    // ----- Phil's Code -----
+
+    @GetMapping("/nearby/{location}")
+    public ArrayList<POI> getListOfPOIDetailsByNearby(@PathVariable String[] location) {
+        return poiService.getPOIByArea(location);
+    }
+
+    @GetMapping("/category/{categories}/{location}")
+    public ArrayList<POI> getListOfPOIDetailsByCategories(@PathVariable String[] categories, @PathVariable String[] location) {
+        return poiService.getPOIByCategories(categories, location);
+    }
+
+    // Ends here
 
     @GetMapping("/{wishlistId}/{businessId}")
     public POI getPOIDetails(@PathVariable String wishlistId, @PathVariable String businessId) {
