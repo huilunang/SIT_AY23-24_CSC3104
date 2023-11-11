@@ -112,6 +112,25 @@ export function makeFriendRequest(email) {
   });
 }
 
+export function checkIfFriend(email) {
+  const jwtToken = localStorage.getItem("jwtToken");
+  const currUser = localStorage.getItem("email");
+
+  const requestData = {
+    email: currUser,
+    user: email,
+  };
+
+  return apiClient.post("/friends/checkFriend", requestData, {
+    headers: {
+      Authorization: jwtToken,
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+
+
 export function listFriendRequests() {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email");

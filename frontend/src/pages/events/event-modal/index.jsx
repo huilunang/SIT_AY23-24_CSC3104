@@ -14,6 +14,7 @@ import { scheduleNotification } from "../../../api/notification/NotificationApiS
 import { createEvent } from "../../../api/notification/EventApiService";
 import { getUserName } from "../../../api/notification/EventApiService";
 import { getDetails } from "../../../api/notification/EventApiService";
+import { checkIfFriend } from "../../../api/friends/FriendsApiService";
 
 export const EventModal = ({ isOpen, onClose, businessId }) => {
   const [details, setDetails] = useState([]);
@@ -69,6 +70,16 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
     }
   }
 
+  async function handleCheckFriend(email) {
+    try {
+      const response = await checkIfFriend(email);
+      successfulResponse(response);
+      return response.data;
+    } catch (error) {
+      errorResponse(error);
+    }
+  }
+
   const handleInviteChange = (e) => {
     setInviteValue(e.target.value);
   };
@@ -77,11 +88,12 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const newUser = inviteValue.trim();
-
-      if (newUser && !invites.includes(newUser) && newUser != email) {
+      const isFriend = await handleCheckFriend(newUser);
+      if (newUser && !invites.includes(newUser) && newUser != email  && isFriend) {
         setInvites([...invites, newUser]);
 
         const user = await getUser(newUser);
+        
         if (user) {
           setInvitees([...invitees, user.firstname + " " + user.lastname]);
         } else {

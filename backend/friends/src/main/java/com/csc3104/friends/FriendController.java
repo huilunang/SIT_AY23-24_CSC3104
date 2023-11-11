@@ -64,6 +64,18 @@ public class FriendController {
         }
     }
 
+    @PostMapping("/checkFriend")
+    public ResponseEntity<Boolean> checkFriend(@RequestBody Map<String, String> requestData) throws JsonProcessingException {
+        String email = requestData.get("email");
+        String user = requestData.get("user");
+        Boolean isFriend = friendService.checkIfFriend(email, user);
+        if (isFriend) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
+        }
+    }
+
     @PostMapping("/removeFriend")
     public ResponseEntity<Boolean> removeFriend(@RequestBody Map<String, String> requestData)
             throws JsonProcessingException {
