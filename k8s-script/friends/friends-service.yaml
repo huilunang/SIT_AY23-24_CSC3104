@@ -12,7 +12,7 @@ spec:
     protocol: TCP
     targetPort: 8084
   selector:
-    app: notification
+    app: friends
   type: ClusterIP
 status:
   loadBalancer: {}
