@@ -4,34 +4,35 @@ export function getAllFriendsById() {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email"); // Or retrieve the ID from wherever it's coming in your application
 
-  return apiClient.get(
-    "/friends/getFriends",
-    { email },
-    {
-      headers: {
-        Authorization: jwtToken,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return apiClient.get('/friends/getFriends', {
+    params: {
+      email: email,
+    },
+    headers: {
+      Authorization: jwtToken,
+      "Content-Type": "application/json",
+    },
+  });
+  
 }
 
 export function searchUsersByName(email) {
   const jwtToken = localStorage.getItem("jwtToken");
 
-  return apiClient.get(
-    "/friends/getUsersByName",
-    { email },
-    {
-      headers: {
-        Authorization: jwtToken,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  return apiClient.get('/friends/getUsersByName', {
+    params: {
+      email: email,
+    },
+    headers: {
+      Authorization: jwtToken,
+      "Content-Type": "application/json",
+    },
+  });
+  
 }
 
 export function getFriendDetailsById(friends) {
+  console.log(friends);
   const jwtToken = localStorage.getItem("jwtToken");
 
   return apiClient.post("/friends/listFriends", friends, {
@@ -41,6 +42,7 @@ export function getFriendDetailsById(friends) {
     },
   });
 }
+
 
 export function addFriend(sender) {
   const email = localStorage.getItem("email");
@@ -113,15 +115,15 @@ export function makeFriendRequest(email) {
 export function listFriendRequests() {
   const jwtToken = localStorage.getItem("jwtToken");
   const email = localStorage.getItem("email");
-
-  return apiClient.get(
-    "/friends/listFriendRequests",
-    { email },
-    {
-      headers: {
-        Authorization: jwtToken,
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  
+  return apiClient.get('/friends/listFriendRequests', {
+    params: {
+      email: email,
+    },
+    headers: {
+      Authorization: jwtToken,
+      "Content-Type": "application/json",
+    },
+  });
+  
 }
