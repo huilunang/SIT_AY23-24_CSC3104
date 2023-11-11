@@ -87,13 +87,6 @@ export default function CustomNavbar() {
                   </MDBDropdownToggle>
                   <MDBDropdownMenu>
                     <MDBDropdownItem>
-                      <MDBNavbarLink href="/profile">
-                        <MDBIcon fas icon="user-circle" />
-                        <span style={{ marginRight: "10px" }} />
-                        Profile
-                      </MDBNavbarLink>
-                    </MDBDropdownItem>
-                    <MDBDropdownItem>
                       <MDBNavbarLink onClick={logout}>
                         <MDBIcon fas icon="sign-in-alt" />
                         <span style={{ marginRight: "10px" }} />

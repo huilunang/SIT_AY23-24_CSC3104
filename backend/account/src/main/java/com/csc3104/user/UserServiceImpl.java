@@ -1,4 +1,5 @@
 package com.csc3104.user;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 
@@ -11,9 +12,10 @@ import com.csc3104.user.UserRequest;
 import com.csc3104.user.UserServiceGrpc.UserServiceImplBase;
 
 @GrpcService
-public class UserServiceImpl extends UserServiceImplBase{
+public class UserServiceImpl extends UserServiceImplBase {
 
     private final UserService userService;
+
     public UserServiceImpl(UserService userService) {
         this.userService = userService;
     }

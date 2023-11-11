@@ -89,7 +89,7 @@ public class NotificationController {
 
     @PostMapping("/schedule")
     public ResponseEntity<String> scheduleNotification(@RequestBody Map<String, String> payload,
-        @RequestParam("to") String to) {
+            @RequestParam("to") String to) {
         String key = payload.get("key");
         String owner = payload.get("owner");
         String member = payload.get("member");
@@ -120,8 +120,9 @@ public class NotificationController {
                 pastRepository.save(new PastNotification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, "unread", url, dest));
             } else if (status.equals("accepted")) {
-                if (notify.equals("true")){
-                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites, url, dest);
+                if (notify.equals("true")) {
+                    notificationService.sendEmailUpcoming(owner, member, title, date, time, description, invites, url,
+                            dest);
                 }
                 repository.save(new Notification(key, owner, member, title, date, time, description, invites,
                         utcTimestamp, type, notify, status, url, dest));
