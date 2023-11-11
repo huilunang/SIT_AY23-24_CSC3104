@@ -37,7 +37,8 @@ public class NotificationService {
     public final List<Notification> notificationQueue = new ArrayList<>();
 
     public void pushNotificationToQueue(String key, String owner, String member, String title, String date, String time,
-            String description, String invites, LocalDateTime timestamp, String type, String notify, String status, String url, String dest) {
+            String description, String invites, LocalDateTime timestamp, String type, String notify, String status,
+            String url, String dest) {
         Notification notification = new Notification(key, owner, member, title, date, time, description, invites,
                 timestamp, type, notify, status, url, dest);
         notificationQueue.add(notification);
@@ -68,13 +69,15 @@ public class NotificationService {
                     overduedNotification.getMember(), overduedNotification.getTitle(), overduedNotification.getDate(),
                     overduedNotification.getTime(), overduedNotification.getDescription(),
                     overduedNotification.getInvites(), overduedNotification.getTimestamp(),
-                    overduedNotification.getType(), overduedNotification.getNotify(), overduedNotification.getStatus(), overduedNotification.getUrl(), overduedNotification.getDest());
+                    overduedNotification.getType(), overduedNotification.getNotify(), overduedNotification.getStatus(),
+                    overduedNotification.getUrl(), overduedNotification.getDest());
 
             if (overduedNotification.getNotify().equals("true")
                     && overduedNotification.getStatus().equals("accepted")) {
                 sendEmailNotification(overduedNotification.getOwner(), overduedNotification.getMember(),
                         overduedNotification.getTitle(), overduedNotification.getDate(), overduedNotification.getTime(),
-                        overduedNotification.getDescription(), overduedNotification.getInvites(), overduedNotification.getUrl(), overduedNotification.getDest());
+                        overduedNotification.getDescription(), overduedNotification.getInvites(),
+                        overduedNotification.getUrl(), overduedNotification.getDest());
             }
 
             // Delete the notification after it's sent
@@ -82,7 +85,8 @@ public class NotificationService {
                     overduedNotification.getMember(), overduedNotification.getTitle(), overduedNotification.getDate(),
                     overduedNotification.getTime(), overduedNotification.getDescription(),
                     overduedNotification.getInvites(), overduedNotification.getTimestamp(),
-                    overduedNotification.getType(), overduedNotification.getNotify(), "unread", overduedNotification.getUrl(), overduedNotification.getDest()));
+                    overduedNotification.getType(), overduedNotification.getNotify(), "unread",
+                    overduedNotification.getUrl(), overduedNotification.getDest()));
             repository.delete(overduedNotification);
         }
     }
@@ -142,7 +146,8 @@ public class NotificationService {
                 "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>"
+                +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
@@ -214,7 +219,8 @@ public class NotificationService {
                 "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>"
+                +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";
@@ -286,7 +292,8 @@ public class NotificationService {
                 "            <li><strong>Venus:</strong> " + dest + "</li>\n" +
                 "            <li><strong>Description:</strong> " + description + "</li>\n" +
                 "        </ul>\n" +
-                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>" +
+                "       <p><strong>View other invitees on <a href='http://localhost:30002/'>TravelExp</a>.<strong></p>"
+                +
                 "    </div>\n" +
                 "</body>\n" +
                 "</html>";

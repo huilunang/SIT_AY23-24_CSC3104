@@ -28,10 +28,10 @@ public class POIServiceImpl extends POIServiceImplBase {
 
         if (details != null) {
             poiDetailsBuilder
-                .setName((String) details[0])
-                .setImageUrl((String) details[1])
-                .setCategory((String) details[2])
-                .setAddress((String) details[3]);
+                    .setName((String) details[0])
+                    .setImageUrl((String) details[1])
+                    .setCategory((String) details[2])
+                    .setAddress((String) details[3]);
 
             responseObserver.onNext(poiDetailsBuilder.build());
             responseObserver.onCompleted();

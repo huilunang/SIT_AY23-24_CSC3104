@@ -12,19 +12,20 @@ public class GatewayApplication {
 		SpringApplication.run(GatewayApplication.class, args);
 	}
 
-//	@Bean
-//	public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
-//		return builder.routes()
-//				.route("account", r -> r.path("/api/v1/auth/*", "/api/v1/user/*")
-//						.uri("http://account:8081"))
-//				.route("wishlist", r -> r.path("/api/v1/gallery/*", "/api/v1/poi/*", "/api/v1/wishlist/*")
-//						.uri("http://wishlist:8082"))
-//				.route("notification", r -> r.path("/events/*", "/notification/*")
-//						.uri("http://notification:8083"))
-//				.route("friends", r -> r.path("/friends/*")
-//						.uri("http://friends:8084"))
-//				.build();
-//	}
+	// @Bean
+	// public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+	// return builder.routes()
+	// .route("account", r -> r.path("/api/v1/auth/*", "/api/v1/user/*")
+	// .uri("http://account:8081"))
+	// .route("wishlist", r -> r.path("/api/v1/gallery/*", "/api/v1/poi/*",
+	// "/api/v1/wishlist/*")
+	// .uri("http://wishlist:8082"))
+	// .route("notification", r -> r.path("/events/*", "/notification/*")
+	// .uri("http://notification:8083"))
+	// .route("friends", r -> r.path("/friends/*")
+	// .uri("http://friends:8084"))
+	// .build();
+	// }
 
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {

@@ -3,7 +3,7 @@
 ## Configuration
 - env.example file is the configuration constants
 
-## Build (Image)
+## Build (Local)
 1. At root folder, Run
     > docker-compose build
 

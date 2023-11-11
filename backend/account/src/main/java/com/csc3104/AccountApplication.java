@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 public class AccountApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(AccountApplication.class, args);
 	}
@@ -20,7 +19,6 @@ public class AccountApplication {
 				registry.addMapping("/**")
 						.allowedMethods("*")
 						.allowedOrigins("*");
-
 			}
 		};
 	}

@@ -1,6 +1,5 @@
 package com.csc3104.wishlistitem;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -40,10 +39,10 @@ public class WishListItemService {
     }
 
     public UserCategories createUserCategories(String email, List<String> categories) {
-        
+
         System.out.println("Attempting to create user categories in Service...");
-        System.out.println("Email: "+ email);
-        System.out.println("User Categories: "+ categories);
+        System.out.println("Email: " + email);
+        System.out.println("User Categories: " + categories);
         UserCategories userCategories = userCategoriesRepository
                 .insert(new UserCategories(email, categories));
         return userCategories;
@@ -54,14 +53,14 @@ public class WishListItemService {
         userCategories.setCategories(updatedCategories);
         userCategoriesRepository.save(userCategories);
         return userCategories;
-      }
+    }
 
-    public UserCategories getUserCategoriesByEmail(String email){
+    public UserCategories getUserCategoriesByEmail(String email) {
         System.out.println("Attempting to fetch user categories in Service...");
-        System.out.println("Email: "+ email);
+        System.out.println("Email: " + email);
         UserCategories userCategories = userCategoriesRepository
                 .findByEmail(email);
-        System.out.println("User Category retrieved, details: "+ userCategories);
+        System.out.println("User Category retrieved, details: " + userCategories);
         return userCategories;
     }
 

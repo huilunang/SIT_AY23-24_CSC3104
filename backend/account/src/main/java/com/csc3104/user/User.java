@@ -19,7 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = "user")
 public class User implements UserDetails {
-
     @Id
     @GeneratedValue
     private int id;

@@ -7,10 +7,12 @@ import java.time.LocalDateTime;
 
 public interface NotificationRepository extends MongoRepository<Notification, String> {
     Notification findByOwner(String owner);
-    
+
     List<Notification> findByMember(String member);
+
     List<Notification> findAllByKey(String key);
 
     List<Notification> findByTimestampBefore(LocalDateTime currentTime);
+
     List<Notification> findByTimestampAfter(LocalDateTime currentTime);
 }

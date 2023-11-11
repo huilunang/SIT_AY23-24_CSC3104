@@ -9,7 +9,8 @@ public class GrpcServerConfig {
 
     @Bean
     public GrpcAuthenticationReader grpcAuthenticationReader() {
-        // You may need to configure the authentication reader based on your requirements
+        // You may need to configure the authentication reader based on your
+        // requirements
         return (metadata, request) -> {
             // Your authentication logic goes here
             // You might check metadata or request to authenticate
