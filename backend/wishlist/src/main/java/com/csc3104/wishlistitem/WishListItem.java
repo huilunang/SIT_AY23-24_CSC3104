@@ -1,6 +1,5 @@
 package com.csc3104.wishlistitem;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,7 +17,6 @@ public class WishListItem {
     private boolean visited;
 
     public WishListItem(String name, String businessId, String albumId, String remarks, boolean visited) {
-        this.id = new ObjectId().toString();
         this.name = name;
         this.businessId = businessId;
         this.albumId = albumId;
