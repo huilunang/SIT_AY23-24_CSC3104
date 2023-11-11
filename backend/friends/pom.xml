@@ -34,15 +34,19 @@
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.devh</groupId>
-			<artifactId>grpc-spring-boot-starter</artifactId>
-			<version>2.15.0.RELEASE</version>
-		</dependency>
-		<dependency>
-    		<groupId>io.grpc</groupId>
-    		<artifactId>grpc-core</artifactId>
-    		<version>${grpc.version}</version>
-		</dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+    </dependency>
+		<!-- <dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty-shaded</artifactId> 
+			<version>1.41.0</version> 
+		</dependency> -->
+    <dependency>
+    <groupId>io.grpc</groupId>
+    <artifactId>grpc-core</artifactId>
+    <version>${grpc.version}</version>
+</dependency>
 		<dependency>
 			<groupId>io.grpc</groupId>
 			<artifactId>grpc-stub</artifactId>
@@ -53,11 +57,16 @@
 			<artifactId>grpc-protobuf</artifactId>
 			<version>${grpc.version}</version>
 		</dependency>
-		<dependency>
+    <dependency>
 			<groupId>com.google.protobuf</groupId>
 			<artifactId>protobuf-java</artifactId>
 			<version>3.17.3</version>
 		</dependency>
+    <dependency>
+      <groupId>net.devh</groupId>
+      <artifactId>grpc-spring-boot-starter</artifactId>
+      <version>2.15.0.RELEASE</version>
+    </dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
 			<artifactId>javax.annotation-api</artifactId>

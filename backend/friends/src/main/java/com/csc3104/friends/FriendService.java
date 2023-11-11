@@ -27,7 +27,7 @@ public class FriendService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GrpcClient("account-service")
+    @GrpcClient("account")
     private com.csc3104.user.UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub;
 
     public List<String> getFriends(String email) {
@@ -41,10 +41,9 @@ public class FriendService {
         return null; 
     }
 
-    public Map<String, Map<String, Object>> getUsersFromName(String email, String token) throws JsonProcessingException {
+    public Map<String, Map<String, Object>> getUsersFromName(String email) {
         Map<String, Map<String, Object>> mapping = new HashMap<>();
         Map<String, Object> attributes = new HashMap<>();
-
         // Establish gRPC channel
         UserRequest req = UserRequest.newBuilder().setEmail(email).build();
 
@@ -57,7 +56,7 @@ public class FriendService {
         attributes.put("email", email2);
         mapping.put(email, attributes);
 
-
+        System.out.println(mapping);
         return mapping;
     }
 
