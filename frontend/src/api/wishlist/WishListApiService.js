@@ -133,24 +133,45 @@ export function createWishListItem(payload) {
 }
 
 export function createUserCategories(payload) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.post(`/api/v1/wishlist/userCategories/insert`, payload);
+    return apiClient.post(`/api/v1/wishlist/userCategories/insert`, payload, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }
 }
 
 export function updateUserCategories(payload) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.put(`/api/v1/wishlist/userCategories/update`, payload);
+    return apiClient.put(`/api/v1/wishlist/userCategories/update`, payload, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }
 }
 
 export function getUserCategories() {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/wishlist/getCategories/${localStorage.getItem("email")}`);
+    return apiClient.get(`/api/v1/wishlist/getCategories/${localStorage.getItem("email")}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.log(error);
   }
@@ -235,33 +256,61 @@ export function updatePOIVisited(wishlistId, businessId, visited) {
   }
 }
 
+
 export function deleteWishListItemByObjectId(objectId) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.delete(`/api/v1/wishlist/delete/${objectId}`);
+    return apiClient.delete(`/api/v1/wishlist/delete/${objectId}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 }
 
 export function getPOIDetailsByBusinessId(businessId) {
+  const jwtToken = localStorage.getItem("jwtToken");
   try {
-    return apiClient.get(`/api/v1/poi/${businessId}`);
+    return apiClient.get(`/api/v1/poi/${businessId}`, {
+      headers: {  
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }
 }
 
 export function getListOfPOIDetailsByNearby(location) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/poi/nearby/${location}`);
+    return apiClient.get(`/api/v1/poi/nearby/${location}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }
 }
 
 export function getListOfPOIDetailsByCategories(categories, location) {
+  const jwtToken = localStorage.getItem("jwtToken");
+
   try {
-    return apiClient.get(`/api/v1/poi/category/${categories}/${location}`);
+    return apiClient.get(`/api/v1/poi/category/${categories}/${location}`, {
+      headers: {
+        Authorization: jwtToken,
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error(error);
   }

@@ -77,6 +77,7 @@ public class WishListItemController {
     @DeleteMapping("/delete/{objectId}")
     public ResponseEntity<String> deleteWishListItemByObjectId(@PathVariable String objectId) {
         try {
+            System.out.println("Attempting to delete object ID: " + objectId);
             wishlistitemService.deleteWishListItemByObjectId(objectId);
             return new ResponseEntity<>("Wish list item deleted successfully", HttpStatus.OK);
         } catch (Exception e) {

@@ -106,23 +106,34 @@ function WishList() {
     try {
       const categories = [];
       const poiDetailsList = [];
+  
       if (businessIdList.length > 0) {
-
         for (let i = 0; i < businessIdList.length; i++) {
           const response = await getPOIDetailsByBusinessId(businessIdList[i]);
+  
+          // Check if response.data exists before accessing its properties
           if (response && response.data) {
             const { category } = response.data;
-            const categoryArray = category.split(',').map((item) => item.trim().toLowerCase()); // Convert each category to lowercase
-            categories.push(...categoryArray);
-            poiDetailsList.push(response.data);
+            // Ensure that category is a non-empty string before splitting
+            if (category && typeof category === 'string') {
+              const categoryArray = category.split(',').map((item) => item.trim().toLowerCase());
+              categories.push(...categoryArray);
+              poiDetailsList.push(response.data);
+            } else {
+              console.error('Category is not a valid string:', response);
+            }
+          } else {
+            console.error('Response data is undefined or null:', response);
           }
         }
       }
+  
       createCuratedCategories(categories);
     } catch (error) {
       console.error('Error fetching POI details:', error);
     }
   };
+  
 
   // Create Curated Categories
   const createCuratedCategories = async (categories) => {
@@ -155,7 +166,7 @@ function WishList() {
         console.log("Updated Categories:", updatedCategories);
         console.log("Email:", email);
         const res = await updateUserCategories(payload);
-        console.log("Updated user categories successfully!");
+        console.log("Updated user categories successfully!", updatedCategories);
         if (res.status === 200) {
            // Handle success response
         }

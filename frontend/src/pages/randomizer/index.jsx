@@ -83,36 +83,39 @@ function WishList() {
   };
 
   const getCuratedCategories = async (email) => {
-
     try {
-  
       console.log("Attempting to pull categories for ", email);
-      const response = await getUserCategories(email);
+      const response = await getUserCategories();
+      
       // Handle bad response
-      if(!response || !response.data) {
+      if (!response || !response.data) {
+        handleRefreshForNearby();
+        handleRefreshForCategory();
         throw new Error('Invalid response');
       }
+      
       const { categories } = response.data;
+      
       // Validate categories
-      if(!categories || !Array.isArray(categories)) {
+      if (!categories || !Array.isArray(categories)) {
         throw new Error('Invalid categories format');
       }
+      
       // Log success
       console.log("Successfully pulled categories: ", categories);
+      
       // Set state or return categories
       setCuratedCategories(categories);
+      
+      // Call additional functions
+      handleRefreshForNearby();
+      handleRefreshForCategory();
     } catch (error) {
-  
       console.error(error);
       // Handle error
-  
-    }finally{
-      
-      handleRefreshForCategory();
-      handleRefreshForNearby();
     }
-  
   };
+  
   useEffect(() => {
     getCuratedCategories(email.toString());
   }, [email]);
@@ -177,14 +180,6 @@ function WishList() {
             </div>
           ))}
         </div>
-      </div>
-      <div>
-        <h2>Curated Categories:</h2>
-        <ul>
-          {curatedCategories.map((category, index) => (
-            <li key={index}>{category}</li>
-          ))}
-        </ul>
       </div>
     </div></>
   );

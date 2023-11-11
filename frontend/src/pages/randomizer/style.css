@@ -12,7 +12,7 @@
     margin-bottom: 20px;
   }
   
-  .card-container {
+  /* .card-container {
     display: flex;
     justify-content: center;
   }
@@ -21,16 +21,16 @@
     margin: 10px;
     padding: 10px;
     border: 1px solid #ddd;
-  }
+  } */
   
-  .card img {
+  /* .card-style img {
     width: 400px;
     height: 300px;
   }
   
-  .card p {
+  .card-style p {
     margin: 5px 0;
-  }
+  } */
   
   .curated-categories {
     margin-top: 50px;
