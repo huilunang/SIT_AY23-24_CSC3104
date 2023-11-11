@@ -102,5 +102,4 @@ public class EventController {
         // Delete documents from the collection
         repository.deleteAll(event);
     }
-
 }

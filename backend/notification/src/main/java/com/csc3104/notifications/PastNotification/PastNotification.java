@@ -182,27 +182,4 @@ public class PastNotification {
   public void setDest(String dest) {
     this.dest = dest;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (!(o instanceof PastNotification))
-      return false;
-    PastNotification pastNotification = (PastNotification) o;
-    return Objects.equals(this.id, pastNotification.id) && Objects.equals(this.owner, pastNotification.owner)
-        && Objects.equals(this.title, pastNotification.title);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.owner, this.title);
-  }
-
-  @Override
-  public String toString() {
-    return String.format(
-        "PastNotification[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', status='%s', url='%s', dest='%s']",
-        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, status, url, dest);
-  }
 }

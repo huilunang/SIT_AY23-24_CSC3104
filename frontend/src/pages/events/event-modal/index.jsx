@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
@@ -28,6 +29,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   const [dest, setDest] = useState("");
   const [notify, setNotify] = useState(false);
 
+  const [validated, setValidated] = useState(false);
   const [lock, setLock] = useState(false);
   const email = localStorage.getItem("email");
 
@@ -111,53 +113,61 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
 
   let uniqueid = uniqid();
   async function createEventApi(e) {
-    e.preventDefault();
-    if (lock) {
-      return;
-    }
-    setLock(true);
-    try {
-      // Wait for the pushEvent and scheduleInviteNotification to complete
-      uniqueid = uniqid();
-      await createEvent(
-        uniqueid,
-        title,
-        date,
-        time,
-        description,
-        invites,
-        notify,
-        "event",
-        url,
-        dest
-      ) // Pass the parameters to the API function
-        .then((response) => successfulResponse(response))
-        .catch((error) => errorResponse(error))
-        .finally(() => console.log("cleanup"));
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+    }else{
 
-      await scheduleNotification(
-        uniqueid,
-        title,
-        date,
-        time,
-        description,
-        invites,
-        notify,
-        "event",
-        url,
-        dest
-      ) // Pass the parameters to the API function
-        .then((response) => successfulResponse(response))
-        .catch((error) => errorResponse(error))
-        .finally(() => setLock(false));
+      e.preventDefault();
+      if (lock) {
+        return;
+      }
+      setLock(true);
+      try {
+        // Wait for the pushEvent and scheduleInviteNotification to complete
+        uniqueid = uniqid();
+        await createEvent(
+          uniqueid,
+          title,
+          date,
+          time,
+          description,
+          invites,
+          notify,
+          "event",
+          url,
+          dest
+        ) // Pass the parameters to the API function
+          .then((response) => successfulResponse(response))
+          .catch((error) => errorResponse(error))
+          .finally(() => console.log("cleanup"));
 
-      // After both operations have completed, close the modal
-      onClose();
-    } catch (error) {
-      console.error("An error occurred:", error);
-      setLock(false);
-      // Handle errors as needed
+        await scheduleNotification(
+          uniqueid,
+          title,
+          date,
+          time,
+          description,
+          invites,
+          notify,
+          "event",
+          url,
+          dest
+        ) // Pass the parameters to the API function
+          .then((response) => successfulResponse(response))
+          .catch((error) => errorResponse(error))
+          .finally(() => setLock(false));
+
+        // After both operations have completed, close the modal
+        onClose();
+      } catch (error) {
+        console.error("An error occurred:", error);
+        setLock(false);
+        // Handle errors as needed
+      }
     }
+    setValidated(true);
   }
 
   return (
@@ -169,55 +179,69 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
         show={isOpen}
         onHide={onClose}
       >
-        <Form onSubmit={createEventApi}>
+        <Form noValidate validated={validated} onSubmit={createEventApi}>
           <Modal.Header className="pt-2 pb-0" style={{ display: "block" }}>
             <Modal.Title>
               <Form.Group as={Row} className="mt-3" controlId="formTitle">
-                <Col xs="10">
-                  <Form.Control
-                    type="text"
-                    aria-label="formTitle"
-                    placeholder="New Event"
-                    style={{ border: "none", fontSize: 24 }}
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    autoComplete="off"
-                  />
-                </Col>
-                <Form.Label column xs="2">
-                  <IoPencil style={{ fontSize: "28px", float: "right" }} />
-                </Form.Label>
+                <InputGroup hasValidation>
+                  <Col xs="10">
+                    <Form.Control
+                      type="text"
+                      required
+                      aria-label="formTitle"
+                      placeholder="New Event"
+                      style={{
+                        borderTop: "none",
+                        borderLeft: "none",
+                        borderRight: "none",
+                        fontSize: 24,
+                      }}
+                      value={title}
+                      onChange={(e) => setTitle(e.target.value)}
+                      autoComplete="off"
+                    />
+                  </Col>
+                  <Form.Label column xs="2">
+                    <IoPencil style={{ fontSize: "28px", float: "right" }} />
+                  </Form.Label>
+                </InputGroup>
               </Form.Group>
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form.Group as={Row} className="mb-3" controlId="formDate">
-              <Form.Label column sm="2">
-                Date
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control
-                  type="date"
-                  aria-label="formDate"
-                  placeholder="Enter date"
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                />
-              </Col>
+              <InputGroup hasValidation>
+                <Form.Label column sm="2">
+                  Date
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="date"
+                    required
+                    aria-label="formDate"
+                    placeholder="Enter date"
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                  />
+                </Col>
+              </InputGroup>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formTime">
-              <Form.Label column sm="2">
-                Time
-              </Form.Label>
-              <Col sm="10">
-                <Form.Control
-                  type="time"
-                  aria-label="formTime"
-                  placeholder="Enter time"
-                  value={time}
-                  onChange={(e) => setTime(e.target.value)}
-                />
-              </Col>
+              <InputGroup hasValidation>
+                <Form.Label column sm="2">
+                  Time
+                </Form.Label>
+                <Col sm="10">
+                  <Form.Control
+                    type="time"
+                    required
+                    aria-label="formTime"
+                    placeholder="Enter time"
+                    value={time}
+                    onChange={(e) => setTime(e.target.value)}
+                  />
+                </Col>
+              </InputGroup>
             </Form.Group>
             <Form.Group as={Row} className="mb-3" controlId="formDest">
               <Form.Label column sm="2">
@@ -317,7 +341,7 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={onClose}>
+            <Button variant="secondary" onClick={onClose} disabled={lock}>
               Cancel
             </Button>
             <Button variant="primary" type="submit" disabled={lock}>
