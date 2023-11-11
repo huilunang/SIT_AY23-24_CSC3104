@@ -171,27 +171,4 @@ class Event {
   public void setDest(String dest) {
     this.dest = dest;
   }
-
-  @Override
-  public boolean equals(Object o) {
-    if (this == o)
-      return true;
-    if (!(o instanceof Event))
-      return false;
-    Event event = (Event) o;
-    return Objects.equals(this.id, event.id) && Objects.equals(this.owner, event.owner)
-        && Objects.equals(this.title, event.title);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.id, this.owner, this.title);
-  }
-
-  @Override
-  public String toString() {
-    return String.format(
-        "Event[id=%s, key='%s', owner='%s', member='%s', title='%s', date='%s', time='%s', description='%s', invites='%s', timestamp='%s', type='%s', notify='%s', url='%s', dest='%s']",
-        id, key, owner, member, title, date, time, description, invites, timestamp, type, notify, url, dest);
-  }
 }
