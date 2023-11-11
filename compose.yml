@@ -92,9 +92,7 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   gateway:
-    build:
-      context: backend
-      dockerfile: ./gateway/Dockerfile
+    image: huilun2000/csc3104:sit_ay23-24_csc3104-gateway
     restart: always
     ports:
       - "30001:9090"

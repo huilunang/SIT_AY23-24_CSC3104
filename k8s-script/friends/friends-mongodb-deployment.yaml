@@ -23,7 +23,13 @@ spec:
         envFrom:
         - configMapRef:
             name: travelexp-conf
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
         volumeMounts:
         - mountPath: /docker-entrypoint-initdb.d
           name: mongo-init

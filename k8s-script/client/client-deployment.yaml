@@ -21,5 +21,11 @@ spec:
       - image: sit_ay23-24_csc3104-client
         name: sit-ay23-24-csc3104-client
         imagePullPolicy: Never
-        resources: {}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
 status: {}
