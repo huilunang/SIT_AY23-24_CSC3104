@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   account:
-    build:
-      context: backend
-      dockerfile: ./account/Dockerfile
+    image: huilun2000/csc3104:sit-ay23-24-csc3104-account
     restart: always
     ports:
       - "8081:8081"
@@ -22,9 +20,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
   wishlist:
-    build:
-      context: backend
-      dockerfile: ./wishlist/Dockerfile
+    image: huilun2000/csc3104:sit_ay23-24_csc3104-wishlist
     restart: always
     ports:
       - "8082:8082"
@@ -46,9 +42,7 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   notification:
-    build:
-      context: backend
-      dockerfile: ./notification/Dockerfile
+    image: huilun2000/csc3104:sit_ay23-24_csc3104-notification
     restart: always
     ports:
       - "8083:8083"
@@ -69,9 +63,7 @@ services:
     volumes:
       - ./db:/docker-entrypoint-initdb.d
   friends:
-    build:
-      context: backend
-      dockerfile: ./friends/Dockerfile
+    image: huilun2000/csc3104:sit_ay23-24_csc3104-friends
     restart: always
     ports:
       - "8084:8084"
@@ -102,9 +94,7 @@ services:
       - notification
       - friends
   client:
-    build:
-      context: frontend
-      dockerfile: ./Dockerfile
+    image: huilun2000/csc3104:sit_ay23-24_csc3104-client
     ports:
       - "30002:5173"
     volumes:

@@ -18,9 +18,9 @@ spec:
         app: client
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-client
+      - image: huilun2000/csc3104:sit_ay23-24_csc3104-client
         name: sit-ay23-24-csc3104-client
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         resources:
           limits:
             cpu: 500m

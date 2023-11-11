@@ -18,9 +18,9 @@ spec:
         app: account
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-account
-        name: sit-ay23-24-csc3104-account
-        imagePullPolicy: Never
+      - image: huilun2000/csc3104:sit-ay23-24-csc3104-account
+        name: sit-ay23-24-csc3104-gateway
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: travelexp-conf

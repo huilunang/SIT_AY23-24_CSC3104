@@ -18,9 +18,9 @@ spec:
         app: notification
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-notification
+      - image: huilun2000/csc3104:sit_ay23-24_csc3104-notification
         name: sit-ay23-24-csc3104-notification-nbl4d
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: travelexp-conf

@@ -18,9 +18,9 @@ spec:
         app: wishlist
     spec:
       containers:
-      - image: sit_ay23-24_csc3104-wishlist
+      - image: huilun2000/csc3104:sit_ay23-24_csc3104-wishlist
         name: sit-ay23-24-csc3104-wishlist
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         envFrom:
         - configMapRef:
             name: travelexp-conf
