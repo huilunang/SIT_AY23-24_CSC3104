@@ -42,10 +42,9 @@ public class FriendService {
     }
 
     public boolean checkIfFriend(String email, String user) {
-        FriendList friends = FriendListRepo.findFriendListByEmail(email);
+        List<String> friends = getFriends(email);
         if (friends != null) {
-            List<String> friends1 = friends.getFriends();
-            if (friends1.contains(user)) {
+            if (friends.contains(user)) {
                 return true;
             }
             else {
