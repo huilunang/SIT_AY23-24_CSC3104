@@ -20,6 +20,8 @@
 2. At root folder, Start
     > kubectl apply -f "[k8s-script](k8s-script)/*"
 3. [Start dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) (optional)
+- Deploy dashboard, run
+    > kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 - Access dashboard, run
     > kubectl proxy
 - Visit the site
@@ -28,3 +30,4 @@
     > kubectl -n kubernetes-dashboard create token admin-user
 4. At root folder, Clean
     > kubectl delete -f "[k8s-script](k8s-script)/*"
+    > kubectl delete -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
