@@ -144,6 +144,8 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
         invites,
         notify,
         "event",
+        url,
+        dest
       ) // Pass the parameters to the API function
         .then((response) => successfulResponse(response))
         .catch((error) => errorResponse(error))
