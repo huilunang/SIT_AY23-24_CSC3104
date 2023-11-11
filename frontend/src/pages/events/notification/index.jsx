@@ -534,6 +534,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               notification.dest
                             )
                           }
+                          aria-disabled={eventLock}
                         >
                           <IoCloseCircleOutline
                             style={{ fontSize: "34px", color: "#e7202e" }}
@@ -559,6 +560,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               notification.dest
                             )
                           }
+                          aria-disabled={eventLock}
                         >
                           <IoCheckmarkCircleOutline
                             style={{ fontSize: "34px", color: "#3db04a" }}
@@ -629,6 +631,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               ""
                             )
                           }
+                          aria-disabled={friendLock}
                         >
                           <IoCloseCircleOutline
                             style={{ fontSize: "34px", color: "#e7202e" }}
@@ -654,6 +657,7 @@ const Notification = ({ isOpen, onClose, updateNotificationCount }) => {
                               ""
                             )
                           }
+                          aria-disabled={friendLock}
                         >
                           <IoCheckmarkCircleOutline
                             style={{ fontSize: "34px", color: "#3db04a" }}
