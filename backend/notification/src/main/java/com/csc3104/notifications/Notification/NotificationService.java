@@ -120,13 +120,19 @@ public class NotificationService {
                 "        p {\n" +
                 "            color: #555;\n" +
                 "        }\n" +
+                "\n" +
+                "        img {\n" +
+                "            max-width: 100%;\n" +
+                "            max-height: 100%;\n" +
+                "        }\n" +
+                "\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
-                "        <img src=" + url + "alt=\"Event Image\">\n" +
+                "        <img src=\"" + url + "\" alt=\"Event Image\">\n" +
                 "        <ul>\n" +
                 "            <li><strong>From:</strong> " + owner + "</li>\n" +
                 "            <li><strong>To:</strong> " + member + "</li>\n" +
@@ -186,13 +192,19 @@ public class NotificationService {
                 "        p {\n" +
                 "            color: #555;\n" +
                 "        }\n" +
+                "\n" +
+                "        img {\n" +
+                "            max-width: 100%;\n" +
+                "            max-height: 100%;\n" +
+                "        }\n" +
+                "\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
-                "        <img src=" + url + "alt=\"Event Image\">\n" +
+                "        <img src=\"" + url + "\" alt=\"Event Image\">\n" +
                 "        <ul>\n" +
                 "            <li><strong>From:</strong> " + owner + "</li>\n" +
                 "            <li><strong>To:</strong> " + member + "</li>\n" +
@@ -252,13 +264,19 @@ public class NotificationService {
                 "        p {\n" +
                 "            color: #555;\n" +
                 "        }\n" +
+                "\n" +
+                "        img {\n" +
+                "            max-width: 100%;\n" +
+                "            max-height: 100%;\n" +
+                "        }\n" +
+                "\n" +
                 "    </style>\n" +
                 "</head>\n" +
                 "<body>\n" +
                 "    <div class=\"container\">\n" +
                 "        <h1>Event Invitation</h1>\n" +
                 "        <p><strong>Event Details:</strong></p>\n" +
-                "        <img src=" + url + "alt=\"Event Image\">\n" +
+                "        <img src=\"" + url + "\" alt=\"Event Image\">\n" +
                 "        <ul>\n" +
                 "            <li><strong>From:</strong> " + owner + "</li>\n" +
                 "            <li><strong>To:</strong> " + member + "</li>\n" +
