@@ -12,9 +12,9 @@ spec:
     protocol: TCP
     targetPort: 8081
   - name: grpc
-    port: 8089
+    port: 8099
     protocol: TCP
-    targetPort: 8089
+    targetPort: 8099
   selector:
     app: account
   type: ClusterIP
