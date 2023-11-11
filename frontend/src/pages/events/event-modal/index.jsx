@@ -32,8 +32,6 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
 
   const [validated, setValidated] = useState(false);
   const [lock, setLock] = useState(false);
-  const [emailToCheck, setEmailToCheck] = useState('');
-  const [checkresult, setcheckResult] = useState(null);
   const email = localStorage.getItem("email");
 
   function successfulResponse(response) {
@@ -45,13 +43,13 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
   }
 
   // check if the (emailToCheck) is part of the user's friends
-  const handleCheckFriend = async () => {
+  const handleCheckFriend = async (email) => {
     try {
-      const response = await checkIfFriend(emailToCheck);
-      setcheckResult(response.data); // Assuming the API returns relevant data
+      const response = await checkIfFriend(email);
+      return response.data; // Assuming the API returns relevant data
     } catch (error) {
       console.error('Error checking friend:', error);
-      setcheckResult(null);
+      return null;
     }
   };
 
@@ -91,11 +89,12 @@ export const EventModal = ({ isOpen, onClose, businessId }) => {
     if (e.key === "Enter" || e.key === ",") {
       e.preventDefault();
       const newUser = inviteValue.trim();
-
-      if (newUser && !invites.includes(newUser) && newUser != email) {
+      const isFriend = await handleCheckFriend(newUser);
+      if (newUser && !invites.includes(newUser) && newUser != email  && isFriend) {
         setInvites([...invites, newUser]);
 
         const user = await getUser(newUser);
+        
         if (user) {
           setInvitees([...invitees, user.firstname + " " + user.lastname]);
         } else {
