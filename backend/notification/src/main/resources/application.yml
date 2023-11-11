@@ -2,6 +2,9 @@ server:
   port: 8083
 grpc:
   client:
+    account-service:
+      address: account:8099
+      negotiation-type: plaintext
     poi-service:
       address: wishlist:8088
       negotiation-type: plaintext
